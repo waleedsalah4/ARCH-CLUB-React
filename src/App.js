@@ -8,6 +8,11 @@ import Home from './components/home/Home';
 import SignIn from './components/register/SignIn';
 import SignUp from './components/register/SignUp';
 import ForgotPassword from './components/register/ForgotPassword';
+import Layout from './components/layout/Layout';
+import Events from './components/events/Events';
+import Podcasts from './components/podcasts/Podcasts';
+import Discover from './components/discover/Discover';
+import Profile from './components/profile/Profile';
 
 
 function App() {
@@ -15,7 +20,14 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<LandingPage />} />
-        <Route path='/home' element={<Home />} />
+
+        <Route element={<Layout />}>
+          <Route path='/home' element={<Home />} />
+          <Route path='/events' element={<Events />} />
+          <Route path='/podcasts' element={<Podcasts />} />
+          <Route path='/discover' element={<Discover />} />
+          <Route path='/profile' element={<Profile />} />
+        </Route>
 
 
         {/* Register */}
