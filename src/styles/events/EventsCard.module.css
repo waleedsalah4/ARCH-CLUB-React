@@ -1,0 +1,28 @@
+.eventComponent{
+    padding: 1rem;
+    box-shadow: 0px 0px 2px #6a4cff;
+    border-radius: 6px;
+    text-align: start;
+}
+.eventHeader {
+    display: flex;
+    justify-content: space-between;
+}
+.eventActions{
+    display: flex;
+}
+
+.userData {
+    display: flex;
+    gap: 10px 20px;
+}
+
+
+.eventDescription,
+.eventComing-date {
+    padding: 0.7rem;
+}
+
+.eventDescription{
+    word-wrap: break-word;
+}

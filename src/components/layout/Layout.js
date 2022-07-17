@@ -21,6 +21,7 @@ import EventIcon from '@mui/icons-material/Event';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import classes from '../../styles/Layout.module.css';
+import Add from '../utilities/Add';
 
 const drawerWidth = 240;
 
@@ -180,17 +181,13 @@ export default function Layout(props) {
         {/* <Divider /> */}
         
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }} className={classes.main}>
         <DrawerHeader />
-        {/* <Typography paragraph>
-          {props.children}
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-          enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-          Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-        </Typography> */}
+        <div style={{position: 'fixed', bottom: '2rem', right: '2rem'}}>
+          <Add />
+        </div>
         <Outlet />
+
       </Box>
     </Box>
   );
