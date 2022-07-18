@@ -1,0 +1,10 @@
+.podcastscontainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/* @media (max-width: 600px) {
+    .podcastscontainer{
+        font-size: 14px;
+    }
+} */

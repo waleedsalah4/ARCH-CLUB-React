@@ -183,7 +183,7 @@ export default function Layout(props) {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }} className={classes.main}>
         <DrawerHeader />
-        <div style={{position: 'fixed', bottom: '2rem', right: '2rem'}}>
+        <div style={{position: 'fixed', bottom: '2rem', right: '1rem'}}>
           <Add />
         </div>
         <Outlet />

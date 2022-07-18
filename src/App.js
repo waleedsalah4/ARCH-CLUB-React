@@ -13,6 +13,7 @@ import Events from './components/events/Events';
 import Podcasts from './components/podcasts/Podcasts';
 import Discover from './components/discover/Discover';
 import Profile from './components/profile/Profile';
+import PodcastPlayer from './components/podcasts/PodcastPlayer';
 
 
 function App() {
@@ -25,8 +26,10 @@ function App() {
           <Route path='/home' element={<Home />} />
           <Route path='/events' element={<Events />} />
           <Route path='/podcasts' element={<Podcasts />} />
+          <Route path='/podcast-player/:id' element={<PodcastPlayer />} />
           <Route path='/discover' element={<Discover />} />
           <Route path='/profile' element={<Profile />} />
+          <Route path='/user-profile/:id' element={<Profile />} />
         </Route>
 
 
