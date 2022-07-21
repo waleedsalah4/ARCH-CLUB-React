@@ -207,5 +207,109 @@ export const podcastsList = [
         createdAt: "2022-04-15T02:02:51.858Z",
         updatedAt: "2022-06-07T19:12:12.128Z",
         isLiked: false
-    }
+    },
+    {
+        audio: {
+            duration: 821.890612,
+            url: "https://res.cloudinary.com/dnpol9y6s/video/upload/v1651025839/podcasts/t0hbe2jxyj7ojzt3v1us.mp3",
+            "publicID": "podcasts/t0hbe2jxyj7ojzt3v1us"
+        },
+        likes: 3,
+        _id: "7268a7b1c5b48d0016c29e05",
+        name: "سيارات تسير بلا سائق",
+        category: "science",
+        createdBy: {
+            "photo": "https://res.cloudinary.com/dnpol9y6s/image/upload/v1647791086/userPhotos/ycsndmw2tnvbxclbnsew.webp",
+            _id: "62374a39ced3480016cda2f8",
+            name: "بودكاست علمي جدا",
+            country: "egypt",
+            language: "arabic"
+        },
+        createdAt: "2022-04-27T02:17:21.684Z",
+        updatedAt: "2022-06-07T19:11:02.672Z",
+        isLiked: true
+    },
+    {
+        audio: {
+            duration: 821.890612,
+            url: "https://res.cloudinary.com/dnpol9y6s/video/upload/v1651025839/podcasts/t0hbe2jxyj7ojzt3v1us.mp3",
+            "publicID": "podcasts/t0hbe2jxyj7ojzt3v1us"
+        },
+        likes: 3,
+        _id: "8268a7b1c5b48d0016c29e05",
+        name: "سيارات تسير بلا سائق",
+        category: "science",
+        createdBy: {
+            "photo": "https://res.cloudinary.com/dnpol9y6s/image/upload/v1647791086/userPhotos/ycsndmw2tnvbxclbnsew.webp",
+            _id: "62374a39ced3480016cda2f8",
+            name: "بودكاست علمي جدا",
+            country: "egypt",
+            language: "arabic"
+        },
+        createdAt: "2022-04-27T02:17:21.684Z",
+        updatedAt: "2022-06-07T19:11:02.672Z",
+        isLiked: true
+    },
+]
+
+export const DiscoverUserList = [
+    {
+        _id: "623712f1ced3480016cd9ab8",
+        photo: "https://res.cloudinary.com/dnpol9y6s/image/upload/v1654712775/userPhotos/yjag8fctslq1jrflhzyj.webp",
+        followers: 3,
+        following: 3,
+        name: "shorouk",
+    },
+    {
+        _id: "6230f811ec65a50016ec6cf7",
+        photo: "https://audiocomms-podcast-platform.herokuapp.com/img/users/default.jpg",
+        followers: 2,
+        following: 0,
+        name: "ahmedffasf",
+    },
+    {
+        _id: "62853571512baf001676508f",
+        photo: "https://audiocomms-podcast-platform.herokuapp.com/img/users/default.jpg",
+        followers: 1,
+        following: 0,
+        bio: "Hello There!",
+        uid: 2080730,
+        name: "Elevate",
+    },
+    {
+        _id: "629e426cd1c994001668193e",
+        photo: "https://res.cloudinary.com/dnpol9y6s/image/upload/v1654539004/userPhotos/hxkhndjhlajhkf0u6num.webp",
+        followers: 1,
+        following: 10,
+        bio: "Hello There!",
+        uid: 1960288411,
+        name: "Ahmed",
+    },
+    {
+        _id: "62a219912e25600016a0be81",
+        photo: "https://res.cloudinary.com/dnpol9y6s/image/upload/v1654790873/userPhotos/p2l6eax6f8qtjwj22hpm.webp",
+        followers: 1,
+        following: 2,
+        bio: "Hello There!",
+        uid: 943328076,
+        name: "megawry",
+    },
+    {
+        _id: "628367720ba07a00165b2427",
+        photo: "https://audiocomms-podcast-platform.herokuapp.com/img/users/default.jpg",
+        followers: 0,
+        following: 0,
+        bio: "Hello There!",
+        uid: 2053920018,
+        name: "shaheen",
+    },
+    {
+        _id: "6285405a512baf00167652fa",
+        photo: "https://audiocomms-podcast-platform.herokuapp.com/img/users/default.jpg",
+        followers: 0,
+        following: 1,
+        bio: "Hello There!",
+        uid: 691159983,
+        name: "amr abd elhamid",
+    },
 ]

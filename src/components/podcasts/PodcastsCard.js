@@ -9,9 +9,9 @@ import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import InterestsIcon from '@mui/icons-material/Interests';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
+import Button from '@mui/material/Button';
 
 import classes from '../../styles/podcasts/PodcastsCard.module.css';
-import { Button } from '@mui/material';
 
 const PodcastsCard = ({podcast, otherUser}) => {
     return (

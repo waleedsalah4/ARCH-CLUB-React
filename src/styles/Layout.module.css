@@ -4,4 +4,5 @@
 
 .main{
     text-align: center;
+    overflow: auto;
 }

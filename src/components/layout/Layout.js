@@ -20,8 +20,8 @@ import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import EventIcon from '@mui/icons-material/Event';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
-import classes from '../../styles/Layout.module.css';
 import Add from '../utilities/Add';
+import classes from '../../styles/Layout.module.css';
 
 const drawerWidth = 240;
 
@@ -183,7 +183,7 @@ export default function Layout(props) {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }} className={classes.main}>
         <DrawerHeader />
-        <div style={{position: 'fixed', bottom: '2rem', right: '1rem'}}>
+        <div style={{position: 'fixed', bottom: '2rem', right: '1rem', zIndex: '2'}}>
           <Add />
         </div>
         <Outlet />
