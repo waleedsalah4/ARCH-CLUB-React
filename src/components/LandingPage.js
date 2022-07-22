@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,6 +10,17 @@ import mainPageImg from '../assets/mainpage/undrawPodcastReWr88.svg';
 import classes from '../styles/LandingPage.module.css';
 
 export default function LandingPage() {
+
+  // temp Auth
+  const navigate = useNavigate()
+  const token = JSON.parse(localStorage.getItem('user-token') || false)
+  console.log(token)
+  useEffect(()=> {
+    if(token) {
+      navigate('/home')
+    }
+  },[token,navigate])
+  //************************* */
   return (
     <Box>
       <Box sx={{ flexGrow: 1 }}>
@@ -51,7 +62,7 @@ export default function LandingPage() {
 
             </div>
             <div className={classes.mainImg}>
-              <img src={mainPageImg} alt='main image' />
+              <img src={mainPageImg} alt='main pic' />
             </div>
           </div>
       </Box>

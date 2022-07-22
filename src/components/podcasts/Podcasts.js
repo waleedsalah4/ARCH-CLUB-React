@@ -7,7 +7,7 @@ function Podcasts() {
     return (
         <div className={classes.podcastscontainer}>
             {podcastsList.map(podcast => (
-                <PodcastsCard key={podcast._id} podcast={podcast} otherUser={true} />
+                <PodcastsCard key={podcast._id} podcast={podcast} otherUser={false} />
             ))}
         </div>
     )

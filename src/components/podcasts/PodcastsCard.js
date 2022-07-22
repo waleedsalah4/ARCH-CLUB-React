@@ -9,7 +9,6 @@ import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import InterestsIcon from '@mui/icons-material/Interests';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
-import Button from '@mui/material/Button';
 
 import classes from '../../styles/podcasts/PodcastsCard.module.css';
 
@@ -75,10 +74,10 @@ const PodcastsCard = ({podcast, otherUser}) => {
                                 {Math.floor(podcast.audio.duration / 60)} : { Math.floor(podcast.audio.duration - Math.floor(podcast.audio.duration / 60) * 60)}
                             </Typography>
                         </div>
-                        <Button variant='text' startIcon={<PlayArrowRoundedIcon /> }>
-                        {/* Play */}
+                        <button className={classes.playPodcastBtn}>
+                            <PlayArrowRoundedIcon />
                             <Typography variant='p'>Play</Typography>
-                        </Button>
+                        </button>
                     </div> 
 
                 </div>

@@ -1,11 +1,13 @@
 import * as React from 'react';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
+// import List from '@mui/material/List';
+// import ListItem from '@mui/material/ListItem';
+// import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import { DiscoverUserList } from '../dummyfile';
+import classes from '../../styles/discover/Discover.module.css';
+// import { Typography } from '@mui/material';
 // function generate(element) {
 //   return [0, 1, 2].map((value) =>
 //     React.cloneElement(element, {
@@ -32,31 +34,54 @@ export default function DiscoverUsers() {
                     Avatar with text and icon
                 </Typography> */}
                 {/* <Demo> */}
-                    <List>
+                    {/* <List> */}
                         {DiscoverUserList.map(user=>(
-                        <ListItem
-                            key={user._id}
-                            secondaryAction={
-                                <Button variant='outlined'>
-                                    Following
-                                </Button>
-                            }
-                        >
-                            <ListItemAvatar>
-                                <Avatar 
-                                    alt='user avatar'
-                                    src={user.photo}
-                                    sx={{ width: 50, height: 50 }}
-                                />
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={user.name}
-                                secondary={`${user.followers >= 1? user.followers : '0'} follower`}
-                            />
-                        </ListItem>
+                        // <ListItem
+                        //     key={user._id}
+                        //     secondaryAction={
+                        //         <Button variant='outlined'>
+                        //             Following
+                        //         </Button>
+                        //     }
+                        // >
+                        //     <ListItemAvatar>
+                        //         <Avatar 
+                        //             alt='user avatar'
+                        //             src={user.photo}
+                        //             sx={{ width: 50, height: 50 }}
+                        //         />
+                        //     </ListItemAvatar>
+                        //     <ListItemText
+                        //         primary={user.name}
+                        //         secondary={`${user.followers >= 1? user.followers : '0'} follower`}
+                        //         
+                        //     />
+                        // </ListItem>
+                            <div key={user._id} className={classes.userContainer}>
+                                <div className={classes.userAvatar}>
+                                    <Avatar 
+                                        alt='user avatar'
+                                        src={user.photo}
+                                        sx={{ width: 50, height: 50 }}
+                                    />
+                                    <div className={classes.userName}>
+                                        <ListItemText
+                                            primary={user.name}
+                                            secondary={`${user.followers >= 1? user.followers : '0'} follower`}
+                                
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <Button variant='outlined'>
+                                        Following
+                                    </Button>
+                                </div>
+                            </div>
+
                         ))}
                         
-                    </List>
+                    {/* </List> */}
                 {/* </Demo> */}
             {/* </div> */}
          </div>

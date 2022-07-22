@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 import { podcastsList } from '../dummyfile';
 import PodcastsCard from '../podcasts/PodcastsCard';
 import DiscoverUsers from './DiscoverUsers';
+import classes from '../../styles/discover/Discover.module.css'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -26,10 +27,7 @@ function TabPanel(props) {
         <Box sx={{ 
             pt: 3,
         }}>
-            <div style={{ 
-            display:'flex', 
-            flexDirection: 'column', 
-            alignItems: 'center' }}>
+            <div className={classes.discoverContainer}>
                 {children}
 
             </div>
