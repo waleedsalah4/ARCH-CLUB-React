@@ -21,6 +21,7 @@ import EventIcon from '@mui/icons-material/Event';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Add from '../utilities/Add';
+import CenteredModal from '../modals/CenteredModal';
 import classes from '../../styles/Layout.module.css';
 
 const drawerWidth = 240;
@@ -185,6 +186,7 @@ export default function Layout(props) {
         <DrawerHeader />
         <div style={{position: 'fixed', bottom: '2rem', right: '1rem', zIndex: '2'}}>
           <Add />
+          <CenteredModal />
         </div>
         <Outlet />
 

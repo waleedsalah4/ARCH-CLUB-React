@@ -5,9 +5,8 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 import { roomList } from '../dummyfile';
-import classes from '../../styles/home/Home.module.css';
 import RoomCard from './RoomCard';
-import { Button } from '@mui/material';
+import classes from '../../styles/home/Home.module.css';
 
 
 const categories = [
@@ -25,10 +24,10 @@ const Home = () => {
 
   return (
     <div>
-      <div className={classes.actionBtns}>
+      {/* <div className={classes.actionBtns}>
         <Button variant='outlined'>Join private room</Button>
         <Button variant='outlined'>Create room</Button>
-      </div>
+      </div> */}
       <div className={classes.header}>
         <FormControl sx={{ m: 1, minWidth: 180 }}>
           <InputLabel id="filter-label" >Filter by Category</InputLabel>
