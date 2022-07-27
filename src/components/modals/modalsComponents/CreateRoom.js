@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import FormInput from '../../register/FormInput';
-import {Formik, Form,} from 'formik';
+import {Formik, Form, Field} from 'formik';
 import * as Yup from 'yup';
 
 
@@ -17,14 +17,9 @@ const categories = [
   ]
 
 function CreateRoom() {
-    const [category, setCategory] = useState('');
-    const [toggleStatus, setToggleStatus] = useState(false);
+    const [toggleStatus, setToggleStatus] = useState(false)
     const [toggleRecord, setToggleRecord] = useState(false)
 
-    const handleChange = (event) => {
-        setCategory(event.target.value);
-        console.log(event.target.value)
-    };
 
 
     const handleToggleStatus = (e) => {
@@ -32,18 +27,33 @@ function CreateRoom() {
     }
     const handleToggleRecord = (e) => {
         setToggleRecord(e.target.checked);
-        console.log(toggleRecord)
     }
 
     const validate = Yup.object({
         roomName: Yup.string()
             .min(3, 'room name must be at least 3 charaters')
-            .required('room id is required'),
+            .required('room name is required'),
     })
 
 
     const handleSubmit = (values) => {
-        console.log(values)
+        getFormData(values)
+    }
+
+    const getFormData = (data) => {
+        console.log({
+             ...data,
+            "toggleStatus": toggleStatus,
+            "toggleRecord": toggleRecord,
+        })
+
+    }
+
+    let toggleText = {
+        primaryStatus: toggleStatus ? 'Private' : 'Public',
+        secondaryStatus: toggleStatus ? 'only people have the room id will join' : 'Any one can join this room',
+        secondaryRecord: toggleRecord ? 'Record Room to listen as podcast later' : 'Room will not be recorded',
+
     }
 
     return (
@@ -57,9 +67,9 @@ function CreateRoom() {
                 <Formik 
                     initialValues={{
                         roomName: '',
-                        categories: '',
-                        switchStatus: false,
-                        switchRecord: false,
+                        categories: 'ai',
+                        // switchStatus: false,
+                        // switchRecord: false,
                     }}
                     validationSchema={validate}
                     onSubmit={handleSubmit}
@@ -74,20 +84,25 @@ function CreateRoom() {
                                 <Typography variant='p'>
                                     choose category
                                 </Typography>
-                                <select name="categories"
+                                {/* <select name="categories"
                                     value={category}
                                     onChange={handleChange}
                                 >
                                     {categories.map(cat => (
                                     <option key={cat} value={cat}>{cat}</option>
                                     ))}
-                                </select>
+                                </select> */}
+                                <Field as="select" name='categories'>
+                                    {categories.map(cat => (
+                                    <option key={cat} value={cat}>{cat}</option>
+                                    ))}
+                                </Field>
                             </Grid>
                             <Grid container item xs={12} justifyContent='space-between'>
                                 <div>
-                                    <Typography variant='p' display='block'>Public</Typography>
+                                    <Typography variant='p' display='block'>{toggleText.primaryStatus}</Typography>
                                     <Typography variant='caption'>
-                                        Any one can join this room
+                                        {toggleText.secondaryStatus}
                                     </Typography>
                                 </div>
                                 <Switch 
@@ -101,7 +116,7 @@ function CreateRoom() {
                                 <div>
                                     <Typography variant='p' display='block'>Record room</Typography>
                                     <Typography variant='caption'>
-                                        Room will not be recorded
+                                        {toggleText.secondaryRecord}
                                     </Typography>
                                 </div>
                                 <Switch 
