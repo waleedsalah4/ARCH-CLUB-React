@@ -1,5 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { openModal } from '../../store/reducers/modalSlice';
+
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
@@ -14,6 +17,10 @@ function Profile() {
     const params = useParams();
     const isMe = params.id ? false : true;
     // console.log(isMe)
+    const dispatch = useDispatch()
+    const openEditModal = () => {
+        dispatch(openModal({name: 'EditProfile'}))
+    }
     return (
         <div className={classes.profileContainer}>
             <div className={classes.profile}>
@@ -27,7 +34,7 @@ function Profile() {
                                 <img src={userAvtar} alt="user avatar" className={classes.avatar} />
                             </div>
                             <div className={classes.controls}>
-                                {isMe ? <Button variant='outlined'>Edit profile</Button> : <Button variant='outlined'>Following</Button>}
+                                {isMe ? <Button variant='outlined' onClick={openEditModal}>Edit profile</Button> : <Button variant='outlined'>Following</Button>}
                             </div>
                         </div>
                         {/* <div className={classes.userName}>

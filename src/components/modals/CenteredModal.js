@@ -9,6 +9,9 @@ import CreateRoom from './modalsComponents/CreateRoom';
 import JoinPrivateRoom from './modalsComponents/JoinPrivateRoom';
 import UploadPodcast from './modalsComponents/UploadPodcast';
 
+import EditProfile from '../profile/EditProfile';
+import UpdatePassword from '../profile/UpdatePassword';
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -38,6 +41,9 @@ const CenteredModal = () => {
         CreateRoom,
         JoinPrivateRoom,
         UploadPodcast,
+
+        EditProfile,
+        UpdatePassword,
     };
 
     let renderComponent;
@@ -66,3 +72,9 @@ const CenteredModal = () => {
 }
 
 export default CenteredModal
+
+//when adding new compoenet to centeredModal
+//add name of component to the componentsLookUp obj
+
+//and adding on click to open model 
+// dispatch(openModal({name: 'ComponentName'}))
