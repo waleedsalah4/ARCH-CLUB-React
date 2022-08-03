@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -34,6 +35,7 @@ const AppBar = styled(MuiAppBar, {
 
 function NavBar(props) {
     const {open, handleDrawerOpen} = props;
+    const navigate = useNavigate()
     return (
         <AppBar position="fixed"  open={open}>
             <Toolbar>
@@ -56,7 +58,7 @@ function NavBar(props) {
             <Box sx={{ display: { 
                 md: 'flex' } 
             }}>
-                <IconButton sx={{ p: 0 }}>
+              <IconButton sx={{ p: 0 }} onClick={() => navigate('/profile')}>
                 <Avatar alt="user avatar" src={avatar2} />
               </IconButton>
           </Box>

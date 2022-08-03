@@ -62,3 +62,11 @@ export const limiTitle = (title, limit =15) => {
 
     return title;
 }
+
+
+export const getDateAfterTwoWeeks = () => {
+    let twoWeeks = 1000 * 60 * 60 * 24 * 13;
+    let twoWeeksTime = new Date(new Date().getTime() + twoWeeks).toISOString();
+
+   return twoWeeksTime
+}

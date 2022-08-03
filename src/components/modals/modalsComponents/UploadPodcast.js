@@ -1,9 +1,103 @@
-import React from 'react'
+import React from 'react';
+import FormInput from '../../register/FormInput';
+import {Formik, Form, Field, ErrorMessage} from 'formik';
+import * as Yup from 'yup';
+
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 
 function UploadPodcast() {
+    const categories = [
+        'just chatting','ai','education','engineering','football','gaming','history','programming','science','storytelling'
+    ]
+
+
+
+
+    const validate = Yup.object({
+        podcastName: Yup.string()
+            .min(3, 'podcast name must be at least 3 charaters')
+            .required('room name is required'),
+        file: Yup.mixed().required()
+    })
+
+
+    const handleSubmit = (values) => {
+        // let formData = new FormData();
+        // formData.append('')
+        console.log(values)
+    }
+
+
     return (
-        <div>UploadPodcast</div>
+        <>
+            <Typography component="h1" variant="h5">
+                Upload Podcast
+            </Typography>
+            <Box 
+                component="div"  
+                sx={{ mt: 3, width: '100%' }}>
+                <Formik 
+                    initialValues={{
+                        podcastName: '',
+                        categories: 'just chatting',
+                        file: ''
+                    }}
+                    validationSchema={validate}
+                    onSubmit={handleSubmit}
+                >
+                {(formProps) => (
+                    <Form>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <TextField
+                                    id='file'
+                                    name='file' 
+                                    accept="mp3/*"  
+                                    type="file" 
+                                    onChange={(event) => {
+                                        formProps.setFieldValue('file', event.target.files[0])
+                                    }} 
+                                />
+                                <ErrorMessage component='div' name='file' style={{color: 'red'}} />
+
+                                {/* <input name='file' accept='mp3/*' type='file' onChange={(event) => {
+                                        formProps.setFieldValue('file', event.target.files[0])
+                                    }} 
+                                /> */}
+                            </Grid>
+                            <Grid item xs={12}>
+                                <FormInput label='Enter podcast name' name='podcastName' type='text' />
+                            </Grid>
+                            <Grid container item xs={12} justifyContent='space-between'>
+                                
+                                <Typography variant='p'>
+                                    choose category
+                                </Typography>
+                                <Field as="select" name='categories'>
+                                    {categories.map(cat => (
+                                    <option key={cat} value={cat}>{cat}</option>
+                                    ))}
+                                </Field>
+                            </Grid>
+                           
+                        </Grid>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                        >
+                            Upload
+                        </Button>
+                    </Form>)}
+                </Formik>
+            </Box>
+        </>
     )
 }
 
-export default UploadPodcast
+export default UploadPodcast;
