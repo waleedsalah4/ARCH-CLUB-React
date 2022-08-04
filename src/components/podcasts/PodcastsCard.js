@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { openModal } from '../../store/reducers/modalSlice';
+
 import { limiTitle } from '../utilities/Helpers';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -13,6 +16,15 @@ import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import classes from '../../styles/podcasts/PodcastsCard.module.css';
 
 const PodcastsCard = ({podcast, otherUser}) => {
+    const dispatch = useDispatch();
+
+    const handleDeletePodcast = (podcast) => {
+        dispatch(openModal({
+            name: 'DeletePodcast',
+            childrenProps: podcast
+        }))
+    }
+
     return (
         <div className={classes.podcastComponent}>
             <div className={classes.pic} title="open podcats in podcasts player">
@@ -24,7 +36,7 @@ const PodcastsCard = ({podcast, otherUser}) => {
                 <div className={classes.dFlex}>
                     <div className={classes.podcastName}>{limiTitle(podcast.name)}</div>
                     {!otherUser && <div className={classes.deletePod}>
-                        <IconButton aria-label="delete">
+                        <IconButton aria-label="delete" onClick={() => handleDeletePodcast(podcast)}>
                             <DeleteIcon />
                         </IconButton>
                     </div>}

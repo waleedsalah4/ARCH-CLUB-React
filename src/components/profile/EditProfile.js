@@ -33,6 +33,10 @@ function EditProfile() {
         dispatch(closeModal())
         dispatch(openModal({name: 'UpdatePassword'}))
     }
+    const handleDeleteAccountModal = () => {
+        dispatch(closeModal())
+        dispatch(openModal({name: 'DeleteAccount'}))
+    }
 
     const handleSubmit = (values) => {
         console.log(values)
@@ -85,7 +89,7 @@ function EditProfile() {
                         <Button variant='text' onClick={handleChangePasswordModal}>Update password</Button>
                     </Grid>
                     <Grid item xs={12}>
-                        <Button variant='text'>Delete Account</Button>
+                        <Button variant='text' onClick={handleDeleteAccountModal}>Delete Account</Button>
                     </Grid>
                 </Grid>
             </Box>

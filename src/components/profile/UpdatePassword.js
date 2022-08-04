@@ -28,6 +28,10 @@ function UpdatePassword() {
         dispatch(closeModal())
         dispatch(openModal({name: 'UpdatePassword'}))
     }
+    const handelCancelUpdate = () => {
+        dispatch(closeModal())
+        dispatch(openModal({name: 'EditProfile'}))
+    }
 
     const handleSubmit = (values) => {
         console.log(values)
@@ -76,6 +80,7 @@ function UpdatePassword() {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3}}
+                                onClick={handelCancelUpdate}
                             >
                                 Cancel
                             </Button>
