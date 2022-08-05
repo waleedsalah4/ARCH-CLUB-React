@@ -1,4 +1,7 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { openModal } from '../../store/reducers/modalSlice';
+
 import { getDate } from '../utilities/Helpers';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -11,6 +14,20 @@ import classes from '../../styles/events/EventsCard.module.css';
   
 
 const EventsCard = ({evt, otherUser})=> {
+    const dispatch = useDispatch()
+    const handleEditModal = () => {
+        dispatch(openModal({name: 'EditEvent', childrenProps:{
+            event: evt
+        }}))
+    }
+
+    const handleDeletePodcast = () => {
+        dispatch(openModal({
+            name: 'DeleteEvent',
+            childrenProps: evt
+        }))
+    }
+
     return (
         <div className={classes.eventComponent}>
             <div className={classes.eventHeader}>
@@ -28,24 +45,31 @@ const EventsCard = ({evt, otherUser})=> {
             {!otherUser &&
                 <div className={classes.eventActions}>
                     <div className={classes.updateEvent}>
-                        <IconButton aria-label="edit">
+                        <IconButton aria-label="edit" onClick={handleEditModal}>
                             <EditIcon />
                         </IconButton>
                     </div>
                     <div className={classes.deleteEvent}>
-                        <IconButton aria-label="delete">
+                        <IconButton aria-label="delete" onClick={handleDeletePodcast}>
                             <DeleteIcon />
                         </IconButton>
                     </div>
                 </div>}
             </div>
             <div className={classes.eventDescription}>
-                <div>Event Title:  {evt.name}</div>
-                About Event:  {evt.description}
+                <div>
+                    <Typography variant='p'>Event Title: </Typography>
+                    <Typography variant='caption'> {evt.name}</Typography>
+                </div>
+                <div>
+                    <Typography variant='p'>About Event:  </Typography>
+                    <Typography variant='caption'> {evt.description}</Typography>
+                </div> 
+                
             </div>
             <div className={classes.eventComingDate}>
-                <h6>comming at:</h6>
-                <p>{getDate(evt.date)}</p>
+                <Typography variant='p' display='block'>comming at:</Typography>
+                <Typography variant='caption'>{getDate(evt.date)}</Typography>
             </div>
         </div>
     )

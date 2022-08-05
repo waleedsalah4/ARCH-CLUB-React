@@ -10,8 +10,10 @@ import JoinPrivateRoom from './modalsComponents/JoinPrivateRoom';
 import UploadPodcast from './modalsComponents/UploadPodcast';
 
 import DeletePodcast from '../podcasts/DeletePodcast';
+import DeleteEvent from '../events/DeleteEvent';
 
 import EditProfile from '../profile/EditProfile';
+import EditEvent from '../events/EditEvent';
 import UpdatePassword from '../profile/UpdatePassword';
 import DeleteAccount from '../profile/DeleteAccount';
 
@@ -46,6 +48,8 @@ const CenteredModal = () => {
         UploadPodcast,
 
         DeletePodcast,
+        DeleteEvent,
+        EditEvent,
 
         EditProfile,
         UpdatePassword,

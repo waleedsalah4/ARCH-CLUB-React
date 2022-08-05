@@ -103,25 +103,25 @@ export const eventsList = [
             country: "egypt",
             language: "arabic"
         },
-        date: "2022-07-18T19:40:00.000Z",
+        date: "2022-08-15T02:30:00.000Z",
         description: "Going to talk about UEFA Nations League",
         name: "UEFA Nations League",
         expireAt: "2022-07-18T19:40:00.000Z",
         createdAt: "2022-07-17T15:40:25.879Z",
-        updatedAt: "2022-07-17T15:40:25.879Z"
+        updatedAt: "2022-08-17T15:40:25.879Z"
     },
     {
         _id: "62d42d69b934ff0016381784",
         createdBy: {
             photo: "https://res.cloudinary.com/dnpol9y6s/image/upload/v1654529565/userPhotos/sdcw3jt15pe9scahv8mo.webp",
             _id: "62548d4724d82500166c0492",
-            name: "waleeeed",
+            name: "waleed",
             country: "egypt",
             language: "arabic"
         },
-        date: "2022-07-18T19:40:00.000Z",
-        description: "Going to talk about UEFA Nations League",
-        name: "UEFA Nations League",
+        date: "2022-08-18T13:40:00.000Z",
+        description: "champoins Nations League",
+        name: "champoins League",
         expireAt: "2022-07-18T19:40:00.000Z",
         createdAt: "2022-07-17T15:40:25.879Z",
         updatedAt: "2022-07-17T15:40:25.879Z"
@@ -135,9 +135,9 @@ export const eventsList = [
             country: "egypt",
             language: "arabic"
         },
-        date: "2022-07-18T19:40:00.000Z",
-        description: "Going to talk about UEFA Nations League",
-        name: "UEFA Nations League",
+        date: "2022-08-12T12:40:00.000Z",
+        description: "Going to talk la liga",
+        name: "La Liga",
         expireAt: "2022-07-18T19:40:00.000Z",
         createdAt: "2022-07-17T15:40:25.879Z",
         updatedAt: "2022-07-17T15:40:25.879Z"
