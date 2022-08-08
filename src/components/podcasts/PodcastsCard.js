@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { openModal } from '../../store/reducers/modalSlice';
+import { openFixedModal } from '../../store/reducers/fixedModalSlice';
 
 import { limiTitle } from '../utilities/Helpers';
 import Typography from '@mui/material/Typography';
@@ -17,12 +18,30 @@ import classes from '../../styles/podcasts/PodcastsCard.module.css';
 
 const PodcastsCard = ({podcast, otherUser}) => {
     const dispatch = useDispatch();
+    const { isRoomOpen } = useSelector((state) => state.fixedModalSlice)
 
     const handleDeletePodcast = (podcast) => {
         dispatch(openModal({
             name: 'DeletePodcast',
             childrenProps: podcast
         }))
+    }
+    
+
+    const handlePlayerModal = () => {
+        if(isRoomOpen) {
+            console.log('can not open the podcast as there is a room running')
+        } else{
+            
+            //close old player first if it was running
+            dispatch(openFixedModal({
+                name: 'PodcastPlayer',
+                childrenProps: {item: podcast},
+                isPlayerOpen: true,
+                isRoomOpen: false
+            }))
+        }
+        
     }
 
     return (
@@ -86,7 +105,10 @@ const PodcastsCard = ({podcast, otherUser}) => {
                                 {Math.floor(podcast.audio.duration / 60)} : { Math.floor(podcast.audio.duration - Math.floor(podcast.audio.duration / 60) * 60)}
                             </Typography>
                         </div>
-                        <button className={classes.playPodcastBtn}>
+                        <button 
+                            className={classes.playPodcastBtn}
+                            onClick={handlePlayerModal}
+                        >
                             <PlayArrowRoundedIcon />
                             <Typography variant='p'>Play</Typography>
                         </button>

@@ -23,6 +23,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import Add from '../utilities/Add';
 import CenteredModal from '../modals/CenteredModal';
 import classes from '../../styles/Layout.module.css';
+import FixedModal from '../modals/FixedModal';
 
 const drawerWidth = 240;
 
@@ -188,6 +189,7 @@ export default function Layout(props) {
           <Add />
           <CenteredModal />
         </div>
+        <FixedModal />
         <Outlet />
 
       </Box>

@@ -1,8 +1,29 @@
+import React from 'react';
+import { useDispatch,useSelector } from 'react-redux';
+import { openFixedModal } from '../../store/reducers/fixedModalSlice';
 import { Button } from '@mui/material';
-import React from 'react'
 import classes from '../../styles/home/RoomCard.module.css';
 
 function RoomCard({room}) {
+    const dispatch = useDispatch();
+    
+    const {isPlayerOpen} = useSelector((state) => state.fixedModalSlice)
+
+    const handleJoinRoomModal = () => {
+        console.log('joined')
+        if(!isPlayerOpen) {
+            dispatch(openFixedModal({
+                name: 'Room',
+                childrenProps: {item: room},
+                isRoomOpen: true,
+                isPlayerOpen: false
+            }))
+        } else{
+            console.log('can not open the room as there is a podcast running')
+        }
+        
+    }
+
     return (
         <div className={classes.room}>
             <div className={classes.roomCard}>
@@ -12,7 +33,13 @@ function RoomCard({room}) {
                         <span className={classes.roomCategory}>{room.category}</span>
                     </div>
                     <div>
-                        <Button variant='outlined' className={classes.joinRublicRoom}>Join</Button>
+                        <Button 
+                            variant='outlined' 
+                            className={classes.joinRublicRoom}
+                            onClick={handleJoinRoomModal}
+                        >
+                            Join
+                        </Button>
                     </div>
                 </div>
                 <div className={classes.roomInfo}>
