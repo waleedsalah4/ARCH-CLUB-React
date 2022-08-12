@@ -14,6 +14,7 @@ function PodcastPlayer({item}) {
     //reference
     const audioPlayer = useRef(); //reference our audio component
     const progressBar = useRef(); //reference our progressBar 
+    const volumeBar = useRef();
     const animationRef = useRef(); //reference the animation
 
     const onLoadedMetadata = () => {
@@ -45,7 +46,9 @@ function PodcastPlayer({item}) {
    
 
     const whilePlaying = () => {
-        progressBar.current.value = audioPlayer.current.currentTime;
+        if(progressBar.current) {
+            progressBar.current.value = audioPlayer.current?.currentTime;
+        }
         changePlayerCurrentTime();
         animationRef.current = requestAnimationFrame(whilePlaying)
     }
@@ -56,8 +59,10 @@ function PodcastPlayer({item}) {
     }
 
     const changePlayerCurrentTime = () => {
-        progressBar.current.style.setProperty('--seek-before-width', `${progressBar.current.value / duration * 100}%`)
-        setCurrentTime(progressBar.current.value)
+        if(progressBar.current) {
+            progressBar.current.style.setProperty('--seek-before-width', `${progressBar.current.value / duration * 100}%`)
+            setCurrentTime(progressBar.current.value)
+        }
     }
 
     const forwardTen = () => {
@@ -69,9 +74,27 @@ function PodcastPlayer({item}) {
         changeRange()
     }
 
+    const changeVolume = () => {
+        // console.log(volumeBar.current.value)
+        audioPlayer.current.volume = volumeBar.current.value / 100;
+    }
+
+    const resetPlayer = () => {
+        audioPlayer.current.currentTime = 0
+        progressBar.current.value = 0;
+        changePlayerCurrentTime();
+        togglePlayPause()
+    }
+
     return (
         <div className={classes.audioPlayer}>
-            <audio ref={audioPlayer} src={item.audio.url} preload="metadata" onLoadedMetadata={onLoadedMetadata}></audio>
+            <audio 
+                ref={audioPlayer} 
+                src={item.audio.url}
+                preload="metadata"
+                onLoadedMetadata={onLoadedMetadata}
+                onEnded={resetPlayer}
+            ></audio>
 
             <div className={classes.audio}>
 
@@ -106,6 +129,14 @@ function PodcastPlayer({item}) {
                 <button onClick={forwardTen} className={classes.forwardBackward}>
                 10 <FastForwardIcon />
                 </button>
+            </div>
+            <div>
+                <input 
+                    type='range' 
+                    ref={volumeBar}
+                    defaultValue='99'
+                    onChange={changeVolume}
+                />
             </div>
             
         </div>

@@ -47,9 +47,9 @@ const PodcastsCard = ({podcast, otherUser}) => {
     return (
         <div className={classes.podcastComponent}>
             <div className={classes.pic} title="open podcats in podcasts player">
-                <Link to={`/podcast-player/${podcast._id}`}>
+                {/* <Link to={`/podcast-player/${podcast._id}`}> */}
                     <img src={podcast.createdBy.photo} alt="user podcast" />
-                </Link>
+                {/* </Link> */}
             </div>
             <div className={classes.description}> 
                 <div className={classes.dFlex}>
