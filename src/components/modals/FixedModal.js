@@ -1,13 +1,10 @@
 import React from 'react';
-import { useSelector,useDispatch } from 'react-redux';
-import { closeFixedModal } from '../../store/reducers/fixedModalSlice';
+import { useSelector } from 'react-redux';
 import Room from '../room/Room';
 import PodcastPlayer from '../podcasts/PodcastPlayer';
 
 function FixedModal() {
-    const dispatch = useDispatch();
     const {isOpen, componentName, childrenProps} = useSelector((state) => state.fixedModalSlice)
-    const handleClose = () => dispatch(closeFixedModal());
 
     const componentsLookUp = {
         Room,
@@ -24,7 +21,6 @@ function FixedModal() {
     return (
         <>
             {isOpen &&<div style={{position: 'fixed', left: '4.5rem', bottom: '1rem', zIndex: '2'}}>
-                <p onClick={handleClose}>X</p>
                 {renderComponent}
             </div>}
         </>

@@ -1,15 +1,28 @@
 import React,{ useState,useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { closeFixedModal } from '../../store/reducers/fixedModalSlice';
 
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import FastForwardIcon from '@mui/icons-material/FastForward';
 import FastRewindIcon from '@mui/icons-material/FastRewind';
+import VolumeMuteIcon from '@mui/icons-material/VolumeMute';
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ReplayIcon from '@mui/icons-material/Replay';
+import CloseIcon from '@mui/icons-material/Close';
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
+import { IconButton, Typography } from '@mui/material';
 import classes from '../../styles/podcasts/PodcastPlayer.module.css';
 
 function PodcastPlayer({item}) {
+    const dispatch = useDispatch();
+
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0);
-    const [currentTime, setCurrentTime] = useState(0)
+    const [currentTime, setCurrentTime] = useState(0);
+    const [collapse, setCollapse] = useState(true)
 
     //reference
     const audioPlayer = useRef(); //reference our audio component
@@ -86,59 +99,165 @@ function PodcastPlayer({item}) {
         togglePlayPause()
     }
 
+    const handleClose = () => dispatch(closeFixedModal());
+    const ToggleCollapse = () => setCollapse(!collapse);
+
     return (
-        <div className={classes.audioPlayer}>
-            <audio 
-                ref={audioPlayer} 
-                src={item.audio.url}
-                preload="metadata"
-                onLoadedMetadata={onLoadedMetadata}
-                onEnded={resetPlayer}
-            ></audio>
+        <div className={classes.podcastPlayer}>
+            <div className={`${collapse && classes.displayHidden}`}>
+                <div>
+                    <IconButton 
+                        aria-label='collapse' 
+                        onClick={ToggleCollapse}
+                    >
+                        <KeyboardDoubleArrowUpIcon />
+                    </IconButton>
+                    <Typography variant='p'>{item.name}</Typography>
+                    <IconButton 
+                        aria-label='close' 
+                        onClick={handleClose}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                </div>
+                <div>
+                    <IconButton aria-label='play-pause' 
+                        onClick={togglePlayPause} 
+                        // className={classes.playPause}
+                    >
+                        {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
+                    </IconButton>
+                    {isPlaying && <div className={classes.waveLoader2}>
+                    <span className={classes.stroke2}></span>
+                    <span className={classes.stroke2}></span>
+                    <span className={classes.stroke2}></span>
+                    <span className={classes.stroke2}></span>
+                    <span className={classes.stroke2}></span>
+                    <span className={classes.stroke2}></span>
+                    <span className={classes.stroke2}></span>
+                </div>}
+                </div>
+            </div>
+            <div className={`${!collapse && classes.displayHidden}`}>
+                <IconButton 
+                    aria-label='close' 
+                    className={classes.closeModal}
+                    onClick={handleClose}
+                >
+                    <CloseIcon />
+                </IconButton>
+                <IconButton 
+                    aria-label='collapse' 
+                    className={classes.collapse}
+                    onClick={ToggleCollapse}
+                >
+                    <KeyboardDoubleArrowDownIcon />
+                </IconButton>
+                <div className={classes.userInfo}>
+                    <div className={classes.userImg}>
+                        <img 
+                            src={item.createdBy.photo} 
+                            className={`${isPlaying && classes.rotate }`} 
+                            alt="user avatar" 
+                        />
+                    </div>
+                    <div className={classes.userName}>
+                        <h3>{item.createdBy.name}</h3>
+                        <p>{item.name}</p>
+                    </div>
+                </div>
+                {isPlaying && <div className={classes.waveLoader}>
+                    <span className={classes.stroke}></span>
+                    <span className={classes.stroke}></span>
+                    <span className={classes.stroke}></span>
+                    <span className={classes.stroke}></span>
+                    <span className={classes.stroke}></span>
+                    <span className={classes.stroke}></span>
+                    <span className={classes.stroke}></span>
+                </div>}
+                <div className={classes.playerContainer}>
+                    <audio 
+                        ref={audioPlayer} 
+                        src={item.audio.url}
+                        preload="metadata"
+                        onLoadedMetadata={onLoadedMetadata}
+                        onEnded={resetPlayer}
+                    ></audio>
 
-            <div className={classes.audio}>
+                    <div className={classes.audio}>
 
-                {/* current time */}
-                <div className={classes.currentTime}>
-                    {calculateTime(currentTime)}
+                        {/* current time */}
+                        <div className={classes.currentTime}>
+                            {calculateTime(currentTime)}
+                        </div>
+
+                        {/* progeress bar */}
+                        <div>
+                            <input 
+                                type='range' 
+                                defaultValue='0' 
+                                ref={progressBar}
+                                onChange={changeRange}
+                                className={classes.progressBar}
+                            />
+                        </div>
+                        {/* duration */}
+                        <div className={classes.duration}>
+                            {(duration && !isNaN(duration)) && calculateTime(duration)}
+                        </div>
+                    </div>
                 </div>
 
-                {/* progeress bar */}
-                <div>
+                <div className={classes.playerContainer}>
+                    <VolumeMuteIcon />
                     <input 
                         type='range' 
-                        defaultValue='0' 
-                        ref={progressBar}
-                        onChange={changeRange}
-                        className={classes.progressBar}
+                        ref={volumeBar}
+                        defaultValue='99'
+                        onChange={changeVolume}
+                        className={classes.volumeBar}
                     />
+                    <VolumeUpIcon />
                 </div>
-                {/* duration */}
-                <div className={classes.duration}>
-                    {(duration && !isNaN(duration)) && calculateTime(duration)}
-                </div>
-            </div>
+                <div className={classes.playerButtons}>
+                    <div 
+                        className={`${classes.likeTrack} ${item.isLiked ? classes.liked : ''}`}
+                    >
+                        <FavoriteIcon />
+                    </div>
 
-            <div className={classes.controls}>
-                <button className={classes.forwardBackward} onClick={backwardTen}>
-                    <FastRewindIcon /> 10
-                </button>
-                <button onClick={togglePlayPause} className={classes.playPause}>
-                    {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
-                </button>
-                <button onClick={forwardTen} className={classes.forwardBackward}>
-                10 <FastForwardIcon />
-                </button>
-            </div>
-            <div>
-                <input 
-                    type='range' 
-                    ref={volumeBar}
-                    defaultValue='99'
-                    onChange={changeVolume}
-                />
-            </div>
+                    {/* <button 
+                        className={classes.forwardBackward} 
+                        
+                    > */}
+                        <IconButton aria-label='backward 10' onClick={backwardTen}>
+                            <FastRewindIcon />
+                        </IconButton> 10
+                    {/* </button> */}
+
+                    <IconButton aria-label='play-pause' 
+                        onClick={togglePlayPause} 
+                        // className={classes.playPause}
+                    >
+                        {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
+                    </IconButton>
+
+                    {/* <button 
+                        
+                        className={classes.forwardBackward}
+                    > */}
+                        10 
+                        <IconButton aria-label='forward 10' onClick={forwardTen} >
+                            <FastForwardIcon />
+                        </IconButton>
+                    {/* </button> */}
+
+                    <IconButton aria-label="replay">
+                        <ReplayIcon />
+                    </IconButton>
+                </div>
             
+            </div>
         </div>
     )
 }

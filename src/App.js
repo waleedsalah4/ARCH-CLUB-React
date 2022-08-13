@@ -14,6 +14,7 @@ import Podcasts from './components/podcasts/Podcasts';
 import Discover from './components/discover/Discover';
 import Profile from './components/profile/Profile';
 // import PodcastPlayer from './components/podcasts/PodcastPlayer';
+// import MusicPlayerSlider from './components/podcasts/testComponent';
 
 
 function App() {
