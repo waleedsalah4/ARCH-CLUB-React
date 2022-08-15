@@ -1,14 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Room from '../room/Room';
-import PodcastPlayer from '../podcasts/PodcastPlayer';
+import PlayerLogic from '../podcasts/PlayerLogic';
 
 function FixedModal() {
     const {isOpen, componentName, childrenProps} = useSelector((state) => state.fixedModalSlice)
 
     const componentsLookUp = {
         Room,
-        PodcastPlayer
+        PlayerLogic
     };
     let renderComponent;
     if(componentName){

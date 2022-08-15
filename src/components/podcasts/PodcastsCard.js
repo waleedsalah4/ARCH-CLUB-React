@@ -35,7 +35,7 @@ const PodcastsCard = ({podcast, otherUser}) => {
             
             //close old player first if it was running
             dispatch(openFixedModal({
-                name: 'PodcastPlayer',
+                name: 'PlayerLogic',
                 childrenProps: {item: podcast},
                 isPlayerOpen: true,
                 isRoomOpen: false

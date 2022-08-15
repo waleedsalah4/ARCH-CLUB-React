@@ -1,6 +1,8 @@
-import React,{ useState,useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { closeFixedModal } from '../../store/reducers/fixedModalSlice';
+import React
+// ,{ useState,useRef }
+ from 'react';
+// import { useDispatch } from 'react-redux';
+// import { closeFixedModal } from '../../store/reducers/fixedModalSlice';
 
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
@@ -14,98 +16,18 @@ import CloseIcon from '@mui/icons-material/Close';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
 import { IconButton, Typography } from '@mui/material';
+import WaveLoader from './WaveLoader';
 import classes from '../../styles/podcasts/PodcastPlayer.module.css';
 
-function PodcastPlayer({item}) {
-    const dispatch = useDispatch();
 
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [duration, setDuration] = useState(0);
-    const [currentTime, setCurrentTime] = useState(0);
-    const [collapse, setCollapse] = useState(true)
+function PodcastPlayer(props) {
 
-    //reference
-    const audioPlayer = useRef(); //reference our audio component
-    const progressBar = useRef(); //reference our progressBar 
-    const volumeBar = useRef();
-    const animationRef = useRef(); //reference the animation
-
-    const onLoadedMetadata = () => {
-        const seconds = Math.floor(audioPlayer.current.duration);
-        setDuration(seconds);
-        progressBar.current.max = seconds;
-    };
-
-    const calculateTime = (secs) => {
-        const minutes = Math.floor(secs / 60);
-        const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-        const seconds = Math.floor(secs % 60);
-        const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-        return `${returnedMinutes}:${returnedSeconds}`;
-    }
-
-    const togglePlayPause = () => {
-        const prevValue = isPlaying;
-        setIsPlaying(!prevValue)
-        if(!prevValue){
-            audioPlayer.current.play();
-            animationRef.current = requestAnimationFrame(whilePlaying)
-        }else {
-            audioPlayer.current.pause();
-            cancelAnimationFrame(animationRef.current)
-        }
-    }
-
-   
-
-    const whilePlaying = () => {
-        if(progressBar.current) {
-            progressBar.current.value = audioPlayer.current?.currentTime;
-        }
-        changePlayerCurrentTime();
-        animationRef.current = requestAnimationFrame(whilePlaying)
-    }
-
-    const changeRange = () => {
-        audioPlayer.current.currentTime = progressBar.current.value;
-        changePlayerCurrentTime()
-    }
-
-    const changePlayerCurrentTime = () => {
-        if(progressBar.current) {
-            progressBar.current.style.setProperty('--seek-before-width', `${progressBar.current.value / duration * 100}%`)
-            setCurrentTime(progressBar.current.value)
-        }
-    }
-
-    const forwardTen = () => {
-        progressBar.current.value = Number(progressBar.current.value) + 10
-        changeRange()
-    }
-    const backwardTen = () => {
-        progressBar.current.value = Number(progressBar.current.value) - 10
-        changeRange()
-    }
-
-    const changeVolume = () => {
-        // console.log(volumeBar.current.value)
-        audioPlayer.current.volume = volumeBar.current.value / 100;
-    }
-
-    const resetPlayer = () => {
-        audioPlayer.current.currentTime = 0
-        progressBar.current.value = 0;
-        changePlayerCurrentTime();
-        togglePlayPause()
-    }
-
-    const handleClose = () => dispatch(closeFixedModal());
-    const ToggleCollapse = () => setCollapse(!collapse);
+    const { collapse,ToggleCollapse, item,togglePlayPause, isPlaying, handleClose, audioPlayer, onLoadedMetadata ,resetPlayer,calculateTime, currentTime, progressBar, changeRange, duration,volumeBar,changeVolume,backwardTen, forwardTen, replayPodcast } = props
 
     return (
         <div className={classes.podcastPlayer}>
             <div className={`${collapse && classes.displayHidden}`}>
-                <div>
+                <div className={classes.miniPlayer}>
                     <IconButton 
                         aria-label='collapse' 
                         onClick={ToggleCollapse}
@@ -113,46 +35,39 @@ function PodcastPlayer({item}) {
                         <KeyboardDoubleArrowUpIcon />
                     </IconButton>
                     <Typography variant='p'>{item.name}</Typography>
-                    <IconButton 
-                        aria-label='close' 
-                        onClick={handleClose}
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                </div>
-                <div>
+                {/* </div>
+                <div> */}
                     <IconButton aria-label='play-pause' 
                         onClick={togglePlayPause} 
                         // className={classes.playPause}
                     >
                         {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
                     </IconButton>
-                    {isPlaying && <div className={classes.waveLoader2}>
-                    <span className={classes.stroke2}></span>
-                    <span className={classes.stroke2}></span>
-                    <span className={classes.stroke2}></span>
-                    <span className={classes.stroke2}></span>
-                    <span className={classes.stroke2}></span>
-                    <span className={classes.stroke2}></span>
-                    <span className={classes.stroke2}></span>
-                </div>}
+                    {isPlaying && <WaveLoader 
+                    waveLoader={classes.waveLoader}
+                    waveLoaderHeight={classes.miniPlayerWaveLoaderHeight}
+                    stroke={classes.stroke}
+                    strokeWidth={classes.miniPlayerStrokeWidth}
+                />}
                 </div>
             </div>
             <div className={`${!collapse && classes.displayHidden}`}>
-                <IconButton 
-                    aria-label='close' 
-                    className={classes.closeModal}
-                    onClick={handleClose}
-                >
-                    <CloseIcon />
-                </IconButton>
-                <IconButton 
-                    aria-label='collapse' 
-                    className={classes.collapse}
-                    onClick={ToggleCollapse}
-                >
-                    <KeyboardDoubleArrowDownIcon />
-                </IconButton>
+                <div>
+                    <IconButton 
+                        aria-label='collapse' 
+                        onClick={ToggleCollapse}
+                        className={classes.collapse}
+                    >
+                        <KeyboardDoubleArrowDownIcon />
+                    </IconButton>
+                    <IconButton 
+                        aria-label='close' 
+                        onClick={handleClose}
+                        className={classes.closeModal}
+                    >
+                        <CloseIcon />
+                    </IconButton>              
+                </div>
                 <div className={classes.userInfo}>
                     <div className={classes.userImg}>
                         <img 
@@ -166,15 +81,12 @@ function PodcastPlayer({item}) {
                         <p>{item.name}</p>
                     </div>
                 </div>
-                {isPlaying && <div className={classes.waveLoader}>
-                    <span className={classes.stroke}></span>
-                    <span className={classes.stroke}></span>
-                    <span className={classes.stroke}></span>
-                    <span className={classes.stroke}></span>
-                    <span className={classes.stroke}></span>
-                    <span className={classes.stroke}></span>
-                    <span className={classes.stroke}></span>
-                </div>}
+                {isPlaying && <WaveLoader 
+                    waveLoader={classes.waveLoader}
+                    waveLoaderHeight={classes.waveLoaderHeight}
+                    stroke={classes.stroke}
+                    strokeWidth={classes.strokeWidth}
+                /> }
                 <div className={classes.playerContainer}>
                     <audio 
                         ref={audioPlayer} 
@@ -252,7 +164,7 @@ function PodcastPlayer({item}) {
                         </IconButton>
                     {/* </button> */}
 
-                    <IconButton aria-label="replay">
+                    <IconButton aria-label="replay" onClick={replayPodcast}>
                         <ReplayIcon />
                     </IconButton>
                 </div>
@@ -264,4 +176,89 @@ function PodcastPlayer({item}) {
 
 export default PodcastPlayer
 
+    // ********* that moved to PlayerLogic component *****/
 
+    // const dispatch = useDispatch();
+
+    // const [isPlaying, setIsPlaying] = useState(false);
+    // const [duration, setDuration] = useState(0);
+    // const [currentTime, setCurrentTime] = useState(0);
+    // const [collapse, setCollapse] = useState(true)
+
+    // //reference
+    // const audioPlayer = useRef(); //reference our audio component
+    // const progressBar = useRef(); //reference our progressBar 
+    // const volumeBar = useRef();
+    // const animationRef = useRef(); //reference the animation
+
+    // const onLoadedMetadata = () => {
+    //     const seconds = Math.floor(audioPlayer.current.duration);
+    //     setDuration(seconds);
+    //     progressBar.current.max = seconds;
+    // };
+
+    // const calculateTime = (secs) => {
+    //     const minutes = Math.floor(secs / 60);
+    //     const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+    //     const seconds = Math.floor(secs % 60);
+    //     const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+    //     return `${returnedMinutes}:${returnedSeconds}`;
+    // }
+
+    // const togglePlayPause = () => {
+    //     const prevValue = isPlaying;
+    //     setIsPlaying(!prevValue)
+    //     if(!prevValue){
+    //         audioPlayer.current.play();
+    //         animationRef.current = requestAnimationFrame(whilePlaying)
+    //     }else {
+    //         audioPlayer.current.pause();
+    //         cancelAnimationFrame(animationRef.current)
+    //     }
+    // }
+
+   
+
+    // const whilePlaying = () => {
+    //     if(progressBar.current) {
+    //         progressBar.current.value = audioPlayer.current?.currentTime;
+    //     }
+    //     changePlayerCurrentTime();
+    //     animationRef.current = requestAnimationFrame(whilePlaying)
+    // }
+
+    // const changeRange = () => {
+    //     audioPlayer.current.currentTime = progressBar.current.value;
+    //     changePlayerCurrentTime()
+    // }
+
+    // const changePlayerCurrentTime = () => {
+    //     if(progressBar.current) {
+    //         progressBar.current.style.setProperty('--seek-before-width', `${progressBar.current.value / duration * 100}%`)
+    //         setCurrentTime(progressBar.current.value)
+    //     }
+    // }
+
+    // const forwardTen = () => {
+    //     progressBar.current.value = Number(progressBar.current.value) + 10
+    //     changeRange()
+    // }
+    // const backwardTen = () => {
+    //     progressBar.current.value = Number(progressBar.current.value) - 10
+    //     changeRange()
+    // }
+
+    // const changeVolume = () => {
+    //     // console.log(volumeBar.current.value)
+    //     audioPlayer.current.volume = volumeBar.current.value / 100;
+    // }
+
+    // const resetPlayer = () => {
+    //     audioPlayer.current.currentTime = 0
+    //     progressBar.current.value = 0;
+    //     changePlayerCurrentTime();
+    //     togglePlayPause()
+    // }
+
+    // const handleClose = () => dispatch(closeFixedModal());
+    // const ToggleCollapse = () => setCollapse(!collapse);
