@@ -1,6 +1,6 @@
 import React from 'react';
 import { limiTitle } from '../utilities/Helpers';
-import { Avatar, IconButton } from '@mui/material';
+import { Avatar } from '@mui/material';
 
 import PanToolIcon from '@mui/icons-material/PanTool';
 import classes from '../../styles/room/RoomCard.module.css';
@@ -13,12 +13,12 @@ function RoomAudience({audience}) {
                 src={audience.photo}
                 sx={{ width: 56, height: 56 }}
             />
-            <span className={classes.RequestHand}>
-            {audience.isAsked && <IconButton aria-label='hand'>
-                    <PanToolIcon />
-                </IconButton>
-            }     
+            
+            {audience.isAsked && <span className={classes.requestHand}>
+                <PanToolIcon />
             </span>
+            }     
+            
             <div className={`${classes.userName} ${classes.listener}`}>
                 <div>
                     {limiTitle(audience.name)}

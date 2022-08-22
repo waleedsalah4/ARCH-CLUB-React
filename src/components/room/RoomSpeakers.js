@@ -1,6 +1,6 @@
 import React from 'react';
 import { limiTitle } from '../utilities/Helpers';
-import { Avatar, IconButton } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
 // import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
 import StarIcon from '@mui/icons-material/Star';
@@ -15,11 +15,11 @@ function RoomSpeakers({speaker}) {
                 src={speaker.photo}
                 sx={{ width: 56, height: 56 }}
             />
-            {speaker.isMuted && <IconButton aria-label='mic=off'>
+            {speaker.isMuted && <span className={classes.mic}>
                 <MicOffIcon />
-            </IconButton>}
+                </span>}
             <div className={`${classes.userName} ${ !speaker.isAdmin && classes.speaker}`}>
-                {speaker.isAdmin && <StarIcon />}
+                {speaker.isAdmin && <StarIcon sx={{fontSize: '1rem'}} />}
                  <div>
                     {limiTitle(speaker.name)}
                 </div>

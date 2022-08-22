@@ -32,7 +32,9 @@
     text-align: center;
   }
   
-
+  .displayHidden{
+    display: none;
+  }
 /* create room*/
 .createRoomContainer {
   width: 100%;
@@ -49,18 +51,18 @@
   display: none;
 }
   
-  .page {
+.page {
     /* width: 1; */
     display: flex;
     align-items: flex-start;
     justify-content: center;
     /* padding: 10px; */
     /* margin-left: 49px; */
-  }
+}
   
-  .page .house {
-    width: 70%;
-    min-width: 331.908px;
+.page .house {
+    /* width: 70%; */
+    min-width: 320px;
     height: 530px;
     background: var(--primary-color);
     border-radius: 33px;
@@ -113,16 +115,18 @@
   
   .page .house .screen main > div {
     width: 100%;
-    /* height: 100%; */
     display: flex;
-    /* justify-content: space-between; */
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: 20px 38px;
+    gap: 10px 25px;
+  }
+  .page .house .screen main .roomHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
  
   .page .house .screen main > div .user {
-    /* width: 15%; */
     height: 100px;
     display: flex;
     flex-direction: column;
@@ -133,19 +137,19 @@
   
 
 
-  .page .house .screen main > div .user .avatar {
+  /* .page .house .screen main > div .user .avatar {
     width: 65px;
     height: 65px;
     border-radius: 50%;
     overflow: hidden;
-  }
+  } */
   
-  .page .house .screen main > div .user .avatar img {
+  /* .page .house .screen main > div .user .avatar img {
     width: 62px;
     height: 62px;
     border-radius: 50%;
     cursor: pointer;
-  }
+  } */
 
   .page .house .screen main > div .user .avatar img.volumeIndicator {
     border: 3px solid transparent;
@@ -153,8 +157,8 @@
   
   
   
-  .page .house .screen main > div .user > .fun,
-  .page .house .screen main > div .user > .mic,
+  /* .page .house .screen main > div .user > .fun,
+  /* .page .house .screen main > div .user > .mic, 
   .requestHandImg {
     width: 25px;
     height: 25px;
@@ -163,19 +167,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+  } */
   
   .requestHand{
-    
     position: absolute;
-    top: 40px;
-    left: 0px;
+    top: 30px;
+    left: 30px;
   }
   
   .page .house .screen main > div .user > .mic {
     position: absolute;
-    top: 40px;
-    left: 46px;
+    top: 18px;
+    left: 41px;
   }
   
   .page .house .screen main > div .user > .fun > img,
@@ -203,11 +206,11 @@
   .page .house .screen main > div .user .userName.speaker,
   .page .house .screen main > div .user .userName.listener {
     flex-direction: column;
-    margin-left: 11px;
+    /* margin-left: 11px; */
     margin-top: 5px;
   }
   
-  .page .house .screen main > div .user .userName .user-role{
+  .page .house .screen main > div .user .userName .userRole{
     font-size: 8px;
     color: var(--primary-color);
   }
@@ -241,6 +244,7 @@
         -ms-flex-align: center;
             align-items: center;
     padding: 0 8px 12px;
+    color: #fff;
   }
   
   .page .house .screen footer .btOptions > div {
@@ -248,7 +252,7 @@
     display: flex;
   }
   
-  .page .house .screen footer .btOptions button {
+  /* .page .house .screen footer .btOptions button {
     width: 130px;
     height: 35px;
     border-radius: 30px;
@@ -256,8 +260,8 @@
     color: var(--body-color);
     font-weight: bold;
   }
-  
-  .page .house .screen footer .btOptions .plus,
+   */
+  /* .page .house .screen footer .btOptions .plus,
   .page .house .screen footer .btOptions .hand,
   .page .house .screen footer .btOptions .arrow{
     width: 32px;
@@ -265,14 +269,14 @@
     border-radius: 50%;
     background: #eee;
     margin-left: 8px;
-  }
+  } */
   
-  .page .house .screen footer .btOptions .plus img,
+  /* .page .house .screen footer .btOptions .plus img,
   .page .house .screen footer .btOptions .hand img,
   .page .house .screen footer .btOptions .arrow img {
     width: 16px;
     height: auto;
-  }
+  } */
   
   
   

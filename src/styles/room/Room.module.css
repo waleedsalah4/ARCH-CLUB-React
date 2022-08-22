@@ -1,0 +1,9 @@
+.miniRoom{
+    padding: 0.5rem;
+    display: flex;
+    max-width: 320px;
+    gap: 10px 20px;
+    align-items: center;
+    box-shadow: 0 0 3px #24282d;
+    border-radius: 4px;
+}

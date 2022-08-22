@@ -1,27 +1,35 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { closeFixedModal } from '../../store/reducers/fixedModalSlice';
-// import {roomList} from '../dummyfile';
+import React, { useState } from 'react';
 import RoomCard from './RoomCard';
-import { IconButton } from '@mui/material';
+import WaveLoader from '../podcasts/WaveLoader';
+import { IconButton,Typography } from '@mui/material';
 
-import CloseIcon from '@mui/icons-material/Close';
-
-// const room = roomList[1];
-
+import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
+import classes from '../../styles/podcasts/PodcastPlayer.module.css';
+import styles from '../../styles/room/Room.module.css';
 export default function Room({item}) {
-  const dispatch = useDispatch()
-  const handleClose = () => dispatch(closeFixedModal());
+  const [collapse, setCollapse] = useState(true)
+  const toggleCollapse = () => setCollapse(!collapse);
 
   return (
     <>
-      <IconButton 
-        aria-label='close' 
-        onClick={handleClose}
-      >
-        <CloseIcon />
-      </IconButton> 
-      <RoomCard room={item} />
+      <div className={`${collapse && classes.displayHidden}`}>
+        <div className={styles.miniRoom}>
+          <IconButton 
+            aria-label='collapse' 
+            onClick={toggleCollapse}
+            >
+            <KeyboardDoubleArrowUpIcon />
+          </IconButton>
+            <Typography variant='p'>{item.name}</Typography>    
+              <WaveLoader 
+                waveLoader={classes.waveLoader}
+                waveLoaderHeight={classes.miniPlayerWaveLoaderHeight}
+                stroke={classes.stroke}
+                strokeWidth={classes.miniPlayerStrokeWidth}
+              />
+        </div>
+      </div>
+      <RoomCard room={item} collapse={collapse} toggleCollapse={toggleCollapse} />
     </>
   );
 }

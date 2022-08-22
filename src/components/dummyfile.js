@@ -4,10 +4,11 @@ export const roomList = [
     {
         audience: [
             {
-                "photo": "https://res.cloudinary.com/dnpol9y6s/image/upload/v1654530401/userPhotos/lcuvd6n1wypqchmoxpf4.webp",
-                "uid": 556481501,
-                "_id": "6231c44cd7a78d001683345b",
-                "name": "waleedsalah"
+                photo: "https://res.cloudinary.com/dnpol9y6s/image/upload/v1654530401/userPhotos/lcuvd6n1wypqchmoxpf4.webp",
+                uid: 556481501,
+                _id: "6231c44cd7a78d001683345b",
+                name: "waleedsalah",
+                isAsked: false
             },
         ],
         brodcasters: [
@@ -15,17 +16,21 @@ export const roomList = [
                 photo: "https://res.cloudinary.com/dnpol9y6s/image/upload/v1654530401/userPhotos/lcuvd6n1wypqchmoxpf4.webp",
                 uid: 556481501,
                 _id: "6231c44cd7a78d001683345b",
-                name: "waleedsalah"
+                name: "waleedsalah",
+                isMuted: true,
+                isAdmin: false
             },
         ],
-        isRecording: false,
+        isRecording: true,
         _id: "62d41bc6ddb1880016a788bd",
         name: "123",
         admin: {
             photo: "https://res.cloudinary.com/dnpol9y6s/image/upload/v1654530401/userPhotos/lcuvd6n1wypqchmoxpf4.webp",
             uid: 556481501,
             _id: "6231c44cd7a78d001683345b",
-            name: "waleedsalah"
+            name: "waleedsalah",
+            isMuted: false,
+            isAdmin: true
         },
         category: "ai",
         status: "public",        
