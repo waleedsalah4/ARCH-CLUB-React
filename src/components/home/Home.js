@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// import { useSelector } from 'react-redux';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -15,6 +16,8 @@ const categories = [
 
 
 const Home = () => {
+  // const  {userData} = useSelector(state => state.signSlice);
+  // console.log(userData)
   const [category, setCategory] = useState('');
 
   const handleChange = (event) => {

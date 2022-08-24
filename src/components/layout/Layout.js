@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import NavBar from './NavBar';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logOut } from '../../store/reducers/signSlice';
+import { loggingOut } from '../utilities/Helpers';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -22,8 +25,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Add from '../utilities/Add';
 import CenteredModal from '../modals/CenteredModal';
-import classes from '../../styles/Layout.module.css';
 import FixedModal from '../modals/FixedModal';
+import classes from '../../styles/Layout.module.css';
 
 const drawerWidth = 240;
 
@@ -109,6 +112,7 @@ export default function Layout(props) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -117,6 +121,11 @@ export default function Layout(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const userLeave = () => {
+    dispatch(logOut())
+    loggingOut()
+    navigate('/')
+  }
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -159,7 +168,11 @@ export default function Layout(props) {
           ))}
         </List>
         <List style={{ marginTop: `auto` }}>
-          <ListItem disablePadding sx={{ display: 'block' }} >
+          <ListItem 
+            disablePadding 
+            sx={{ display: 'block' }} 
+            onClick={userLeave}
+          >
             <ListItemButton
                 sx={{
                 minHeight: 48,

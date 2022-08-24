@@ -1,17 +1,32 @@
-import React from 'react';
-import RegisterCard from './RegisterCard';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import FormInput from './FormInput';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../../store/reducers/signSlice';
 import {Formik, Form} from 'formik';
 import * as Yup from 'yup';
 
+import RegisterCard from './RegisterCard';
+import FormInput from './FormInput';
+import FeedBack from '../utilities/FeedBack';
+
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
 function SignIn() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {userData, isLoading, LogError} = useSelector((state)=> state.signSlice)
+  // console.log(LogError)
+  useEffect(()=>{
+    if(userData){
+      navigate('/home')
+    }
+  },[userData,navigate])
+
   const validate = Yup.object({
     email: Yup.string()
       .email('Email is invalid')
@@ -22,6 +37,7 @@ function SignIn() {
   })
 
   return (
+    <>
     <RegisterCard>
       <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
         <LockOutlinedIcon />
@@ -39,7 +55,7 @@ function SignIn() {
               }}
               validationSchema={validate}
               onSubmit={values => {
-                console.log(values)
+                dispatch(login(values))
               }}
             >
               <Form>
@@ -63,8 +79,9 @@ function SignIn() {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
+                  disabled={isLoading}
                   >
-                  Sign In
+                  {isLoading ? 'Signing...' : 'Sign In'}
                 </Button>
                 <Grid container justifyContent="flex-end">
                   <Grid item>
@@ -78,6 +95,8 @@ function SignIn() {
             </Formik>
       </Box>
     </RegisterCard>
+    {LogError && <FeedBack openStatus={true} message={LogError} status='error' /> }
+    </>
   )
 }
 

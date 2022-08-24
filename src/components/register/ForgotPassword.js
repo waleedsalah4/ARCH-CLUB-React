@@ -1,23 +1,34 @@
 import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { forgotPassword } from '../../store/reducers/forgotPasswordSlice';
+
 import RegisterCard from './RegisterCard';
+import FeedBack from '../utilities/FeedBack';
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 function ForgotPassword() {
     const emailInput = useRef()
+
+    const dispatch = useDispatch();
+    const {emailSent, isLoading, forgotError} = useSelector((state)=> state.forgotSlice)
+
+
     const handleSubmit = (event) => {
         event.preventDefault();
         let emailvalue = emailInput.current.value;
-        console.log(emailvalue)
+        dispatch(forgotPassword({email : emailvalue}))
     }
 
   return (
+    <>
     <RegisterCard>
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
@@ -54,8 +65,9 @@ function ForgotPassword() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                disabled={isLoading}
             >
-                Send Email
+                {isLoading ? 'Sending...' : 'Send Email'}
             </Button>
             <Grid container justifyContent="flex-end">
                 <Grid item>
@@ -66,6 +78,9 @@ function ForgotPassword() {
             </Grid>
       </Box>
     </RegisterCard>
+    {forgotError && <FeedBack openStatus={true} message={forgotError} status='error' /> }
+    {emailSent && <FeedBack openStatus={true} message={emailSent} status='success' /> }
+    </>
   )
 }
 

@@ -1,25 +1,43 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { signup } from '../../store/reducers/signSlice';
+
+import {Formik, Form} from 'formik';
+import * as Yup from 'yup';
+import FormInput from './FormInput';
 import RegisterCard from './RegisterCard';
+import FeedBack from '../utilities/FeedBack';
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import FormInput from './FormInput';
-import {Formik, Form} from 'formik';
-import * as Yup from 'yup';
+
 
 
 function SignUp() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {userData, isLoading, signupError} = useSelector((state)=> state.signSlice)
+
+  useEffect(()=>{
+    if(userData){
+      navigate('/home')
+    }
+  },[userData,navigate])
+
   const validate = Yup.object({
-    username: Yup.string()
+    name: Yup.string()
       .min(3, 'Must be more that 3 characters')
       .required('Required'),
     email: Yup.string()
       .email('Email is invalid')
       .required('Email is required'),
+    country: Yup.string()
+      .required('Password is required'),
     password: Yup.string()
       .min(8, 'Password must be at least 8 charaters')
       .required('Password is required'),
@@ -29,6 +47,7 @@ function SignUp() {
   })
 
   return (
+    <>
       <RegisterCard>
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
@@ -42,14 +61,17 @@ function SignUp() {
             sx={{ mt: 3 }}>
             <Formik 
               initialValues={{
-                username: '',
+                name: '',
                 email: '',
+                country: 'Egypt',
+                language: 'English',
                 password: '',
                 passwordConfirm: ''
               }}
               validationSchema={validate}
               onSubmit={values => {
                 console.log(values)
+                dispatch(signup( values))
               }}
             >
               {/* {(formik) => ( */}
@@ -57,7 +79,7 @@ function SignUp() {
                 <Form>
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
-                      <FormInput label='user Name*' name='username' type='text' />
+                      <FormInput label='user Name*' name='name' type='text' />
                     </Grid>
                     <Grid item xs={12}>
                       <FormInput label='Email*' name='email' type='email' />
@@ -74,8 +96,9 @@ function SignUp() {
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
+                    disabled={isLoading}
                   >
-                   Sign Up
+                   {isLoading ? 'Signing...' : 'Sign Up'}
                   </Button>
                   <Grid container justifyContent="flex-end">
                     <Grid item>
@@ -88,9 +111,11 @@ function SignUp() {
               {/* )} */}
             </Formik>
         
-          </Box>
-        </RegisterCard>
-    )
+        </Box>
+      </RegisterCard>
+      {signupError && <FeedBack openStatus={true} message={signupError} status='error' /> }
+    </>
+  )
 }
 
 export default SignUp
