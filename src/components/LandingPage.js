@@ -14,7 +14,7 @@ export default function LandingPage() {
   // temp Auth
   const navigate = useNavigate()
   const token = JSON.parse(localStorage.getItem('user-token') || false)
-  console.log(token)
+  // console.log(token)
   useEffect(()=> {
     if(token) {
       navigate('/home')

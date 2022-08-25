@@ -39,7 +39,7 @@ const EventsCard = ({evt, otherUser})=> {
                     </div>
                     <div>
                         <Typography variant="h6">{evt.createdBy.name}</Typography>
-                        <Typography>{getDate(evt.createdAt)}</Typography>
+                        <Typography variant='caption'>{getDate(evt.createdAt)}</Typography>
                     </div>
                 </div>
             {!otherUser &&

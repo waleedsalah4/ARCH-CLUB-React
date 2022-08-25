@@ -17,6 +17,8 @@ import EditEvent from '../events/EditEvent';
 import UpdatePassword from '../profile/UpdatePassword';
 import DeleteAccount from '../profile/DeleteAccount';
 
+import Success from '../utilities/Success';
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -53,8 +55,9 @@ const CenteredModal = () => {
 
         EditProfile,
         UpdatePassword,
-        DeleteAccount
+        DeleteAccount,
         
+        Success,
     };
 
     let renderComponent;
@@ -84,7 +87,7 @@ const CenteredModal = () => {
 
 export default CenteredModal
 
-//when adding new compoenet to centeredModal
+//when adding new component to centeredModal
 //add name of component to the componentsLookUp obj
 
 //and adding on click to open model 
