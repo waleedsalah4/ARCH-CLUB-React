@@ -7,8 +7,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 
-import { podcastsList } from '../dummyfile';
-import PodcastsCard from '../podcasts/PodcastsCard';
+import DiscoverPodcasts from './DiscoverPodcasts';
 import DiscoverUsers from './DiscoverUsers';
 import classes from '../../styles/discover/Discover.module.css'
 
@@ -90,9 +89,7 @@ const Discover =() => {
             onChangeIndex={handleChangeIndex}
         > */}
             <TabPanel value={value} index={0} dir={theme.direction}>
-                {podcastsList.map(podcast => (
-                    <PodcastsCard key={podcast._id} podcast={podcast} otherUser={true} />
-                ))}
+                <DiscoverPodcasts />
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
 

@@ -62,7 +62,7 @@ const eventsSlice = createSlice({
       [getMyFollowingEvents.rejected]: (state, action) => {
         state.isLoading = false;
         state.eventError = action.payload;
-        state.eventPage = 1;
+        // state.eventPage = 1;
         state.eventPage = action.meta.arg;
         state.loadMoreVisible = false
       },  

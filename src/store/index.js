@@ -7,6 +7,9 @@ import forgotSlice from "./reducers/forgotPasswordSlice";
 
 import eventsSlice from "./reducers/eventsSlice";
 import CreateEventSlice from "./reducers/CreateEventSlice";
+import discoverPodcastsSlice from "./reducers/discoverPodcastsSlice";
+import discoverUsersSlice from "./reducers/discoverUsersSlice";
+import likeSlice from "./reducers/likeSlice";
 
 export default configureStore({
     reducer: { 
@@ -18,6 +21,9 @@ export default configureStore({
 
         eventsSlice,
         CreateEventSlice,
+        discoverPodcastsSlice,
+        discoverUsersSlice,
+        likeSlice
     }
 })
 

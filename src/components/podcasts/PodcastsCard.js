@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { openModal } from '../../store/reducers/modalSlice';
 import { openFixedModal } from '../../store/reducers/fixedModalSlice';
-
+import { likePod, disLikePod } from '../../store/reducers/likeSlice';
 import { limiTitle } from '../utilities/Helpers';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -27,12 +27,10 @@ const PodcastsCard = ({podcast, otherUser}) => {
         }))
     }
     
-
     const handlePlayerModal = () => {
         if(isRoomOpen) {
             console.log('can not open the podcast as there is a room running')
         } else{
-            
             //close old player first if it was running
             dispatch(openFixedModal({
                 name: 'PlayerLogic',
@@ -42,6 +40,10 @@ const PodcastsCard = ({podcast, otherUser}) => {
             }))
         }
         
+    }
+
+    const handleLikePodcasts = () => {
+        podcast.isLiked ? dispatch(disLikePod(podcast._id)): dispatch(likePod(podcast._id))
     }
 
     return (
@@ -71,7 +73,7 @@ const PodcastsCard = ({podcast, otherUser}) => {
                     </Typography>
                     <div className={classes.likes}>
                         <Typography>{podcast.likes}</Typography>
-                        <IconButton aria-label="favorite">
+                        <IconButton aria-label="favorite" onClick={handleLikePodcasts}>
                             <FavoriteIcon  
                                 className={`${classes.likesIcon} ${podcast.isLiked ? classes.isLiked : ''}`}
                             />
