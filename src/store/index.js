@@ -9,7 +9,9 @@ import eventsSlice from "./reducers/eventsSlice";
 import CreateEventSlice from "./reducers/CreateEventSlice";
 import discoverPodcastsSlice from "./reducers/discoverPodcastsSlice";
 import discoverUsersSlice from "./reducers/discoverUsersSlice";
+import podcastsSlice from "./reducers/podcastsSlice";
 import likeSlice from "./reducers/likeSlice";
+import uploadPodcastSlice from "./reducers/uploadPodcastSlice";
 
 export default configureStore({
     reducer: { 
@@ -23,7 +25,9 @@ export default configureStore({
         CreateEventSlice,
         discoverPodcastsSlice,
         discoverUsersSlice,
-        likeSlice
+        podcastsSlice,
+        likeSlice,
+        uploadPodcastSlice
     }
 })
 

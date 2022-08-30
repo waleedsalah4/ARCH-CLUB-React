@@ -1,29 +1,31 @@
-import React, { useState } from 'react';
+import React
+//, { useState }
+ from 'react';
 // import { useSelector } from 'react-redux';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Typography from '@mui/material/Typography';
+// import InputLabel from '@mui/material/InputLabel';
+// import MenuItem from '@mui/material/MenuItem';
+// import FormControl from '@mui/material/FormControl';
+// import Select from '@mui/material/Select';
+// import Typography from '@mui/material/Typography';
 import { roomList } from '../dummyfile';
 import RoomCard from './RoomCard';
 import classes from '../../styles/home/Home.module.css';
 
 
-const categories = [
-  'all','ai','education','engineering','football','gaming','history','just chatting','programming','science','storytelling'
-]
+// const categories = [
+//   'all','ai','education','engineering','football','gaming','history','just chatting','programming','science','storytelling'
+// ]
 
 
 const Home = () => {
   // const  {userData} = useSelector(state => state.signSlice);
   // console.log(userData)
-  const [category, setCategory] = useState('');
+  // const [category, setCategory] = useState('');
 
-  const handleChange = (event) => {
-    setCategory(event.target.value);
-    console.log(event.target.value)
-  };
+  // const handleChange = (event) => {
+  //   setCategory(event.target.value);
+  //   console.log(event.target.value)
+  // };
 
   return (
     <div>
@@ -31,7 +33,7 @@ const Home = () => {
         <Button variant='outlined'>Join private room</Button>
         <Button variant='outlined'>Create room</Button>
       </div> */}
-      <div className={classes.header}>
+      {/* <div className={classes.header}>
         <FormControl sx={{ m: 1, minWidth: 180 }}>
           <InputLabel id="filter-label" >Filter by Category</InputLabel>
           <Select
@@ -49,7 +51,7 @@ const Home = () => {
         </FormControl>
 
         <Typography gutterBottom>All Rooms</Typography>
-      </div>
+      </div> */}
       <div className={classes.rooms}>
         {roomList && roomList.map(room => (
           <RoomCard key={room._id} room={room} />

@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { generateSignature } from '../../../store/reducers/uploadPodcastSlice';
 import FormInput from '../../register/FormInput';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
@@ -9,26 +11,26 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 
+
+const categories = [
+    'just chatting','ai','education','engineering','football','gaming','history','programming','science','storytelling'
+]
+
 function UploadPodcast() {
-    const categories = [
-        'just chatting','ai','education','engineering','football','gaming','history','programming','science','storytelling'
-    ]
 
-
-
+    const dispatch = useDispatch()
+    const {isLoading} = useSelector(state => state.uploadPodcastSlice)
 
     const validate = Yup.object({
         podcastName: Yup.string()
-            .min(3, 'podcast name must be at least 3 charaters')
+            .min(5, 'podcast name must be at least 5 charaters')
             .required('room name is required'),
         file: Yup.mixed().required()
     })
 
 
     const handleSubmit = (values) => {
-        // let formData = new FormData();
-        // formData.append('')
-        console.log(values)
+        dispatch(generateSignature(values))
     }
 
 
@@ -90,8 +92,9 @@ function UploadPodcast() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            disabled={isLoading}
                         >
-                            Upload
+                           {isLoading ? 'Uploading...' : 'Uploading'}
                         </Button>
                     </Form>)}
                 </Formik>
