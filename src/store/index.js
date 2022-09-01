@@ -13,6 +13,8 @@ import podcastsSlice from "./reducers/podcastsSlice";
 import likeSlice from "./reducers/likeSlice";
 import uploadPodcastSlice from "./reducers/uploadPodcastSlice";
 
+import profileSlice from "./reducers/profileSlice";
+
 export default configureStore({
     reducer: { 
         modal, 
@@ -23,11 +25,15 @@ export default configureStore({
 
         eventsSlice,
         CreateEventSlice,
+        
         discoverPodcastsSlice,
         discoverUsersSlice,
         podcastsSlice,
         likeSlice,
-        uploadPodcastSlice
+        uploadPodcastSlice,
+
+        profileSlice
+        
     }
 })
 

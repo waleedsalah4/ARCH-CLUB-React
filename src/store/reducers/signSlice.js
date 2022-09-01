@@ -83,7 +83,13 @@ export const signup = createAsyncThunk(
 
 const sign = createSlice({
     name: 'sign',
-    initialState: { userData: null, isLoading: false, isLogged: false, LogError: null, signupError: null },
+    initialState: { 
+      userData: JSON.parse(localStorage.getItem('user-data')) || null,
+      isLoading: false,
+      isLogged: false,
+      LogError: null,
+      signupError: null
+    },
     reducers: {
       logOut: (state, action)=>{
         state.userData = null;
@@ -97,7 +103,7 @@ const sign = createSlice({
       [login.fulfilled]: (state, action) => {
         state.isLoading = false;
         state.isLogged= true;
-        state.userData = action.payload;
+        state.userData = action.payload.userData;
       },
       [login.rejected]: (state, action) => {
         state.isLoading = false;
@@ -113,7 +119,7 @@ const sign = createSlice({
       [signup.fulfilled]: (state, action) => {
         state.isLoading = false;
         state.isLogged= true;
-        state.userData = action.payload;
+        state.userData = action.payload.userData;
       },
       [signup.rejected]: (state, action) => {
         state.isLoading = false;

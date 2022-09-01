@@ -16,7 +16,7 @@ import EditProfile from '../profile/EditProfile';
 import EditEvent from '../events/EditEvent';
 import UpdatePassword from '../profile/UpdatePassword';
 import DeleteAccount from '../profile/DeleteAccount';
-
+import FollowModal from '../profile/FollowModal';
 import Success from '../utilities/Success';
 
 const style = {
@@ -52,6 +52,8 @@ const CenteredModal = () => {
         DeletePodcast,
         DeleteEvent,
         EditEvent,
+
+        FollowModal,
 
         EditProfile,
         UpdatePassword,

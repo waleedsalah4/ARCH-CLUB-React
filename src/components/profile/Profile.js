@@ -1,64 +1,53 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { openModal } from '../../store/reducers/modalSlice';
+import React,{ useEffect } from 'react';
+import { useParams,useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMe, getUser } from '../../store/reducers/profileSlice';
 
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+// import userAvtar from '../../assets/avatar/avatar2.svg';
 
-import logoImg from '../../assets/logo/ic_launcher_mdpi.png';
-import userAvtar from '../../assets/avatar/avatar2.svg';
+import ProfileTabs from './ProfileTabs';
+import ProfileHeader from './ProfileHeader';
+import FeedBack from '../utilities/FeedBack';
+import Loader from '../utilities/Loader';
 
 import classes from '../../styles/profile/Profile.module.css';
-import ProfileTabs from './ProfileTabs';
-
 
 function Profile() {
     const params = useParams();
-    const isMe = params.id ? false : true;
-    // console.log(isMe)
+    const navigate = useNavigate()
+    const mydata= JSON.parse(localStorage.getItem('user-data'))
+    let isMe = params.id ? false : true;
     const dispatch = useDispatch()
-    const openEditModal = () => {
-        dispatch(openModal({name: 'EditProfile'}))
-    }
+    const {userData, isLoading, profileError} = useSelector(state=> state.profileSlice)
+    // console.log(userData)
+    // console.log(isMe)
+    useEffect(()=>{
+        if( params.id && params.id === mydata._id){
+            // console.log('navigate =>>>')
+            navigate('/profile')
+        } else{
+            if(isMe){
+                dispatch(getMe())
+            } else {
+                dispatch(getUser(params.id))
+            }
+        }
+    },[dispatch, params])
+    // console.log(userData)
+
     return (
-        <div className={classes.profileContainer}>
-            <div className={classes.profile}>
-                <div className={classes.header}>
-                    <div className={classes.background}>
-                        <img src={logoImg} alt='logo' />
-                    </div>
-                    <div className={classes.userInfo}>
-                        <div className={classes.info}>
-                            <div className={classes.userImg}>
-                                <img src={userAvtar} alt="user avatar" className={classes.avatar} />
-                            </div>
-                            <div className={classes.controls}>
-                                {isMe ? <Button variant='outlined' onClick={openEditModal}>Edit profile</Button> : <Button variant='outlined'>Following</Button>}
-                            </div>
-                        </div>
-                        {/* <div className={classes.userName}>
-                            waleed salah
-                        </div> */}
-                        <Typography variant='h6'>Waleed Salah</Typography>
-                        <Typography variant='caption' className={classes.userBio}>
-                            If you tell the truth, you don't have to remember anything
-                        </Typography>
-                        <div className={classes.follow}>
-                            <div className={classes.followers}>
-                                <span>2</span> followers
-                            </div>
-                            <div className={classes.following}>
-                                <span>653</span> following
-                            </div>
-                        </div>
+        <>
+            {userData && !isLoading &&  <div className={classes.profileContainer}>
+                <div className={classes.profile}>
+                    <ProfileHeader userData={userData} isMe={isMe} />
+                    <div className={classes.tabs}>
+                        <ProfileTabs isMe={isMe} />
                     </div>
                 </div>
-                <div className={classes.tabs}>
-                    <ProfileTabs isMe={isMe} />
-                </div>
-            </div>
-        </div>
+            </div>}
+            {isLoading && <Loader />}
+            {profileError && <FeedBack openStatus={true} message={profileError} status='error' /> }
+        </>
     )
 }
 

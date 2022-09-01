@@ -29,7 +29,7 @@ function App() {
           {/* <Route path='/podcast-player/:id' element={<PodcastPlayer />} /> */}
           <Route path='/discover' element={<Discover />} />
           <Route path='/profile' element={<Profile />} />
-          <Route path='/user-profile/:id' element={<Profile />} />  
+          <Route path='/user-profile/:id' element={<Profile />} /> 
         </Route>
         {/* Register */}
         <Route path='/signin' element={<SignIn />} />

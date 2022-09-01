@@ -1,0 +1,16 @@
+.followContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px 1px;
+}
+.userContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.userAvatar {
+    display: flex;
+    align-items: center;
+    gap: 1px 10px;
+}
