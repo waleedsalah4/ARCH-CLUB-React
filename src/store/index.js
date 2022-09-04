@@ -14,6 +14,7 @@ import likeSlice from "./reducers/likeSlice";
 import uploadPodcastSlice from "./reducers/uploadPodcastSlice";
 
 import profileSlice from "./reducers/profileSlice";
+import FollowSlice from "./reducers/FollowSlice";
 
 export default configureStore({
     reducer: { 
@@ -32,7 +33,8 @@ export default configureStore({
         likeSlice,
         uploadPodcastSlice,
 
-        profileSlice
+        profileSlice,
+        FollowSlice
         
     }
 })

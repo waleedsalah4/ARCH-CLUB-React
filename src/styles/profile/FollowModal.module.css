@@ -14,3 +14,6 @@
     align-items: center;
     gap: 1px 10px;
 }
+.loader{
+    text-align: center;
+}
