@@ -187,13 +187,13 @@ const FollowSlice = createSlice({
         [getUserFollowing.pending]: (state, action) => {
             state.isLoading = true;
             state.followError = null;
-            state.followPage = action.meta.arg;
+            state.followPage = action.meta.arg.page;
             state.loadMoreVisible = false
         }
         ,
         [getUserFollowing.fulfilled]: (state, action) => {
             state.isLoading = false; 
-            if(action.meta.arg === 1){
+            if(action.meta.arg.page === 1){
               state.followList = [];
               action.payload.users.map(res =>{
                   state.followList.push(res);
@@ -210,7 +210,7 @@ const FollowSlice = createSlice({
         [getUserFollowing.rejected]: (state, action) => {
             state.isLoading = false;
             state.followError = action.payload;
-            state.followPage = action.meta.arg;
+            state.followPage = action.meta.arg.page;
             state.loadMoreVisible = false
         },
 
@@ -218,13 +218,13 @@ const FollowSlice = createSlice({
         [getUserFollowers.pending]: (state, action) => {
             state.isLoading = true;
             state.followError = null;
-            state.followPage = action.meta.arg;
+            state.followPage = action.meta.arg.page;
             state.loadMoreVisible = false
         }
         ,
         [getUserFollowers.fulfilled]: (state, action) => {
             state.isLoading = false; 
-            if(action.meta.arg === 1){
+            if(action.meta.arg.page === 1){
               state.followList = [];
               action.payload.users.map(res =>{
                   state.followList.push(res);
@@ -241,8 +241,9 @@ const FollowSlice = createSlice({
         [getUserFollowers.rejected]: (state, action) => {
             state.isLoading = false;
             state.followError = action.payload;
-            state.followPage = action.meta.arg;
-            state.loadMoreVisible = false
+            state.followPage = action.meta.arg.page;
+            state.loadMoreVisible = false;
+            
         },
 
         [closeModal]: (state, action)=>{

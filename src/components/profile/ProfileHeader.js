@@ -16,15 +16,21 @@ function ProfileHeader({userData, isMe}) {
     const openFollowersModal = () => {
         dispatch(openModal({
             name: 'FollowModal', 
-            childrenProps: {text: isMe ? 'myFollowers': 'userFollowers',
-           type: 'Followers'}
+            childrenProps: {
+                text: isMe ? 'myFollowers': 'userFollowers',
+                type: 'Followers',
+                id: userData._id
+            }
         }))
     }
     const openFollowingModal = () => {
         dispatch(openModal({
             name: 'FollowModal', 
-            childrenProps: {text: isMe ? 'myFollowing': 'userFollowing',
-           type: 'Following'}
+            childrenProps: {
+                text: isMe ? 'myFollowing': 'userFollowing',
+                type: 'Following',
+                id: userData._id
+            }
         }))
     }
 

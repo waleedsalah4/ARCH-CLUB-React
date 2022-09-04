@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMyFollowers, getMyFollowing } from '../../store/reducers/FollowSlice';
+import { getMyFollowers, getMyFollowing, getUserFollowers, getUserFollowing } from '../../store/reducers/FollowSlice';
 
 import Typography from '@mui/material/Typography';
 
@@ -27,11 +27,12 @@ function FollowModal(props) {
                 break;
     
             case 'userFollowers':
-                console.log('userFollowers');
+                // console.log(data)
+                dispatch(getUserFollowers({id: data.id, page: data.page}))
                 break;
     
             case 'userFollowing':
-                console.log('userFollowing');
+                dispatch(getUserFollowing({id: data.id, page: data.page}))
                 break;
     
             default:
@@ -40,15 +41,15 @@ function FollowModal(props) {
     }
 
     const {followList,followPage,isLoading,followError,loadMoreVisible} = useSelector((state) => state.FollowSlice)
-    console.log(followList)
+    console.log(followPage)
 
     useEffect(()=>{
-        FetchData(props.text,{page: 1});
+        FetchData(props.text,{page: 1, id: props.id});
         console.log('useEffect runs')
     },[])
 
     const fetchMoreData = () =>{
-        FetchData(props.text,{page: followPage});
+        FetchData(props.text,{page: followPage, id: props.id});
     }
     return (
         <div className={classes.followContainer}>
