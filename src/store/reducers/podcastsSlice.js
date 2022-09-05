@@ -55,9 +55,16 @@ const podcastsSlice = createSlice({
       },
       [getMyFollowingPodcasts.fulfilled]: (state, action) => {
         state.isLoading = false;
-        action.payload.podcasts.map(res =>{
+        if(action.meta.arg === 1){
+          state.podcasts = []
+          action.payload.podcasts.map(res =>{
             state.podcasts.push(res);
         })
+        }else{
+          action.payload.podcasts.map(res =>{
+              state.podcasts.push(res);
+          })
+        }
         state.podsPage++;
         state.podcasts.length < action.payload.result.docsCount ? state.loadMoreVisible = true : state.loadMoreVisible = false
       },

@@ -41,7 +41,7 @@ function Profile() {
                 <div className={classes.profile}>
                     <ProfileHeader userData={userData} isMe={isMe} />
                     <div className={classes.tabs}>
-                        <ProfileTabs isMe={isMe} />
+                        <ProfileTabs isMe={isMe} userData={userData} />
                     </div>
                 </div>
             </div>}

@@ -1,17 +1,24 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { closeModal } from '../../store/reducers/modalSlice';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { closeModal, openModal } from '../../store/reducers/modalSlice';
+import { deletePodcast } from '../../store/reducers/profilePodcastsSlice';
+import FeedBack from '../utilities/FeedBack';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 
 function DeletePodcast(props) {
     const dispatch = useDispatch()
+    const {deleteError, deleteLoading} = useSelector(state => state.profilePodcastsSlice)
 
-    const deletePodcast = () => {
-        console.log(props.name)
-        //disptch delete action
+    const handelDeletePodcast = () => {
+        dispatch(deletePodcast(props._id)).then((results)=>{
+            if(results.payload.result.status === 'success'){
+                dispatch(openModal({name: 'Success', childrenProps:{
+                    message: 'Podcast has been deleted successfully'
+                }}))
+            }
+        })
     }
     const cancelDelete = () => {
         dispatch(closeModal())
@@ -34,13 +41,16 @@ function DeletePodcast(props) {
                 <Grid item xs={6}>
                     <Button 
                         variant='contained'
-                        onClick={deletePodcast}
+                        onClick={handelDeletePodcast}
                         color='error'
+                        disabled={deleteLoading}
                     >
-                        Delete
+                        {deleteLoading ? 'Deleting' : 'Delete'}
                     </Button>
                 </Grid>
             </Grid>
+
+            {deleteError && <FeedBack openStatus={true} message={deleteError} status='error' /> }
         </>
     )
 }

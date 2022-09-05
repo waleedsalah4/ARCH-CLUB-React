@@ -64,7 +64,7 @@ const PodcastsCard = ({podcast, otherUser}) => {
                 </div>
 
                 <div className={classes.podcastDetails}>
-                    <Typography>by: 
+                    <Typography variant='caption'>by: 
                         <span>
                             <Link to={`/user-profile/${podcast.createdBy._id}`}>
                                 {podcast.createdBy.name}

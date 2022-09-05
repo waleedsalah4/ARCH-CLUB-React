@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMyFollowers, getMyFollowing, getUserFollowers, getUserFollowing } from '../../store/reducers/FollowSlice';
 
@@ -16,7 +16,7 @@ import classes from '../../styles/profile/FollowModal.module.css';
 function FollowModal(props) {
     const dispatch = useDispatch();
 
-    const FetchData = (text, data) => {
+    const FetchData = useCallback((text, data) => {
         switch (text){
             case 'myFollowers':
                 dispatch(getMyFollowers(data.page))
@@ -38,15 +38,15 @@ function FollowModal(props) {
             default:
                 console.log('closeModal');                 
         }
-    }
+    },[dispatch])
 
     const {followList,followPage,isLoading,followError,loadMoreVisible} = useSelector((state) => state.FollowSlice)
     console.log(followPage)
 
     useEffect(()=>{
         FetchData(props.text,{page: 1, id: props.id});
-        console.log('useEffect runs')
-    },[])
+        // console.log('useEffect runs')
+    },[FetchData,props.text,props.id])
 
     const fetchMoreData = () =>{
         FetchData(props.text,{page: followPage, id: props.id});
