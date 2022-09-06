@@ -36,10 +36,11 @@ function ProfilePodcasts({otherUser, userData}) {
             {isLoading && <Loader />}
                 {loadMoreVisible && <Button 
                     variant='contained'
+                    sx={{mb: 1}}
                     onClick={handleLoadMorePods}
                 >
                     Load More</Button>}
-                {profilePodcasts.length ===0 && !isLoading && <p>There's podcasts yet</p>}
+                {profilePodcasts.length ===0 && !isLoading && <p>There's no podcasts yet</p>}
 
             {profilePodError && <FeedBack openStatus={true} message={profilePodError} status='error' /> }
         </>

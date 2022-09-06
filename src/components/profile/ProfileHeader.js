@@ -10,7 +10,12 @@ import classes from '../../styles/profile/Profile.module.css';
 function ProfileHeader({userData, isMe}) {
     const dispatch = useDispatch()
     const openEditModal = () => {
-        dispatch(openModal({name: 'EditProfile'}))
+        dispatch(openModal({
+            name: 'EditProfile',
+            childrenProps: {
+                data: userData
+            }
+        }))
     }
 
     const openFollowersModal = () => {

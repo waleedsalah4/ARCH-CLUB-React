@@ -5,9 +5,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 // import { TabPanel,a11yProps } from '../utilities/Tabs';
-import { eventsList } from '../dummyfile';
-import EventsCard from '../events/EventsCard';
 import ProfilePodcasts from './ProfilePodcasts';
+import ProfileEvents from './ProfileEvents';
 
 
 function TabPanel(props) {
@@ -78,25 +77,20 @@ export default function ProfileTabs({isMe, userData}) {
         >
           <Tab label="Podcasts" {...a11yProps(0)} />
           <Tab label="Events" {...a11yProps(1)} />
-          <Tab label="Likes" {...a11yProps(2)} />
+          {/* <Tab label="Likes" {...a11yProps(2)} /> */}
         </Tabs>
       {/* </AppBar> */}
     </Box>
     <Box>
       <TabPanel value={value} index={0} dir={theme.direction}>
-        {/* {podcastsList.map(podcast => (
-          <PodcastsCard key={podcast._id} podcast={podcast} otherUser={!isMe} />
-        ))} */}
         <ProfilePodcasts otherUser={!isMe} userData={userData} />
       </TabPanel>
       <TabPanel value={value} index={1} dir={theme.direction}>
-        {eventsList && eventsList.map(evt => (
-            <EventsCard key={evt._id} evt={evt} otherUser={!isMe} />
-          ))}
+          <ProfileEvents otherUser={!isMe} userData={userData} />
       </TabPanel>
-      <TabPanel value={value} index={2} dir={theme.direction}>
+      {/* <TabPanel value={value} index={2} dir={theme.direction}>
           likes
-      </TabPanel>
+      </TabPanel> */}
     </Box>
     </>
   );

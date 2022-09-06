@@ -16,11 +16,11 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 const validationSchema = yup.object({
   title: yup
     .string('Enter Title')
-    .min(3, 'Title should be of minimum 3 characters length')
+    .min(5, 'Title should be of minimum 5 characters length')
     .required('Title is required'),
   description: yup
     .string('Enter your description')
-    .min(3, 'description should be of minimum 3 characters length')
+    .min(5, 'description should be of minimum 5 characters length')
     .required('description is required'),
 });
 

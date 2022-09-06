@@ -1,33 +1,42 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { openModal, closeModal } from '../../store/reducers/modalSlice';
-import FormInput from '../register/FormInput';
-import {Formik, Form} from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { TextField } from '@mui/material';
 
-// const profileData = {
-//     name: 'waleed',
-//     email: 'waleed@gmail.com',
-//     bio: 'test bio'
-// }
 
-function EditProfile() {
+const validate = Yup.object({
+    name: Yup.string()
+        .min(3, 'Name must be at least 3 charaters')
+        .required('name is required'),
+    email: Yup.string()
+        .email('Email is invalid')
+        .required('Email is required'),
+})
+
+function EditProfile({data}) {
     const dispatch = useDispatch()
 
-    const validate = Yup.object({
-        userName: Yup.string()
-            .min(3, 'Name must be at least 3 charaters')
-            .required('name is required'),
-        email: Yup.string()
-            .email('Email is invalid')
-            .required('Email is required'),
+    const formik = useFormik({
+        initialValues: {
+            name: data.name,
+            email: data.email,
+            bio: data.bio
+        },
+        validationSchema: validate,
+        onSubmit: (values) =>{
+            console.log(values)
+        },
     })
-
+    // const handleSubmit = (values) => {
+    //     console.log(values)
+    // }
 
     const handleChangePasswordModal = () => {
         dispatch(closeModal())
@@ -38,9 +47,7 @@ function EditProfile() {
         dispatch(openModal({name: 'DeleteAccount'}))
     }
 
-    const handleSubmit = (values) => {
-        console.log(values)
-    }
+    
 
     return (
         <>
@@ -49,40 +56,58 @@ function EditProfile() {
             </Typography>
             <Box 
                 component="div"  
-                sx={{ mt: 3, width: '100%' }}>
-                <Formik 
-                    initialValues={{
-                        userName: '',
-                        email: '',
-                        bio: ''
-                    }}
-                    validationSchema={validate}
-                    onSubmit={handleSubmit}
-                >
-                    <Form>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <FormInput label='Name' type='text' name='userName'  />
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <FormInput label='Email' type='email' name='email'  />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <FormInput label='Bio' type='text' name='bio'  />
-                            </Grid>
-                            
+                sx={{ mt: 3, width: '100%' }}
+            >
+                <form onSubmit={formik.handleSubmit}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <TextField 
+                                fullWidth
+                                label='Name' 
+                                type='text' 
+                                name='name' 
+                                value={formik.values.name} 
+                                onChange={formik.handleChange}
+                                error={formik.touched.name && Boolean(formik.errors.name)}
+                                helperText={formik.touched.name && formik.errors.name}
+                            />
                         </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 3 }}
-                        >
-                            Save
-                        </Button>
-                    </Form>
-                </Formik>
+
+                        <Grid item xs={12}>
+                            <TextField 
+                                fullWidth
+                                label='Email' 
+                                type='email' 
+                                name='email' 
+                                value={formik.values.email} 
+                                onChange={formik.handleChange}
+                                error={formik.touched.email && Boolean(formik.errors.email)}
+                                helperText={formik.touched.email && formik.errors.email}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField 
+                                fullWidth
+                                label='Bio' 
+                                type='text' 
+                                name='bio' 
+                                value={formik.values.bio} 
+                                onChange={formik.handleChange}
+                                error={formik.touched.bio && Boolean(formik.errors.bio)}
+                                helperText={formik.touched.bio && formik.errors.bio}
+                            />
+                        </Grid>
+                            
+                    </Grid>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 3 }}
+                    >
+                        Save
+                    </Button>
+                </form>
 
                 <Grid container>
                     <Grid item xs={12}>
