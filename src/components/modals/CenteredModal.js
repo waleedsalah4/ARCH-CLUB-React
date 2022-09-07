@@ -14,6 +14,7 @@ import DeleteEvent from '../events/DeleteEvent';
 
 import EditProfile from '../profile/EditProfile';
 import EditEvent from '../events/EditEvent';
+import UpdatePhoto from '../profile/UpdatePhoto';
 import UpdatePassword from '../profile/UpdatePassword';
 import DeleteAccount from '../profile/DeleteAccount';
 import FollowModal from '../profile/FollowModal';
@@ -58,6 +59,7 @@ const CenteredModal = () => {
         FollowModal,
 
         EditProfile,
+        UpdatePhoto,
         UpdatePassword,
         DeleteAccount,
         

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { openModal } from '../../store/reducers/modalSlice';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
 
 import logoImg from '../../assets/logo/ic_launcher_mdpi.png';
 import classes from '../../styles/profile/Profile.module.css';
@@ -38,6 +39,14 @@ function ProfileHeader({userData, isMe}) {
             }
         }))
     }
+    const openPhotoModal = () => {
+        dispatch(openModal({
+            name: 'UpdatePhoto', 
+            childrenProps: {
+                pic: userData.photo
+            }
+        }))
+    }
 
     return (
         <div className={classes.header}>
@@ -47,7 +56,15 @@ function ProfileHeader({userData, isMe}) {
             <div className={classes.userInfo}>
                 <div className={classes.info}>
                     <div className={classes.userImg}>
-                        <img src={userData.photo} alt="user avatar" className={classes.avatar} />
+                        <div className={classes.avatar} >
+                            <Avatar 
+                                src={userData.photo} 
+                                alt="user avatar" 
+                                title='click to preview'
+                                onClick={openPhotoModal}
+                                sx={{ width: 70, height: 70 }}
+                            />
+                        </div>
                     </div>
                     <div className={classes.controls}>
                         {isMe ? <Button variant='outlined' onClick={openEditModal}>Edit profile</Button> : <Button variant='outlined'>Following</Button>}

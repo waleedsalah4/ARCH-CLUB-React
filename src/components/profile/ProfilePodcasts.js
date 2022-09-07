@@ -17,7 +17,7 @@ function ProfilePodcasts({otherUser, userData}) {
         } else {
             dispatch(getMyPodcasts(1))
         }
-        console.log('useEffect runs')
+        // console.log('useEffect runs')
     },[dispatch, otherUser,userData._id])
 
     const handleLoadMorePods = () => {

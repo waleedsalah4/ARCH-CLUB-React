@@ -8,7 +8,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import SearchBar from './SearchBar';
-import avatar2 from '../../assets/avatar/avatar2.svg';
 
 const drawerWidth = 240;
 
@@ -35,6 +34,7 @@ const AppBar = styled(MuiAppBar, {
 
 function NavBar(props) {
     const {open, handleDrawerOpen} = props;
+    const userAvatar = JSON.parse(localStorage.getItem('user-data'))
     const navigate = useNavigate()
     return (
         <AppBar position="fixed"  open={open}>
@@ -59,7 +59,7 @@ function NavBar(props) {
                 md: 'flex' } 
             }}>
               <IconButton sx={{ p: 0 }} onClick={() => navigate('/profile')}>
-                <Avatar alt="user avatar" src={avatar2} />
+                <Avatar alt="user avatar" src={userAvatar.photo} />
               </IconButton>
           </Box>
             </Toolbar>

@@ -40,13 +40,12 @@
 }
 
 .avatar {
-    width: 70px;
-    height: 70px;
     position: absolute;
-    left: 1px;
-    bottom: 8px;
+    left: 1.5px;
+    bottom: 8.5px;
     border: 2px solid #bbc2c9;
     border-radius: 50%;
+    cursor: pointer;
 }
 .userBio{
     overflow-wrap: break-word;

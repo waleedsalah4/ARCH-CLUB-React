@@ -1,6 +1,7 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { openModal, closeModal } from '../../store/reducers/modalSlice';
+import { updateMe } from '../../store/reducers/profileSlice';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -8,7 +9,9 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { TextField } from '@mui/material';
+import TextField from '@mui/material/TextField';
+
+import FeedBack from '../utilities/FeedBack';
 
 
 const validate = Yup.object({
@@ -21,7 +24,8 @@ const validate = Yup.object({
 })
 
 function EditProfile({data}) {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const {editLoading, editError} = useSelector(state => state.profileSlice);
 
     const formik = useFormik({
         initialValues: {
@@ -31,7 +35,7 @@ function EditProfile({data}) {
         },
         validationSchema: validate,
         onSubmit: (values) =>{
-            console.log(values)
+            dispatch(updateMe(values))
         },
     })
     // const handleSubmit = (values) => {
@@ -51,6 +55,7 @@ function EditProfile({data}) {
 
     return (
         <>
+        {editError && <FeedBack openStatus={true} message={editError} status='error' /> }
             <Typography component="h1" variant="h5">
                 Edit Profile
             </Typography>
@@ -104,8 +109,9 @@ function EditProfile({data}) {
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 3 }}
+                        disabled={editLoading}
                     >
-                        Save
+                        {editLoading ? 'Saving...': 'Save'}
                     </Button>
                 </form>
 

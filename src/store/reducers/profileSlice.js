@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { closeModal } from './modalSlice';
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
 const token = JSON.parse(localStorage.getItem('user-token'))
 
@@ -56,13 +57,75 @@ export const getMe = createAsyncThunk(
 );
 
 
+export const updateMe = createAsyncThunk(
+  'profile/updateMe', 
+    async (data, thunkAPI) => {
+      const { rejectWithValue,dispatch } = thunkAPI;
+      try {
+        const response = await fetch(`${url}/api/v1/users/updateMe`, {
+            method: 'PATCH',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+        const res = await response.json();
+        if(res.status !== 'fail'){
+          localStorage.setItem('user-data', JSON.stringify(res.user))
+          dispatch(closeModal())
+          return res.user
+        } else {
+          return rejectWithValue(res.message);
+        }
+          
+      } catch (error) {
+        
+        return rejectWithValue(error.message);
+      }
+    }
+);
+
+export const changePhoto = createAsyncThunk(
+  'profile/changePhoto', 
+    async (photo, thunkAPI) => {
+      const { rejectWithValue,dispatch } = thunkAPI;
+      try {
+        const response = await fetch(`${url}/api/v1/users/updateMyPhoto`, {
+            method: 'PATCH',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: photo
+        });
+        const res = await response.json();
+        if(res.status !== 'fail'){
+          localStorage.setItem('user-data', JSON.stringify(res.user))
+          dispatch(closeModal())
+          return res.user
+        } else {
+          return rejectWithValue(res.message);
+        }
+          
+      } catch (error) {
+        
+        return rejectWithValue(error.message);
+      }
+    }
+);
 
 const profileSlice = createSlice({
     name: 'profile',
     initialState: { 
       userData: null,
       isLoading: false,
-      profileError: null
+      profileError: null,
+
+      editLoading: false,
+      editError: null,
+
+      editPhotoLoading: false,
+      editPhotoError: null
     },
     reducers: {},
     extraReducers: {
@@ -80,7 +143,7 @@ const profileSlice = createSlice({
         // console.log(action.payload)
       },
 
-      //sign up
+      //getUser up
       [getUser.pending]: (state, action) => {
         state.isLoading = true;
         state.profileError = null;
@@ -93,6 +156,34 @@ const profileSlice = createSlice({
         state.isLoading = false;
         state.profileError = action.payload;
       },
+
+       //Update me
+       [updateMe.pending]: (state, action) => {
+        state.editLoading = true;
+        state.editError = null;
+      },
+      [updateMe.fulfilled]: (state, action) => {
+        state.editLoading = false;
+        state.userData = action.payload;
+      },
+      [updateMe.rejected]: (state, action) => {
+        state.editLoading = false;
+        state.editError = action.payload;
+      },
+
+        //Update me
+        [changePhoto.pending]: (state, action) => {
+          state.editPhotoLoading = true;
+          state.editPhotoError = null;
+        },
+        [changePhoto.fulfilled]: (state, action) => {
+          state.editPhotoLoading = false;
+          state.userData = action.payload;
+        },
+        [changePhoto.rejected]: (state, action) => {
+          state.editPhotoLoading = false;
+          state.editPhotoError = action.payload;
+        },
   
     },
 });
