@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 function ProfileEvents({otherUser, userData}) {
     const dispatch = useDispatch();
     const {events, profileEventsPage, isLoading, profileEventError, loadMoreVisible} = useSelector(state => state.profileEventsSlice)
-
+    // console.log(events)
     useEffect(()=>{
         if(otherUser){
             dispatch(getOtherUserEvents({id: userData._id, page: 1}))

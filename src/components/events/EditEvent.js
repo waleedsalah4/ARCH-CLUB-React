@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-
-import { closeModal } from '../../store/reducers/modalSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeModal,openModal } from '../../store/reducers/modalSlice';
+import { editEvent } from '../../store/reducers/profileEventsSlice';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -13,10 +13,12 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
+import FeedBack from '../utilities/FeedBack';
+
 const validationSchema = yup.object({
-  title: yup
+  name: yup
     .string('Enter Title')
-    .min(5, 'Title should be of minimum 5 characters length')
+    .min(4, 'Title should be of minimum 4 characters length')
     .required('Title is required'),
   description: yup
     .string('Enter your description')
@@ -25,11 +27,12 @@ const validationSchema = yup.object({
 });
 
 const EditEvent = ({event}) => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const {editLoading, editError} = useSelector(state => state.profileEventsSlice)
     const [date, setDate] = useState(event.date)
     const formik = useFormik({
         initialValues: {
-            title: event.name,
+            name: event.name,
             description: event.description,
         },
         validationSchema: validationSchema,
@@ -43,11 +46,17 @@ const EditEvent = ({event}) => {
     }
 
     const getFormData = (data) => {
-        let formData = {
+        let eventdata = {
             ...data,
-            date
+            date: date === event.date ? event.date : date.toISOString()
         }
-        console.log(formData)
+        dispatch(editEvent({eventdata,id: event._id})).then((res) =>{
+            if(res.meta.requestStatus === 'fulfilled'){
+                dispatch(openModal({name: 'Success', childrenProps:{
+                    message: 'Event has been updated successfully'
+                }}))
+            }
+        })
     }
 
     const cancelEdit = () => {
@@ -56,18 +65,19 @@ const EditEvent = ({event}) => {
 
     return (
         <div>
+            {editError && <FeedBack openStatus={true} message={editError} status='error' /> }
             <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
                             id="title"
-                            name="title"
+                            name="name"
                             label="Title"
-                            value={formik.values.title}
+                            value={formik.values.name}
                             onChange={formik.handleChange}
-                            error={formik.touched.title && Boolean(formik.errors.title)}
-                            helperText={formik.touched.title && formik.errors.title}
+                            error={formik.touched.name && Boolean(formik.errors.name)}
+                            helperText={formik.touched.name && formik.errors.name}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -102,8 +112,9 @@ const EditEvent = ({event}) => {
                     fullWidth 
                     type="submit" 
                     sx={{ mt: 3, mb: 3 }}
+                    disabled={editLoading}
                 >
-                    Submit
+                    {editLoading ? 'Submit...' : 'Submit'}
                 </Button>
                 <Button 
                     color="primary" 
@@ -111,11 +122,12 @@ const EditEvent = ({event}) => {
                     fullWidth 
                     onClick={cancelEdit}
                 >
-                    Cancel
+                    Close
                 </Button>
             </form>
         </div>
     );
 };
 
-export default React.memo(EditEvent);
+// export default React.memo(EditEvent);
+export default EditEvent;

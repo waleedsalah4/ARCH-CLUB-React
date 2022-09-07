@@ -55,6 +55,34 @@ export const getOtherUserEvents = createAsyncThunk(
     }
 );
 
+export const editEvent = createAsyncThunk(
+  'profileEvents/editEvent', 
+    async (data, thunkAPI) => {
+      const { rejectWithValue,dispatch } = thunkAPI;
+      try {
+        const response = await fetch(`${url}/api/v1/events/${data.id}`, {
+            method: 'PATCH',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data.eventdata),
+        });
+        const res = await response.json();
+        if(res.status !== 'fail'){
+          dispatch(closeModal())
+          return {result: res.data, id: data.id}
+        } else {
+          return rejectWithValue(res.message);
+        }
+          
+      } catch (error) {
+        
+        return rejectWithValue(error.message);
+      }
+  }
+);
+
 export const deleteEvent = createAsyncThunk(
     'profileEvents/deleteEvent', 
       async (id, thunkAPI) => {
@@ -94,7 +122,10 @@ const profileEventsSlice = createSlice({
         loadMoreVisible: true,
 
         deleteError: null,
-        deleteLoading: false
+        deleteLoading: false,
+
+        editError: null,
+        editLoading: false,
     },
     reducers: {
     },
@@ -168,10 +199,30 @@ const profileEventsSlice = createSlice({
       },
       [deleteEvent.rejected]: (state, action) => {
         state.deleteLoading = false;
-        state.deleteError = action.payload.result.message;
+        state.deleteError = action.payload;
+      },
+      //editEvent
+
+      //delete Podcast
+      [editEvent.pending]: (state, action) => {
+        state.editError = null;
+        state.editLoading = true;
+      },
+      [editEvent.fulfilled]: (state, action) => {
+        let itemIndex = state.events.findIndex(event => event._id === action.payload.id)
+        let eventArr = state.events;
+        if(itemIndex !== -1) {
+          eventArr[itemIndex] = action.payload.result
+        }
+        state.events = eventArr
+        state.editLoading = false;
+      },
+      [editEvent.rejected]: (state, action) => {
+        state.editLoading = false;
+        state.editError = action.payload;
       },
       
-    },
+  },
 });
 
 export default profileEventsSlice.reducer;
