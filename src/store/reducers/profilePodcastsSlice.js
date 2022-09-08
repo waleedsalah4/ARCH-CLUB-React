@@ -4,7 +4,7 @@ import { closeModal } from './modalSlice';
 
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
 
-const token = JSON.parse(localStorage.getItem('user-token'))
+// const token = JSON.parse(localStorage.getItem('user-token'))
 
 export const getMyPodcasts = createAsyncThunk(
   'profilePodcasts/getMyPodcasts', 
@@ -14,7 +14,7 @@ export const getMyPodcasts = createAsyncThunk(
         const response = await fetch(`${url}/api/v1/podcasts/me?limit=4&page=${page}`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
             },
         });
         const res = await response.json();
@@ -39,7 +39,7 @@ export const getOtherUserPodcasts = createAsyncThunk(
           const response = await fetch(`${url}/api/v1/podcasts?createdBy=${data.id}&limit=4&page=${data.page}`, {
                 method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
                 },
           });
           const res = await response.json();
@@ -64,7 +64,7 @@ export const deletePodcast = createAsyncThunk(
           const response = await fetch(`${url}/api/v1/podcasts/${id}`, {
                 method: 'DELETE',
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
                 },
           });
           const res = await response.json();

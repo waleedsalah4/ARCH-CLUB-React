@@ -3,7 +3,7 @@ import { closeModal } from './modalSlice';
 
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
 
-const token = JSON.parse(localStorage.getItem('user-token'))
+// const token = JSON.parse(localStorage.getItem('user-token'))
 
 export const getMyEvents = createAsyncThunk(
   'profileEvents/getMyEvents', 
@@ -13,7 +13,7 @@ export const getMyEvents = createAsyncThunk(
         const response = await fetch(`${url}/api/v1/events/me/?limit=4&page=${page}`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
             },
         });
         const res = await response.json();
@@ -38,7 +38,7 @@ export const getOtherUserEvents = createAsyncThunk(
           const response = await fetch(`${url}/api/v1/events/?createdBy=${data.id}&limit=4&page=${data.page}`, {
                 method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
                 },
           });
           const res = await response.json();
@@ -63,7 +63,7 @@ export const editEvent = createAsyncThunk(
         const response = await fetch(`${url}/api/v1/events/${data.id}`, {
             method: 'PATCH',
             headers: {
-              'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
               'Content-Type': 'application/json'
             },
             body: JSON.stringify(data.eventdata),
@@ -91,7 +91,7 @@ export const deleteEvent = createAsyncThunk(
           const response = await fetch(`${url}/api/v1/events/${id}`, {
                 method: 'DELETE',
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
                 },
           });
           const res = await response.json();

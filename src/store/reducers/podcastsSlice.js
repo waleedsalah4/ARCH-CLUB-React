@@ -3,7 +3,7 @@ import { likePod, disLikePod } from './likeSlice';
 
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
 
-const token = JSON.parse(localStorage.getItem('user-token'))
+// const token = JSON.parse(localStorage.getItem('user-token'))
 
 export const getMyFollowingPodcasts = createAsyncThunk(
   'podcasts/getMyFollowingPodcasts', 
@@ -13,7 +13,7 @@ export const getMyFollowingPodcasts = createAsyncThunk(
         const response = await fetch(`${url}/api/v1/podcasts/following/me?limit=6&page=${page}`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
             },
         });
         const res = await response.json();

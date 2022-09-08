@@ -1,23 +1,34 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { closeModal } from '../../store/reducers/modalSlice';
+import { deleteAccount } from '../../store/reducers/profileSlice';
+import {loggingOut} from '../utilities/Helpers';
+import FeedBack from '../utilities/FeedBack';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 
 function DeleteAcount() {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
+    const {deleteError,deleteLoading} = useSelector(state => state.profileSlice)
 
-    const deleteAcount = () => {
-        console.log('delete')
-        //disptch delete action and path callback function
-        //to forward user to landpage screen when deleting request is done
+    const handleDeleteAcount = () => {
+        dispatch(deleteAccount()).then(res=>{
+            console.log(res)
+            if(res.meta.requestStatus === "fulfilled"){
+                loggingOut()
+                navigate('/')
+            }
+        })
     }
     const cancelDelete = () => {
         dispatch(closeModal())
     }
     return (
         <>
+        {deleteError && <FeedBack openStatus={true} message={deleteError} status='error' /> }
             <Typography variant='h6' display='block'>
                 Are you sure want to delete your acount ?
             </Typography>
@@ -36,10 +47,11 @@ function DeleteAcount() {
                 <Grid item xs={6}>
                     <Button 
                         variant='contained'
-                        onClick={deleteAcount}
+                        onClick={handleDeleteAcount}
                         color='error'
+                        disabled={deleteLoading}
                     >
-                        Delete
+                        {deleteLoading ? 'Deleting' : 'Delete'}
                     </Button>
                 </Grid>
             </Grid>

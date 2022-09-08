@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { closeModal,openModal } from './modalSlice';
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
 
-const token = JSON.parse(localStorage.getItem('user-token'))
+// const token = JSON.parse(localStorage.getItem('user-token'))
 
 //req 1
 export const generateSignature = createAsyncThunk(
@@ -14,7 +14,7 @@ export const generateSignature = createAsyncThunk(
         const response = await fetch(`${url}/api/v1/podcasts/generateSignature`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`
             }
         });
         const res = await response.json();
@@ -92,7 +92,7 @@ export const createPodcast = createAsyncThunk(
             const response = await fetch(`${url}/api/v1/podcasts`, {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(podcastBody),

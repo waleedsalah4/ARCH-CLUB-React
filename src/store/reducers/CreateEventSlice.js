@@ -1,18 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
 
-const token = JSON.parse(localStorage.getItem('user-token'))
+// const token = JSON.parse(localStorage.getItem('user-token'))
 
 export const createEvent = createAsyncThunk(
   'craeteEvents/createEvent', 
     async (data, thunkAPI) => {
       const { rejectWithValue } = thunkAPI;
-      console.log(data)
+      // console.log(data)
       try {
         const response = await fetch(`${url}/api/v1/events/me`, {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data),

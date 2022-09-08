@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { closeModal } from './modalSlice';
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
-const token = JSON.parse(localStorage.getItem('user-token'))
+// const token = JSON.parse(localStorage.getItem('user-token'))
 
 export const getUser = createAsyncThunk(
   'profile/getUser', 
@@ -11,7 +11,7 @@ export const getUser = createAsyncThunk(
         const response = await fetch(`${url}/api/v1/users/${id}`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
             },
         });
         const res = await response.json();
@@ -37,7 +37,7 @@ export const getMe = createAsyncThunk(
         const response = await fetch(`${url}/api/v1/users/me`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
             },
         });
         const res = await response.json();
@@ -65,7 +65,7 @@ export const updateMe = createAsyncThunk(
         const response = await fetch(`${url}/api/v1/users/updateMe`, {
             method: 'PATCH',
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
               "Content-Type": "application/json"
             },
             body: JSON.stringify(data)
@@ -94,7 +94,7 @@ export const changePhoto = createAsyncThunk(
         const response = await fetch(`${url}/api/v1/users/updateMyPhoto`, {
             method: 'PATCH',
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
             },
             body: photo
         });
@@ -114,6 +114,55 @@ export const changePhoto = createAsyncThunk(
     }
 );
 
+export const changePassword = createAsyncThunk(
+  'profile/changePassword', 
+    async (data, thunkAPI) => {
+      const { rejectWithValue,dispatch } = thunkAPI;
+      try {
+        const response = await fetch(`${url}/api/v1/users/updateMyPassword`, {
+            method: 'PATCH',
+            headers: {
+              Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+        const res = await response.json();
+        if(res.status !== 'fail'){
+          dispatch(closeModal())
+          return res
+        } else {
+          return rejectWithValue(res.message);
+        }
+          
+      } catch (error) {
+        
+        return rejectWithValue(error.message);
+      }
+    }
+);
+
+export const deleteAccount = createAsyncThunk(
+  'profile/deleteAccount', 
+    async (_, thunkAPI) => {
+      const { rejectWithValue,dispatch } = thunkAPI;
+      try {
+        const response = await fetch(`${url}/api/v1/users/deleteMe`, {
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`
+            }
+        });
+        // const res = await response.json();
+          dispatch(closeModal())
+          return 
+      } catch (error) {
+        
+        return rejectWithValue(error.message);
+      }
+    }
+);
+
 const profileSlice = createSlice({
     name: 'profile',
     initialState: { 
@@ -125,7 +174,13 @@ const profileSlice = createSlice({
       editError: null,
 
       editPhotoLoading: false,
-      editPhotoError: null
+      editPhotoError: null,
+
+      changePassLoading: false,
+      changePassError: null,
+
+      deleteLoading: false,
+      deleteError: null,
     },
     reducers: {},
     extraReducers: {
@@ -171,7 +226,7 @@ const profileSlice = createSlice({
         state.editError = action.payload;
       },
 
-        //Update me
+        //change photo
         [changePhoto.pending]: (state, action) => {
           state.editPhotoLoading = true;
           state.editPhotoError = null;
@@ -184,6 +239,31 @@ const profileSlice = createSlice({
           state.editPhotoLoading = false;
           state.editPhotoError = action.payload;
         },
+      //change password
+      [changePassword.pending]: (state, action) => {
+        state.changePassLoading = true;
+        state.changePassError = null;
+      },
+      [changePassword.fulfilled]: (state, action) => {
+        state.changePassLoading = false;
+      },
+      [changePassword.rejected]: (state, action) => {
+        state.changePassLoading = false;
+        state.changePassError = action.payload;
+      },
+
+      //delete account
+      [deleteAccount.pending]: (state, action) => {
+        state.deleteLoading = true;
+        state.deleteError = null;
+      },
+      [deleteAccount.fulfilled]: (state, action) => {
+        state.deleteLoading = false;
+      },
+      [deleteAccount.rejected]: (state, action) => {
+        state.deleteLoading = false;
+        state.deleteError = action.payload;
+      },
   
     },
 });

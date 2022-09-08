@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
 
-const token = JSON.parse(localStorage.getItem('user-token'))
+// const token = JSON.parse(localStorage.getItem('user-token'))
 
 export const discoverUsersReq = createAsyncThunk(
   'discoverPodcasts/discoverUsersReq', 
@@ -11,7 +11,7 @@ export const discoverUsersReq = createAsyncThunk(
         const response = await fetch(`${url}/api/v1/users/discover?page=${page}&limit=10&sort=-followers`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
             },
         });
         const res = await response.json();

@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {closeModal} from './modalSlice';
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
 
-const token = JSON.parse(localStorage.getItem('user-token'))
+// const token = JSON.parse(localStorage.getItem('user-token'))
 
 export const getMyFollowers = createAsyncThunk(
   'follow/getMyFollowers', 
@@ -12,7 +12,7 @@ export const getMyFollowers = createAsyncThunk(
         const response = await fetch(`${url}/api/v1/users/me/followers?limit=4&page=${page}`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
             },
         });
         const res = await response.json();
@@ -39,7 +39,7 @@ export const getMyFollowing = createAsyncThunk(
             const response = await fetch(`${url}/api/v1/users/me/following?limit=4&page=${page}`, {
                     method: 'GET',
                     headers: {
-                        Authorization: `Bearer ${token}`,
+                        Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
                     },
             });
             const res = await response.json();
@@ -65,7 +65,7 @@ export const getUserFollowing = createAsyncThunk(
             const response = await fetch(`${url}/api/v1/users/${data.id}/following?limit=4&page=${data.page}`, {
                     method: 'GET',
                     headers: {
-                        Authorization: `Bearer ${token}`,
+                        Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
                     },
             });
             const res = await response.json();
@@ -91,7 +91,7 @@ export const getUserFollowers = createAsyncThunk(
             const response = await fetch(`${url}/api/v1/users/${data.id}/followers?limit=4&page=${data.page}`, {
                     method: 'GET',
                     headers: {
-                        Authorization: `Bearer ${token}`,
+                        Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
                     },
             });
             const res = await response.json();
