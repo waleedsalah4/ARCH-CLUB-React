@@ -40,8 +40,12 @@ function FollowModal(props) {
         }
     },[dispatch])
 
-    const {followList,followPage,isLoading,followError,loadMoreVisible} = useSelector((state) => state.FollowSlice)
-    console.log(followPage)
+    const {
+        followList,followPage,isLoading,followError,loadMoreVisible,
+        followUserError
+    } = useSelector((state) => state.FollowSlice)
+
+    // console.log(followList)
 
     useEffect(()=>{
         FetchData(props.text,{page: 1, id: props.id});
@@ -71,7 +75,9 @@ function FollowModal(props) {
             {followList.length ===0 && !isLoading &&<p>you have no followers yet</p>}
 
             {followError && <FeedBack openStatus={true} message={followError} status='error' /> }
+            {followUserError && <FeedBack openStatus={true} message={followUserError} status='error' /> }
         </div>
+
     )
 }
 

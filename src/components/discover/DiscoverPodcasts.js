@@ -5,6 +5,7 @@ import { getAllPodcasts } from '../../store/reducers/discoverPodcastsSlice';
 import PodcastsCard from '../podcasts/PodcastsCard';
 import FeedBack from '../utilities/FeedBack';
 import Button from '@mui/material/Button';
+import Loader from '../utilities/Loader';
 
 const DiscoverPodcasts = () => {
     const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const DiscoverPodcasts = () => {
             {discoverPodcasts && discoverPodcasts.map(podcast => (
                 <PodcastsCard key={podcast._id} podcast={podcast} otherUser={true} />
             ))}
-           {isLoading && <div>Loading...</div>}
+           {isLoading && <Loader />}
                 {loadMoreVisible && <Button 
                     variant='contained'
                     onClick={handleLoadMorePods}

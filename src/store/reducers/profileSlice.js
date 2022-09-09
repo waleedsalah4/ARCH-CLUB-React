@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { closeModal } from './modalSlice';
+import { followUser,unFollowUser } from './FollowUsersSlice';
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
 // const token = JSON.parse(localStorage.getItem('user-token'))
 
@@ -181,6 +182,9 @@ const profileSlice = createSlice({
 
       deleteLoading: false,
       deleteError: null,
+
+      followUserLoading: false,
+      followUserError: null
     },
     reducers: {},
     extraReducers: {
@@ -225,6 +229,50 @@ const profileSlice = createSlice({
         state.editLoading = false;
         state.editError = action.payload;
       },
+
+        //follow
+        [followUser.pending]: (state, action) => {
+          state.followUserLoading= true;
+          state.followUserError = null
+  
+        }
+        ,
+        [followUser.fulfilled]: (state, action) => {
+          state.followUserLoading= false;
+          // console.log(action.payload)
+          if(action.payload.type === 'userData') {
+            // console.log('how the fuck i get in')
+            let userInfo = state.userData;
+            userInfo.isFollowed = true
+            state.userData = userInfo;
+          }
+        },
+  
+        [followUser.rejected]: (state, action) => {
+          state.followUserLoading= false;
+          state.followUserError = action.payload  
+        },
+  
+        [unFollowUser.pending]: (state, action) => {
+          state.followUserLoading= true;
+          state.followError = null
+  
+        }
+        ,
+        [unFollowUser.fulfilled]: (state, action) => {
+          state.followUserLoading= false;
+          if(action.payload.type === 'userData') {
+            let userInfo = state.userData;
+            userInfo.isFollowed = false
+            state.userData = userInfo;
+          }
+        },
+  
+        [unFollowUser.rejected]: (state, action) => {
+          state.followUserLoading= false;
+          state.followError = action.payload
+            
+        },
 
         //change photo
         [changePhoto.pending]: (state, action) => {

@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { followUser,unFollowUser } from './FollowUsersSlice';
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
 
 // const token = JSON.parse(localStorage.getItem('user-token'))
@@ -41,6 +42,8 @@ const discoverUsersSlice = createSlice({
         isLoading: false, 
         disUsersError: null ,
         loadMoreVisible: true,
+
+        followUserError: null,
     },
     reducers: {
     },
@@ -72,6 +75,49 @@ const discoverUsersSlice = createSlice({
         state.discoverUsersPage = action.meta.arg;
         state.loadMoreVisible = false
       },  
+
+      //follow
+      [followUser.pending]: (state, action) => {
+        state.followUserError = null
+
+      }
+      ,
+      [followUser.fulfilled]: (state, action) => {
+        state.followLoading= false;
+        if(action.payload.type === 'discover'){
+          for (let user of state.discoverUsers) {
+            if(user._id === action.payload.id){
+              user.isFollowed = true;
+              break;
+            }
+          }
+        }
+      },
+      
+      [followUser.rejected]: (state, action) => {
+        state.followUserError = action.payload  
+      },
+
+      //unfollow
+      [unFollowUser.pending]: (state, action) => {
+        state.followError = null
+      }
+      ,
+      [unFollowUser.fulfilled]: (state, action) => {
+        if(action.payload.type === 'discover'){
+          for (let user of state.discoverUsers) {
+            if(user._id === action.payload.id){
+              user.isFollowed = false;
+              break;
+            }
+          }
+        }
+      },
+
+      [unFollowUser.rejected]: (state, action) => {
+        state.followError = action.payload
+          
+      },
     },
 });
 

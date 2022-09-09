@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { followUser, unFollowUser } from '../../store/reducers/FollowUsersSlice';
 import { closeModal } from '../../store/reducers/modalSlice';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
@@ -14,6 +15,14 @@ function FollowersFollowing({user}) {
     const goTouserPage = () => {
         dispatch(closeModal())
         navigate(`/user-profile/${user._id}`)
+    }
+
+    const handleFollowUser = () => {
+        if(user.isFollowed){
+            dispatch(unFollowUser({id: user._id,type: 'followModal' }))
+        } else {
+            dispatch(followUser({id: user._id,type: 'followModal' }))
+        }
     }
     return (
         <div className={classes.userContainer}>
@@ -32,7 +41,11 @@ function FollowersFollowing({user}) {
                 </div>
             </div>
             <div>
-                <Button variant={user.isFollowed ? 'contained': 'outlined'}>
+                <Button 
+                    variant={user.isFollowed ? 'contained': 'outlined'}
+                    onClick={handleFollowUser}
+                    // disabled={followLoading}
+                >
                     {user.isFollowed ? 'Following': 'Follow'}
                 </Button>
             </div>

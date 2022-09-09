@@ -38,7 +38,7 @@ export default configureStore({
         profileSlice,
         profilePodcastsSlice,
         profileEventsSlice,
-        FollowSlice
+        FollowSlice,
         
     }
 })

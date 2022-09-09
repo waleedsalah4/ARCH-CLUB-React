@@ -4,6 +4,7 @@ import { getMyFollowingPodcasts } from '../../store/reducers/podcastsSlice';
 import FeedBack from '../utilities/FeedBack';
 import PodcastsCard from './PodcastsCard';
 import Button from '@mui/material/Button';
+import Loader from '../utilities/Loader';
 import classes from '../../styles/podcasts/Podcasts.module.css';
 function Podcasts() {
     const dispatch = useDispatch();
@@ -23,7 +24,7 @@ function Podcasts() {
             {podcasts && podcasts.map(podcast => (
                 <PodcastsCard key={podcast._id} podcast={podcast} otherUser={true} />
             ))}
-            {isLoading && <div>Loading...</div>}
+            {isLoading && <Loader />}
                 {loadMoreVisible && <Button 
                     variant='contained'
                     onClick={handleLoadMorePods}

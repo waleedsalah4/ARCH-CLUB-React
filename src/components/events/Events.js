@@ -5,6 +5,7 @@ import EventsCard from './EventsCard';
 import Button from '@mui/material/Button';
 // import { eventsList } from '../dummyfile';
 import FeedBack from '../utilities/FeedBack';
+import Loader from '../utilities/Loader';
 import classes from '../../styles/events/Events.module.css';
 
 function Events() {
@@ -30,7 +31,7 @@ function Events() {
                 {events && events.map(evt => (
                     <EventsCard key={evt._id} evt={evt} otherUser={true} />
                 ))}
-                {isLoading && <div>Loading...</div>}
+                {isLoading && <Loader />}
                 {loadMoreVisible && <Button 
                     variant='contained'
                     onClick={handleLoadMoreEvents}

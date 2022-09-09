@@ -18,7 +18,8 @@ function Profile() {
     const mydata= JSON.parse(localStorage.getItem('user-data'))
     let isMe = params.id ? false : true;
     const dispatch = useDispatch()
-    const {userData, isLoading, profileError} = useSelector(state=> state.profileSlice)
+    const {userData, isLoading, profileError,
+        followUserError} = useSelector(state=> state.profileSlice)
     // console.log(userData)
     // console.log(isMe)
     useEffect(()=>{
@@ -39,7 +40,7 @@ function Profile() {
         <>
             {userData && !isLoading &&  <div className={classes.profileContainer}>
                 <div className={classes.profile}>
-                    <ProfileHeader userData={userData} isMe={isMe} />
+                    <ProfileHeader userData={userData} isMe={isMe}  />
                     <div className={classes.tabs}>
                         <ProfileTabs isMe={isMe} userData={userData} />
                     </div>
@@ -47,6 +48,7 @@ function Profile() {
             </div>}
             {isLoading && <Loader />}
             {profileError && <FeedBack openStatus={true} message={profileError} status='error' /> }
+            {followUserError && <FeedBack openStatus={true} message={followUserError} status='error' /> }
         </>
     )
 }

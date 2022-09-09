@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../../store/reducers/modalSlice';
+import { followUser, unFollowUser } from '../../store/reducers/FollowUsersSlice';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
@@ -48,6 +49,14 @@ function ProfileHeader({userData, isMe}) {
         }))
     }
 
+    const handleFollowUser = () => {
+        if(userData.isFollowed){
+            dispatch(unFollowUser({id: userData._id,type: 'userData' }))
+        } else{
+            dispatch(followUser({id: userData._id,type: 'userData' }))
+        }
+    }
+
     return (
         <div className={classes.header}>
             <div className={classes.background}>
@@ -67,7 +76,11 @@ function ProfileHeader({userData, isMe}) {
                         </div>
                     </div>
                     <div className={classes.controls}>
-                        {isMe ? <Button variant='outlined' onClick={openEditModal}>Edit profile</Button> : <Button variant='outlined'>Following</Button>}
+                            {isMe ? <Button variant='outlined' onClick={openEditModal}>Edit profile</Button> : <Button 
+                            variant={userData.isFollowed ? 'contained': 'outlined'}
+                            // disabled={followUserLoading}
+                            onClick={handleFollowUser}
+                        >{userData.isFollowed ? 'Following' : 'Follow'}</Button>}
                     </div>
                 </div>
                 {/* <div className={classes.userName}>

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {closeModal} from './modalSlice';
+import { followUser, unFollowUser } from './FollowUsersSlice';
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
 
 // const token = JSON.parse(localStorage.getItem('user-token'))
@@ -110,6 +111,8 @@ export const getUserFollowers = createAsyncThunk(
 );
 
 
+
+
 const FollowSlice = createSlice({
     name: 'follow',
     initialState: { 
@@ -118,6 +121,9 @@ const FollowSlice = createSlice({
         isLoading: false, 
         followError: null ,
         loadMoreVisible: true,
+
+        followLoading: false,
+        followUserError : null
     },
     reducers: {
     },
@@ -246,13 +252,71 @@ const FollowSlice = createSlice({
             
         },
 
-        [closeModal]: (state, action)=>{
+        //follow
+      [followUser.pending]: (state, action) => {
+        state.followLoading= true;
+        state.followUserError = null
+
+      }
+      ,
+      [followUser.fulfilled]: (state, action) => {
+        state.followLoading= false;
+        if(action.payload.type === 'followModal'){
+          for (let user of state.followList) {
+            if(user.follower?._id === action.payload.id){
+              user.follower.isFollowed = true;
+              break;
+            } else if (user.following?._id === action.payload.id){
+              user.following.isFollowed = true;
+              break;
+            } 
+          }
+        }
+      },
+
+      [followUser.rejected]: (state, action) => {
+        state.followLoading= false;
+        state.followUserError = action.payload  
+      },
+
+      [unFollowUser.pending]: (state, action) => {
+        state.followLoading= true;
+        state.followError = null
+
+      }
+      ,
+      [unFollowUser.fulfilled]: (state, action) => {
+        state.followLoading= false;
+        if(action.payload.type === 'followModal'){
+          // console.log('how the fuck i get in')
+          for (let user of state.followList) {
+            if(user.follower?._id === action.payload.id){
+                user.follower.isFollowed = false;
+                break;
+            } else if (user.following?._id === action.payload.id){
+              user.following.isFollowed = false;
+                break;
+            }
+          }
+        }
+      },
+
+      [unFollowUser.rejected]: (state, action) => {
+        state.followLoading= false;
+        state.followError = action.payload
+          
+      },
+
+      [closeModal]: (state, action)=>{
             state.isLoading = false;
             state.followError = null;
             state.followList = [];
             state.followPage = 1;
-            state.loadMoreVisible = false
-        }
+            state.loadMoreVisible = false;
+
+            state.followError = null;
+            state.followLoading = false
+      }
     },
 });
 
