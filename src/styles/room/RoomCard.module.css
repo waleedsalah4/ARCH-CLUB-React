@@ -127,12 +127,12 @@
   }
  
   .page .house .screen main > div .user {
-    height: 100px;
+    height: 104px;
     display: flex;
     flex-direction: column;
     align-content: flex-start;
     position: relative;
-    margin-top: 16px;
+    margin-top: 10px;
   }
   
 
@@ -172,13 +172,13 @@
   .requestHand{
     position: absolute;
     top: 30px;
-    left: 30px;
+    left: 40px;
   }
   
   .page .house .screen main > div .user > .mic {
     position: absolute;
     top: 18px;
-    left: 41px;
+    left: 47px;
   }
   
   .page .house .screen main > div .user > .fun > img,

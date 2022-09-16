@@ -6,7 +6,7 @@ import RoomAudience from './RoomAudience';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import classes from '../../styles/room/RoomCard.module.css';
 
-function RoomCard({room, collapse, toggleCollapse}) {
+function RoomCard({room, collapse, toggleCollapse, socket}) {
     const [state, setState] = useState({
         isAdmin: false,
         isSpeaker:true,
@@ -45,7 +45,7 @@ function RoomCard({room, collapse, toggleCollapse}) {
                             </div>
                         </main> 
         
-                        <RoomFooter state={state} />
+                        <RoomFooter state={state} socket={socket} />
                     
                     </div>
                 </div>

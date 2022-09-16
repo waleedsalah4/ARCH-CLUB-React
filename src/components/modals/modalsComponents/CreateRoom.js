@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+// import { useDispatch,useSelector } from 'react-redux';
+// import { openFixedModal } from '../../../store/reducers/fixedModalSlice';
 import FormInput from '../../register/FormInput';
 import {Formik, Form, Field} from 'formik';
 import * as Yup from 'yup';
@@ -9,7 +11,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Switch from '@mui/material/Switch';
-
+// import { createAfuckenRoom } from '../../room/Room';
 
 
 const categories = [
@@ -17,20 +19,25 @@ const categories = [
   ]
 
 function CreateRoom() {
+    
     const [toggleStatus, setToggleStatus] = useState(false)
+    const [statustype, setStatusType] = useState('public')
     const [toggleRecord, setToggleRecord] = useState(false)
 
-
+    // const dispatch = useDispatch();
+    
+    // const {isPlayerOpen} = useSelector((state) => state.fixedModalSlice)
 
     const handleToggleStatus = (e) => {
         setToggleStatus(e.target.checked);
+        e.target.checked ? setStatusType('private') : setStatusType('public');
     }
     const handleToggleRecord = (e) => {
         setToggleRecord(e.target.checked);
     }
 
     const validate = Yup.object({
-        roomName: Yup.string()
+        name: Yup.string()
             .min(3, 'room name must be at least 3 charaters')
             .required('room name is required'),
     })
@@ -41,10 +48,25 @@ function CreateRoom() {
     }
 
     const getFormData = (data) => {
-        console.log({
-             ...data,
-            "toggleStatus": toggleStatus,
-            "toggleRecord": toggleRecord,
+        // if(!isPlayerOpen) {
+        //     dispatch(openFixedModal({
+        //         name: 'Room',
+        //         isRoomOpen: true,
+        //         isPlayerOpen: false
+        //     }))
+        //     createAfuckenRoom({
+        //         ...data,
+        //         status: statustype,
+        //         isRocording: toggleRecord,
+        //     })
+        // } else{
+        //     console.log('can not create room as there is podcasts running')
+        // }
+        
+        console.log({ 
+            ...data,
+            status: statustype,
+            isRocording: toggleRecord
         })
 
     }
@@ -66,8 +88,8 @@ function CreateRoom() {
                 sx={{ mt: 3, width: '100%' }}>
                 <Formik 
                     initialValues={{
-                        roomName: '',
-                        categories: 'ai',
+                        name: '',
+                        category: 'ai',
                         // switchStatus: false,
                         // switchRecord: false,
                     }}
@@ -77,7 +99,7 @@ function CreateRoom() {
                     <Form>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <FormInput label='Enter room name' name='roomName' type='text' />
+                                <FormInput label='Enter room name' name='name' type='text' />
                             </Grid>
                             <Grid container item xs={12} justifyContent='space-between'>
                                 
@@ -92,7 +114,7 @@ function CreateRoom() {
                                     <option key={cat} value={cat}>{cat}</option>
                                     ))}
                                 </select> */}
-                                <Field as="select" name='categories'>
+                                <Field as="select" name='category'>
                                     {categories.map(cat => (
                                     <option key={cat} value={cat}>{cat}</option>
                                     ))}

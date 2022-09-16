@@ -8,7 +8,7 @@ export const roomList = [
                 uid: 556481501,
                 _id: "6231c44cd7a78d001683345b",
                 name: "waleedsalah",
-                isAsked: false
+                isAsked: true
             },
         ],
         brodcasters: [

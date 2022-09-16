@@ -1,7 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { closeFixedModal } from '../../store/reducers/fixedModalSlice';
-
 import { Button, IconButton } from '@mui/material';
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
@@ -10,9 +7,23 @@ import PanToolIcon from '@mui/icons-material/PanTool';
 
 import classes from '../../styles/room/RoomCard.module.css';
 
-function RoomFooter({state}) {
-    const dispatch = useDispatch()
-    const handleClose = () => dispatch(closeFixedModal());
+function RoomFooter({state, socket}) {
+    
+    const handleLeaveroom = () => {
+        socket.disconnect();
+        // dispatch(closeFixedModal())
+    };
+
+    const handleEndroom = () => {
+        socket.emit('endRoom');
+    }
+
+    const handleGoBack = () => {
+        socket.emit('weHaveToGoBack')//user want to go back to audience
+    }
+    const handleAskForPerms = () => {
+        socket.emit('askForPerms') 
+    }
     return (
         <footer>
             <div className={classes.btOptions}>
@@ -20,7 +31,7 @@ function RoomFooter({state}) {
                     <Button 
                         variant='outlined' 
                         className={classes.allCenter}
-                        onClick={handleClose}
+                        onClick={handleEndroom}
                     >
                         <span>✌️</span>
                         <span>End Room</span>
@@ -29,7 +40,7 @@ function RoomFooter({state}) {
                     <Button 
                         variant='outlined' 
                         className={classes.allCenter}
-                        onClick={handleClose}
+                        onClick={handleLeaveroom}
                     >
                         <span>✌️</span>
                         <span>Leave quietly</span>
@@ -46,10 +57,16 @@ function RoomFooter({state}) {
                         </IconButton>
                     }
                     
-                    {state.isListener && !state.isAdmin && <IconButton aria-label='hand'>
+                    {state.isListener && !state.isAdmin && <IconButton 
+                        aria-label='hand'
+                        onClick={handleAskForPerms}
+                    >
                         <PanToolIcon />
                     </IconButton>}
-                    {!state.isAdmin && !state.isListener && <IconButton aria-label='go-back'>
+                    {!state.isAdmin && !state.isListener && <IconButton 
+                        aria-label='go-back'
+                        onClick={handleGoBack}
+                    >
                         <ArrowDownwardIcon />
                     </IconButton>}
                 </div>
