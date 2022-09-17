@@ -1,14 +1,21 @@
 import React
 //, { useState }
- from 'react';
+,{useEffect}
+from 'react';
+import { useOutletContext } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { getActiveRooms } from '../../store/reducers/homeSlice';
 // import { useSelector } from 'react-redux';
 // import InputLabel from '@mui/material/InputLabel';
 // import MenuItem from '@mui/material/MenuItem';
 // import FormControl from '@mui/material/FormControl';
 // import Select from '@mui/material/Select';
 // import Typography from '@mui/material/Typography';
-import { roomList } from '../dummyfile';
+// import { roomList } from '../dummyfile';
 import RoomCard from './RoomCard';
+import FeedBack from '../utilities/FeedBack';
+import Loader from '../utilities/Loader';
+import Button from '@mui/material/Button';
 import classes from '../../styles/home/Home.module.css';
 
 
@@ -26,6 +33,20 @@ const Home = () => {
   //   setCategory(event.target.value);
   //   console.log(event.target.value)
   // };
+  const socket = useOutletContext();
+  // console.log(socket)
+
+  const dispatch = useDispatch();
+  useEffect(()=> {
+    dispatch(getActiveRooms(1))
+  },[])
+    
+   const {isLoading, rooms,homePage, homeError, loadMoreVisible} = useSelector(state => state.homeSlice)
+    // console.log(events, eventPage)
+
+  const handleLoadMoreRooms = () => {
+    dispatch(getActiveRooms(homePage))
+  }
 
   return (
     <div>
@@ -53,11 +74,25 @@ const Home = () => {
         <Typography gutterBottom>All Rooms</Typography>
       </div> */}
       <div className={classes.rooms}>
-        {roomList && roomList.map(room => (
-          <RoomCard key={room._id} room={room} />
+        {rooms && rooms.map(room => (
+          <RoomCard   
+            key={room._id} 
+            room={room} 
+            socketio={socket}
+          />
         ))}
-        {roomList.length === 0 && <p>Theres no active rooms now</p>}
       </div>
+
+      {isLoading && <Loader />}
+          {loadMoreVisible && <Button 
+          variant='contained'
+          onClick={handleLoadMoreRooms}
+        >
+          Load More
+      </Button>}
+      {rooms.length ===0 && !isLoading && <p>There's no active rooms now</p>}
+
+      {homeError && <FeedBack openStatus={true} message={homeError} status='error' /> }
     </div>
   );
 }

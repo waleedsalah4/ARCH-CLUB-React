@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import NavBar from './NavBar';
 import { Outlet, useNavigate } from 'react-router-dom';
+import io from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../../store/reducers/signSlice';
 import { loggingOut } from '../utilities/Helpers';
@@ -114,6 +115,12 @@ export default function Layout(props) {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  let socket = io('https://audiocomms-podcast-platform.herokuapp.com', {
+    auth: {
+      token: JSON.parse(localStorage.getItem('user-token'))
+    }
+  });
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -203,7 +210,7 @@ export default function Layout(props) {
           <CenteredModal />
         </div>
         <FixedModal />
-        <Outlet />
+        <Outlet context={socket}/>
 
       </Box>
     </Box>

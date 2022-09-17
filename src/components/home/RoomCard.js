@@ -2,22 +2,30 @@ import React from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import { openFixedModal } from '../../store/reducers/fixedModalSlice';
 import { Button } from '@mui/material';
+import { socket } from '../../store/actions';
 import classes from '../../styles/home/RoomCard.module.css';
 
 function RoomCard({room}) {
     const dispatch = useDispatch();
-    
+    let socketio = socket;
     const {isPlayerOpen} = useSelector((state) => state.fixedModalSlice)
 
     const handleJoinRoomModal = () => {
         console.log('joined')
         if(!isPlayerOpen) {
+            if(socketio.connected){
+                socketio.emit('joinRoom', room.name);
+            } else {
+                socketio.connect();
+                socketio.emit('joinRoom', room.name);
+            }
             dispatch(openFixedModal({
                 name: 'Room',
-                childrenProps: {item: room},
+                // childrenProps: {socket: socketio},
                 isRoomOpen: true,
                 isPlayerOpen: false
             }))
+            
         } else{
             console.log('can not open the room as there is a podcast running')
         }

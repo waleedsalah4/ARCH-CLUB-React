@@ -6,9 +6,11 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import PanToolIcon from '@mui/icons-material/PanTool';
 
 import classes from '../../styles/room/RoomCard.module.css';
+// import { useDispatch } from 'react-redux';
+// import {closeFixedModal} from '../../store/reducers/fixedModalSlice';
 
 function RoomFooter({state, socket}) {
-    
+    // const dispatch = useDispatch()
     const handleLeaveroom = () => {
         socket.disconnect();
         // dispatch(closeFixedModal())

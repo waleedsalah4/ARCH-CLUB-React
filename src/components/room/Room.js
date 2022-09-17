@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { closeFixedModal } from '../../store/reducers/fixedModalSlice';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
+import { socket } from '../../store/actions';
 
 import RoomCard from './RoomCard';
 import MiniRoom from './MiniRoom';
 
 // let passedSocket = null
 
-export default function Room({item}) {
+export default function Room(props) {
   const dispatch = useDispatch()
+  const [availableRoom, setAvailableRoom] = useState(null)
   const [collapse, setCollapse] = useState(true)
   const toggleCollapse = () => setCollapse(!collapse);
 
-  let socket = io('https://audiocomms-podcast-platform.herokuapp.com', {
-    auth: {
-      token: JSON.parse(localStorage.getItem('user-token'))
-    }
-  });
+  // console.log('socket===>', socket)
 
   // passedSocket = socket;
   useEffect(()=>{
-    // console.log('useEffect runs!!')
+    console.log('useEffect runs!!')
     socket.on("connect", () => {
       console.log(socket.id); // x8WIv7-mJelg7on_ALbx
     });
@@ -30,15 +28,18 @@ export default function Room({item}) {
     socket.on('disconnect', (reason)=>{
       console.log(reason)
       dispatch(closeFixedModal())
+      setAvailableRoom(null)
     })
 
     
     socket.on('createRoomSuccess', (user,room,token) => {
       console.log(user,room,token)
+      setAvailableRoom(room)
     })
 
     socket.on('joinRoomSuccess', (user, room, token) => {
       console.log('join room',user,room,token)
+      setAvailableRoom(room)
     })
     socket.on('userJoined', (user) => {
       console.log('userJoined', user)
@@ -79,19 +80,25 @@ export default function Room({item}) {
 
     socket.on('roomEnded',()=>{
       console.log('room ended')
+      setAvailableRoom(null)
     })
 
+    // return () => socket.close()
   },[socket,dispatch])
 
   return (
     <>
-      <MiniRoom item={item} collapse={collapse} toggleCollapse={toggleCollapse} />
+      {availableRoom && <>
+      <MiniRoom item={availableRoom} collapse={collapse} toggleCollapse={toggleCollapse} />
       <RoomCard 
-        room={item} 
+        room={availableRoom} 
         collapse={collapse} 
         toggleCollapse={toggleCollapse} 
         socket={socket}
       />
+      </>
+      }
+      tsts
     </>
   );
 }

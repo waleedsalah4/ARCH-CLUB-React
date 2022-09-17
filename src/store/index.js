@@ -4,7 +4,7 @@ import fixedModalSlice from "./reducers/fixedModalSlice";
 
 import signSlice from "./reducers/signSlice";
 import forgotSlice from "./reducers/forgotPasswordSlice";
-
+import homeSlice from "./reducers/homeSlice";
 import eventsSlice from "./reducers/eventsSlice";
 import CreateEventSlice from "./reducers/CreateEventSlice";
 import discoverPodcastsSlice from "./reducers/discoverPodcastsSlice";
@@ -25,7 +25,7 @@ export default configureStore({
 
         signSlice, 
         forgotSlice, 
-
+        homeSlice,
         eventsSlice,
         CreateEventSlice,
         
