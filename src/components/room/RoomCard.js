@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { IconButton, Typography } from '@mui/material';
 import RoomFooter from './RoomFooter';
 import RoomSpeakers from './RoomSpeakers';
@@ -6,14 +6,8 @@ import RoomAudience from './RoomAudience';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import classes from '../../styles/room/RoomCard.module.css';
 
-function RoomCard({room, collapse, toggleCollapse, socket}) {
-    const [state, setState] = useState({
-        isAdmin: false,
-        isSpeaker:true,
-        isListener:false,
-        isMuted: true,
-        isAskedState: false
-    })
+function RoomCard({room, collapse, toggleCollapse, socket, state}) {
+    
 
     return (
         <div className={`${!collapse && classes.displayHidden}`}>

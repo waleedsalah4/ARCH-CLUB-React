@@ -12,7 +12,16 @@ import MiniRoom from './MiniRoom';
 export default function Room(props) {
   const dispatch = useDispatch()
   const [availableRoom, setAvailableRoom] = useState(null)
+  const [state, setState] = useState({
+    isAdmin: false,
+    isSpeaker:true,
+    isListener:false,
+    isMuted: true,
+    isAskedState: false
+  })
+
   const [collapse, setCollapse] = useState(true)
+
   const toggleCollapse = () => setCollapse(!collapse);
 
   // console.log('socket===>', socket)
@@ -83,8 +92,23 @@ export default function Room(props) {
       setAvailableRoom(null)
     })
 
-    // return () => socket.close()
-  },[socket,dispatch])
+    return () => {
+      socket.off('connect')
+      socket.off('disconnect')
+      socket.off('createRoomSuccess')
+      socket.off('joinRoomSuccess')
+      socket.off('userJoined')
+      socket.off('userLeft')
+      socket.off('userAskedForPerms')
+      socket.off('userChangedToBrodcaster')
+      socket.off('brodcasterToken')
+      socket.off('userChangedToAudience')
+      socket.off('audienceToken')
+      socket.off('adminReJoinedRoomSuccess')
+      socket.off('adminLeft')
+      socket.off('roomEnded')
+    }
+  },[dispatch])
 
   return (
     <>
@@ -95,10 +119,10 @@ export default function Room(props) {
         collapse={collapse} 
         toggleCollapse={toggleCollapse} 
         socket={socket}
+        state={state}
       />
       </>
       }
-      tsts
     </>
   );
 }

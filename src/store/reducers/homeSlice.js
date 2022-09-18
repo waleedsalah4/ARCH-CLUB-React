@@ -53,9 +53,16 @@ const homeSlice = createSlice({
       },
       [getActiveRooms.fulfilled]: (state, action) => {
         state.isLoading = false; 
-        action.payload.rooms.map(res =>{
+        if(action.meta.arg === 1){
+          state.rooms = [];
+          action.payload.rooms.map(res =>{
             state.rooms.push(res);
-        })
+          })
+        } else {
+          action.payload.rooms.map(res =>{
+              state.rooms.push(res);
+          })
+        }
         state.homePage++;
         state.rooms.length < action.payload.result.docsCount ? state.loadMoreVisible = true : state.loadMoreVisible = false
       },
