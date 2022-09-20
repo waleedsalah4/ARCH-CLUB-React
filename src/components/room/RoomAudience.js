@@ -6,7 +6,7 @@ import MiniModal from './MiniModal';
 import PanToolIcon from '@mui/icons-material/PanTool';
 import classes from '../../styles/room/RoomCard.module.css';
 
-function RoomAudience({audience}) {
+function RoomAudience({audience, state}) {
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -39,8 +39,10 @@ function RoomAudience({audience}) {
             <MiniModal 
                 anchorEl={anchorEl} 
                 open={open} 
+                isAdmin={state.isAdmin}
                 handleClose={handleClose} 
                 type='audience'
+                userId={audience._id}
             />
             <div className={`${classes.userName} ${classes.listener}`}>
                 <div>

@@ -11,6 +11,7 @@ import classes from '../../styles/room/RoomCard.module.css';
 
 function RoomFooter({state, socket}) {
     // const dispatch = useDispatch()
+    console.log('state =>',state)
     const handleLeaveroom = () => {
         socket.disconnect();
         // dispatch(closeFixedModal())

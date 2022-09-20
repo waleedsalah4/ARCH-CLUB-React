@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-// import { useDispatch,useSelector } from 'react-redux';
-// import { openFixedModal } from '../../../store/reducers/fixedModalSlice';
+import { useDispatch,useSelector } from 'react-redux';
+import { openFixedModal } from '../../../store/reducers/fixedModalSlice';
 import FormInput from '../../register/FormInput';
 import {Formik, Form, Field} from 'formik';
 import * as Yup from 'yup';
-
+import { socket } from '../../../store/actions';
 
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -24,9 +24,9 @@ function CreateRoom() {
     const [statustype, setStatusType] = useState('public')
     const [toggleRecord, setToggleRecord] = useState(false)
 
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     
-    // const {isPlayerOpen} = useSelector((state) => state.fixedModalSlice)
+    const {isPlayerOpen} = useSelector((state) => state.fixedModalSlice)
 
     const handleToggleStatus = (e) => {
         setToggleStatus(e.target.checked);
@@ -48,26 +48,35 @@ function CreateRoom() {
     }
 
     const getFormData = (data) => {
-        // if(!isPlayerOpen) {
-        //     dispatch(openFixedModal({
-        //         name: 'Room',
-        //         isRoomOpen: true,
-        //         isPlayerOpen: false
-        //     }))
-        //     createAfuckenRoom({
-        //         ...data,
-        //         status: statustype,
-        //         isRocording: toggleRecord,
-        //     })
-        // } else{
-        //     console.log('can not create room as there is podcasts running')
-        // }
+        if(!isPlayerOpen) {
+            if(socket.connected){
+                socket.emit('createRoom', { 
+                    ...data,
+                    status: statustype,
+                    isRocording: toggleRecord
+                });
+            } else {
+                socket.connect();
+                socket.emit('createRoom', { 
+                    ...data,
+                    status: statustype,
+                    isRocording: toggleRecord
+                });
+            }
+            dispatch(openFixedModal({
+                name: 'Room',
+                isRoomOpen: true,
+                isPlayerOpen: false
+            }))
+        } else{
+            console.log('can not create room as there is podcasts running')
+        }
         
-        console.log({ 
-            ...data,
-            status: statustype,
-            isRocording: toggleRecord
-        })
+        // console.log({ 
+        //     ...data,
+        //     status: statustype,
+        //     isRocording: toggleRecord
+        // })
 
     }
 

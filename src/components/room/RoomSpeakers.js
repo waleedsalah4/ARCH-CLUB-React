@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import MiniModal from './MiniModal';
 import classes from '../../styles/room/RoomCard.module.css';
 
-function RoomSpeakers({speaker}) {
+function RoomSpeakers({speaker, state}) {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) =>{
@@ -42,6 +42,8 @@ function RoomSpeakers({speaker}) {
                 open={open} 
                 handleClose={handleClose} 
                 type='speaker'
+                isAdmin={state.isAdmin}
+                userId={speaker._id}
             />
             <div className={`${classes.userName} ${ !speaker.isAdmin && classes.speaker}`}>
                 {speaker.isAdmin && <StarIcon sx={{fontSize: '1rem'}} />}

@@ -25,16 +25,16 @@ function RoomCard({room, collapse, toggleCollapse, socket, state}) {
                                 </IconButton>
                             </div>
                             <div className={classes.roomSpeakers}> 
-                                <RoomSpeakers speaker={room.admin} />
+                                {/* <RoomSpeakers speaker={room.admin} /> */}
                                 {room.brodcasters.map(speaker => (
-                                    <RoomSpeakers key={speaker._id} speaker={speaker} />
+                                    <RoomSpeakers key={speaker._id} state={state} speaker={speaker} />
                                 ))}
                             </div>
                             <hr />
         
                             <div className={classes.roomListeners}>
                             {room.audience.map(audience => (
-                                    <RoomAudience key={audience._id} audience={audience} />
+                                    <RoomAudience key={audience._id} state={state} audience={audience} />
                                 ))}
                             </div>
                         </main> 
