@@ -156,7 +156,7 @@ export const deleteAccount = createAsyncThunk(
         });
         // const res = await response.json();
           dispatch(closeModal())
-          return 
+          return response
       } catch (error) {
         
         return rejectWithValue(error.message);

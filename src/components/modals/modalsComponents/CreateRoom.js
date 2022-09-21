@@ -53,14 +53,14 @@ function CreateRoom() {
                 socket.emit('createRoom', { 
                     ...data,
                     status: statustype,
-                    isRocording: toggleRecord
+                    isRecording: toggleRecord
                 });
             } else {
                 socket.connect();
                 socket.emit('createRoom', { 
                     ...data,
                     status: statustype,
-                    isRocording: toggleRecord
+                    isRecording: toggleRecord
                 });
             }
             dispatch(openFixedModal({

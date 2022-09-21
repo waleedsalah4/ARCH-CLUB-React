@@ -3,7 +3,15 @@ import { useDispatch } from 'react-redux';
 import { closeFixedModal } from '../../store/reducers/fixedModalSlice';
 import { closeModal } from '../../store/reducers/modalSlice';
 import { socket } from '../../store/actions';
-
+import {
+  changeRole,
+  join,
+  leave,
+  agoraState,
+  // toggleMic, 
+  startRecording, 
+  recorder
+} from './agoraSetting';
 import RoomCard from './RoomCard';
 import MiniRoom from './MiniRoom';
 
@@ -16,7 +24,8 @@ export default function Room(props) {
     isSpeaker: false,
     isListener:false,
     isMuted: false,
-    isAskedState: false
+    isAskedState: false,
+    isRecording: false
   })
   // const [me, setMe] = useState({})
   // let Me = {}
@@ -30,16 +39,43 @@ export default function Room(props) {
   // passedSocket = socket;
   useEffect(()=>{
     let Me = {}
+    let timerCounter = 0
     console.log('useEffect runs!!')
     socket.on("connect", () => {
       console.log(socket.id); // x8WIv7-mJelg7on_ALbx
     });
 
     
-    socket.on('disconnect', (reason)=>{
+    socket.on('disconnect', async(reason)=>{
       console.log(reason)
-      dispatch(closeFixedModal())
-      setAvailableRoom(null)
+      if (reason === 'transport close' && state.isAdmin){
+        if(availableRoom.isRecording) {
+          await recorder.stop();
+        }
+        leave()
+        const reconnectTimer =  setInterval(()=>{
+          if(socket.connected) {
+              socket.emit('adminReJoinRoom')
+              clearInterval(reconnectTimer)
+              timerCounter = 0;
+          }else{
+              if(timerCounter>= 60){
+                dispatch(closeFixedModal())
+              }
+              timerCounter+=3;
+              console.log('please check your internet connection')
+          }
+        } , 3000) 
+      } else if(reason.includes("io server disconnect")){
+        leave()
+        dispatch(closeFixedModal())
+        setAvailableRoom(null)
+      } else {
+        console.log(reason)
+        leave()
+        dispatch(closeFixedModal())
+        setAvailableRoom(null)
+      }
     })
 
     
@@ -53,10 +89,17 @@ export default function Room(props) {
       setState((prevState)=> ({
         ...prevState,
         isAdmin: true,
-        isSpeaker: true
+        isSpeaker: true,
+        isRecording: room.isRecording
       }))
       setAvailableRoom(room)
       // setMe({...user})
+
+      agoraState.role = 'host';
+      join(room.APP_ID,token,room.name,user.uid)
+      if(room.isRecording){
+        startRecording(room.name)
+      }
     })
 
     socket.on('joinRoomSuccess', (user, room, token) => {
@@ -75,7 +118,9 @@ export default function Room(props) {
         isListener: true,
       }))
       setAvailableRoom(room)
-      // console.log('me => ',me)
+      //agora
+      agoraState.role = 'audience';
+      join(room.APP_ID,token,room.name,user.uid)
     })
 
     socket.on('userJoined', (user) => {
@@ -128,11 +173,18 @@ export default function Room(props) {
       }))
 
       //change his role when adding agora
+      if(user._id === Me._id){
+        agoraState.role = 'host' ;
+        console.log('host===================>')
+      }
+      // user._id === Me._id ? agoraState.role = 'host' : '';
     })
 
-    socket.on('brodcasterToken', (token)=>{
-      console.log('brodcaster token when user changed from aud to brod', token)
+    socket.on('brodcasterToken', async(token)=>{
+      // console.log('brodcaster token when user changed from aud to brod', token)
       //only for user who asked
+
+      await changeRole(token)
     })
 
     socket.on('userChangedToAudience', (user)=>{
@@ -152,10 +204,16 @@ export default function Room(props) {
       }))
 
       //change his role when adding agora
+      if(user._id === Me._id){
+        agoraState.role = 'audience' 
+      }
+      // user._id === Me._id ? agoraState.role = 'audience' : '';
     })
 
-    socket.on('audienceToken', (token) => {
-      console.log('aud token', token)
+    socket.on('audienceToken', async(token) => {
+      // console.log('aud token', token)
+
+      await changeRole(token)
     }) // will be only for user ho return be an audience
 
     socket.on('adminReJoinedRoomSuccess', ()=>{
@@ -168,6 +226,7 @@ export default function Room(props) {
 
     socket.on('roomEnded',()=>{
       console.log('room ended')
+      leave()
       setAvailableRoom(null)
 
       //close modal

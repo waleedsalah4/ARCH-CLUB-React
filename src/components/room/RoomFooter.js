@@ -1,4 +1,5 @@
 import React from 'react';
+import { recorder } from './agoraSetting';
 import { Button, IconButton } from '@mui/material';
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
@@ -17,7 +18,12 @@ function RoomFooter({state, socket}) {
         // dispatch(closeFixedModal())
     };
 
-    const handleEndroom = () => {
+    const handleEndroom = async() => {
+        if(state.isRecording){
+            console.log('================recording stop ===================')
+            await recorder.stop();
+        }
+        // console.log('==>recordState====>',state.isRecording)
         socket.emit('endRoom');
     }
 
