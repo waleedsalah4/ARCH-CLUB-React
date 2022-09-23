@@ -29,18 +29,45 @@ export const getActiveRooms = createAsyncThunk(
     }
 );
 
-
+export const getPrivateRoom = createAsyncThunk(
+  'home/getPrivateRoom', 
+    async (id, thunkAPI) => {
+      const { rejectWithValue } = thunkAPI;
+      try {
+        const response = await fetch(`${url}/api/v1/rooms/${id}`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem('user-token'))}`,
+            },
+        });
+        const res = await response.json();
+        if(res.status !== 'fail'){
+          const {data} = res;
+          return {res, data}
+        } else {
+          return rejectWithValue(res.message);
+        }
+          
+      } catch (error) {
+        
+        return rejectWithValue(error.message);
+      }
+    }
+);
 
 
 
 const homeSlice = createSlice({
     name: 'home',
     initialState: { 
-        rooms: [],
-        homePage: 1, 
-        isLoading: false, 
-        homeError: null ,
-        loadMoreVisible: true,
+      rooms: [],
+      homePage: 1, 
+      isLoading: false, 
+      homeError: null ,
+      loadMoreVisible: true,
+
+      roomIsLoading: false,
+      roomError: null,
     },
     reducers: {
     },
@@ -72,7 +99,18 @@ const homeSlice = createSlice({
         // state.homePage = 1;
         state.homePage = action.meta.arg;
         state.loadMoreVisible = false
-      },  
+      },
+      [getPrivateRoom.pending]: (state, action) => {
+        state.roomIsLoading = true;
+        state.roomError = null
+      },
+      [getPrivateRoom.fulfilled]: (state, action) => {
+        state.roomIsLoading = false;
+      },
+      [getPrivateRoom.rejected]: (state, action) => {
+        state.roomIsLoading = false;
+        state.roomError = action.payload
+      }
     },
 });
 

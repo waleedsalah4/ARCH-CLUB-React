@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { closeFixedModal } from "../../store/reducers/fixedModalSlice";
 import { closeModal } from "../../store/reducers/modalSlice";
 import { socket } from "../../store/actions";
+import FeedBack from '../utilities/FeedBack';
 import AgoraRTC from "agora-rtc-sdk-ng";
 import {
   client,
@@ -37,7 +38,7 @@ export default function Room(props) {
     isAskedState: false,
     isRecording: false,
   });
-
+  const [msg, setMsg] = useState(null)
   const [collapse, setCollapse] = useState(true);
 
   const toggleCollapse = () => setCollapse(!collapse);
@@ -148,7 +149,8 @@ export default function Room(props) {
     });
 
     socket.on("errorMessage", (msg) => {
-      console.log(msg);
+      // console.log(msg);
+      handleErrorMsg(msg)
     });
 
     socket.on("disconnect", async (reason) => {
@@ -215,6 +217,9 @@ export default function Room(props) {
       room.brodcasters.map(bro => bro.isMuted = true);
       console.log("room => ", room);
       Me = { ...user };
+      if(room.status === 'private'){
+        dispatch(closeModal());
+      }
       // roomInfo = {...room}
       setState((prevState) => ({
         ...prevState,
@@ -377,6 +382,28 @@ export default function Room(props) {
 
   // console.log("room outside the of effect", availableRoom);
 
+  const handleErrorMsg = (msg) => {
+    if(msg.includes("tried to join room twice")){
+      setMsg({type: 'error', msg : 'tried to join room twice'});
+    }
+    if(msg.includes('You are already in room')){
+      setMsg({type: 'error', msg: 'You are already in room'})
+    }
+    if(msg.includes("active room you created")){
+      setMsg({type: 'error', msg: 'cannot do this action because there is an active room you created'});
+    }
+    if(msg.includes("Duplicate field value")){
+      setMsg({type: 'error', msg: 'there is an active room with this name please check different name'} );
+    }
+    if(msg.includes("not found")){
+      setMsg({type: 'error',msg:'there is no room with this id'});
+    }
+    if(msg.includes("Invalid input data")){
+      setMsg({type: 'error',msg:'Invalid input data. Name must be en-US alphanumeric'});
+    }  
+    
+}
+
   return (
     <>
       {availableRoom && (
@@ -398,6 +425,8 @@ export default function Room(props) {
           />
         </>
       )}
+
+      {msg && <FeedBack openStatus={true} message={msg.msg} status={msg.type}/>}
     </>
   );
 }
