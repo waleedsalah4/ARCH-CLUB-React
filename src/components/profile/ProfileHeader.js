@@ -44,7 +44,8 @@ function ProfileHeader({userData, isMe}) {
         dispatch(openModal({
             name: 'UpdatePhoto', 
             childrenProps: {
-                pic: userData.photo
+                pic: userData.photo,
+                isMe: isMe
             }
         }))
     }

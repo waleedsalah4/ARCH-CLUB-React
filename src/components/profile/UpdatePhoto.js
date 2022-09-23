@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import FeedBack from '../utilities/FeedBack';
 import classes from '../../styles/profile/UpdatePhoto.module.css'
 
-function UpdatePhoto({pic}) {
+function UpdatePhoto({pic, isMe}) {
     const dispatch = useDispatch();
     const {editPhotoLoading,editPhotoError} = useSelector(state => state.profileSlice)
     const [photo, setPhoto] = useState(pic);
@@ -42,7 +42,7 @@ function UpdatePhoto({pic}) {
             <img src={photo} className={classes.img} alt='user-avatar'/>
             <div className={classes.controls}>
                 <Button onClick={handleClose}>close</Button>
-                <Button component="label"  disabled={editPhotoLoading}>
+                {isMe && <Button component="label"  disabled={editPhotoLoading}>
                     Change
                     <input 
                         hidden 
@@ -50,7 +50,7 @@ function UpdatePhoto({pic}) {
                         type="file" 
                         onChange={handleChangeImg}
                     />
-                </Button>
+                </Button>}
                 {photoChange && <Button 
                     onClick={submitPhoto}
                     disabled={editPhotoLoading}

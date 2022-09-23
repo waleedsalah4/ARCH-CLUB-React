@@ -20,7 +20,7 @@ function FixedModal() {
 
     return (
         <>
-            {isOpen &&<div style={{position: 'fixed', left: '4.5rem', bottom: '1rem', zIndex: '2'}}>
+            {isOpen &&<div style={{position: 'fixed', left: '4.5rem', bottom: '1.5rem', zIndex: '2'}}>
                 {renderComponent}
             </div>}
         </>
