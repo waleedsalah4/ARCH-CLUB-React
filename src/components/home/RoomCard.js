@@ -11,7 +11,6 @@ function RoomCard({room}) {
     const {isPlayerOpen} = useSelector((state) => state.fixedModalSlice)
 
     const handleJoinRoomModal = () => {
-        console.log('joined')
         if(!isPlayerOpen) {
             if(socketio.connected){
                 socketio.emit('joinRoom', room.name);

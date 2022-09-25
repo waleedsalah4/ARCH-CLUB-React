@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled, alpha} from '@mui/material/styles';
 
 import InputBase from '@mui/material/InputBase';
@@ -47,6 +48,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 function SearchBar() {
+  const navigate = useNavigate()
     return (
         <Search>
             <SearchIconWrapper>
@@ -55,6 +57,16 @@ function SearchBar() {
             <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    event.defaultPrevented = true;
+                    // Prevent's default 'Enter' behavior.
+                    let searchValue = event.target.value;
+                    if(searchValue.length !== 0){
+                      navigate(`/search/${searchValue}`)
+                    }
+                  }
+                }}
             />
         </Search>
     )

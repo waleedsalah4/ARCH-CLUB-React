@@ -17,6 +17,7 @@ import profileSlice from "./reducers/profileSlice";
 import profilePodcastsSlice from "./reducers/profilePodcastsSlice";
 import profileEventsSlice from "./reducers/profileEventsSlice";
 import FollowSlice from "./reducers/FollowSlice";
+import SearchSlice from "./reducers/SearchSlice";
 
 export default configureStore({
     reducer: { 
@@ -39,7 +40,7 @@ export default configureStore({
         profilePodcastsSlice,
         profileEventsSlice,
         FollowSlice,
-        
+        SearchSlice
     }
 })
 

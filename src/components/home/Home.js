@@ -33,7 +33,7 @@ const Home = () => {
   //   setCategory(event.target.value);
   //   console.log(event.target.value)
   // };
-  const socket = useOutletContext();
+  // const socket = useOutletContext();
   // console.log(socket)
 
   const dispatch = useDispatch();
@@ -78,7 +78,6 @@ const Home = () => {
           <RoomCard   
             key={room._id} 
             room={room} 
-            socketio={socket}
           />
         ))}
       </div>

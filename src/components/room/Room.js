@@ -149,8 +149,8 @@ export default function Room(props) {
     });
 
     socket.on("errorMessage", (msg) => {
-      // console.log(msg);
-      handleErrorMsg(msg)
+      console.log(msg);
+      // handleErrorMsg(msg)
     });
 
     socket.on("disconnect", async (reason) => {
@@ -425,7 +425,7 @@ export default function Room(props) {
         </>
       )}
 
-      {msg && <FeedBack openStatus={true} message={msg.msg} status={msg.type}/>}
+      {/* {msg && <FeedBack openStatus={true} message={msg.msg} status={msg.type}/>} */}
     </>
   );
 }
