@@ -85,6 +85,13 @@
     border-radius: 33px;
     padding: 0;
     overflow: hidden;
+    position: relative;
+  }
+
+  .privateId{
+    position: absolute;
+    top: 0;
+    left: 16%;
   }
   
   .page .house .screen main {

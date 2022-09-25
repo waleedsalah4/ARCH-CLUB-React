@@ -46,7 +46,7 @@ function RoomSpeakers({speaker, state}) {
                 userId={speaker._id}
             />
             <div className={`${classes.userName} ${ !speaker.isAdmin && classes.speaker}`}>
-                {speaker.isAdmin && <StarIcon sx={{fontSize: '1rem'}} />}
+                {speaker.isAdmin && <StarIcon sx={{fontSize: '0.8rem', color: '#1976d2'}} />}
                  <div>
                     {limiTitle(speaker.name)}
                 </div>

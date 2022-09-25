@@ -23,7 +23,12 @@ function RoomCard(props) {
       <div className={classes.page}>
         <div className={classes.house}>
           <div className={classes.screen}>
-            {/* {room.status === 'private' ? <Typography variant="caption">{room._id}</Typography> : ''} */}
+            {room.status === 'private' ? <Typography 
+              className={classes.privateId}
+              variant="caption"
+              >
+                room id: {room._id}
+              </Typography> : ''}
             <main className={classes.roomsUsers}>
               <div className={classes.roomHeader}>
                 <Typography variant="h6">

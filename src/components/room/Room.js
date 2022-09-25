@@ -38,7 +38,7 @@ export default function Room(props) {
     isAskedState: false,
     isRecording: false,
   });
-  const [msg, setMsg] = useState(null)
+  const [msg, setMsg] = useState({})
   const [collapse, setCollapse] = useState(true);
 
   const toggleCollapse = () => setCollapse(!collapse);
@@ -354,8 +354,7 @@ export default function Room(props) {
 
     socket.on("roomEnded", () => {
       console.log("room ended");
-      // audioTracks = []
-      // console.log('au =>', audioTracks)
+      audioTracks = []
       leave();
       setAvailableRoom(null);
 
