@@ -30,6 +30,7 @@ function RoomSpeakers({speaker, state}) {
                     alt="user avatar"
                     src={speaker.photo}
                     sx={{ width: 56, height: 56 }}
+                    className={speaker.isTalking ? classes.isTalking : ''}
                 />
             </IconButton>
             

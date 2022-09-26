@@ -33,7 +33,7 @@ function RoomAudience({audience, state}) {
             </IconButton>
             
             {audience.isAsked && <span className={classes.requestHand}>
-                <PanToolIcon />
+                <PanToolIcon fontSize='small'/>
             </span>
             }     
             <MiniModal 

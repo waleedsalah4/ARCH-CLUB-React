@@ -15,7 +15,6 @@
     --tran-05: all 0.3s ease;
   }
   
-
   
   button, label, .handOver {
     cursor: pointer;
@@ -143,70 +142,36 @@
     margin-top: 10px;
   }
   
-
-
-  /* .page .house .screen main > div .user .avatar {
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    overflow: hidden;
-  } */
-  
-  /* .page .house .screen main > div .user .avatar img {
-    width: 62px;
-    height: 62px;
-    border-radius: 50%;
-    cursor: pointer;
-  } */
-
-  .page .house .screen main > div .user .avatar img.volumeIndicator {
-    border: 3px solid transparent;
-  }
-  
-  
-  
-  /* .page .house .screen main > div .user > .fun,
-  /* .page .house .screen main > div .user > .mic, 
-  .requestHandImg {
-    width: 25px;
-    height: 25px;
-    background: #fff;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  } */
   
   .requestHand{
     position: absolute;
     top: 30px;
-    left: 40px;
+    left: 50px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+  }
+
+  .isTalking{
+    border: 3px solid #1976d2;
   }
   
   .page .house .screen main > div .user > .mic {
     position: absolute;
-    top: 18px;
+    top: 40px;
     left: 47px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
   }
-  
-  .page .house .screen main > div .user > .fun > img,
-  .page .house .screen main > div .user > .mic > img,
-  .request-hand-img  {
-    width: 15px;
-    height: auto;
-  }
+ 
   
   .page .house .screen main > div .user .userName {
     width: 100%;
-    /* position: absolute;
-    top: 70px;
-    left: 15px; */
     font-weight: 700;
     overflow: hidden;
     display: flex;
    justify-content: flex-start;
-    /* align-items: center;
-    flex-wrap: nowrap; */
     font-size: 10px;
     word-wrap: break-word;
   }
@@ -214,21 +179,14 @@
   .page .house .screen main > div .user .userName.speaker,
   .page .house .screen main > div .user .userName.listener {
     flex-direction: column;
-    /* margin-left: 11px; */
     margin-top: 5px;
   }
   
   .page .house .screen main > div .user .userName .userRole{
     font-size: 8px;
-    /* color: var(--primary-color); */
   }
   
-  
-  .page .house .screen main > div .user .userName img {
-    width: 11px;
-    height: 11px;
-    margin-right: 3px;
-  }
+
   
   .page .house .screen footer {
     width: 100%;
@@ -260,123 +218,9 @@
     display: flex;
   }
   
-  /* .page .house .screen footer .btOptions button {
-    width: 130px;
-    height: 35px;
-    border-radius: 30px;
-    border: none;
-    color: var(--body-color);
-    font-weight: bold;
-  }
-   */
-  /* .page .house .screen footer .btOptions .plus,
-  .page .house .screen footer .btOptions .hand,
-  .page .house .screen footer .btOptions .arrow{
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: #eee;
-    margin-left: 8px;
-  } */
-  
-  /* .page .house .screen footer .btOptions .plus img,
-  .page .house .screen footer .btOptions .hand img,
-  .page .house .screen footer .btOptions .arrow img {
-    width: 16px;
-    height: auto;
-  } */
+
   
   
-  
-  /*user card modal*/
-
-.modalContainer {
-  background-color: rgba(0,0,0, 0);
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  min-width: 300px;
-  margin-left: 5rem;
-  z-index: 3000;
-}
-.modalContainer.showModal{
-  display: block;
-}
-.userModal {
-  border-radius: 5px;
-  color: var(--primary-color-light);
-  background: var(--body-color);
-  box-shadow: 0 0 10px rgb(0 0 0 / 30%);
-  position: absolute;
-  overflow: hidden;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 100%;
-  width: 325px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
-
-.userInfo {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-.userInfo a {
-  text-decoration: none;
-  color: var(--primary-color-light);
-}
-.userInfo a:hover {
-  color: var(--secondary-color);
-}
-.userImg {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  margin-bottom: 2px;
-}
-.userImg img{
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-}
-
-.controls {
-  padding: 10px;
-  display: flex;
-  gap: 10px 10px;
-}
-
-.controls button {
-  color: var(--primary-color-light);
-  background-color: var(--secondary-color);
-  padding: 10px;
-  border-radius: 4px;
-  border: none;
-  width: 120px;
-  font-size: 18px;
-}
-
-.closeModal {
-  width: 100%;
-  position: relative;
-}
-.closeModal span {
-  position: absolute;
-  bottom: -7px;
-  right: -12px;
-  font-size: 20px;
-  cursor: pointer;
-}
-
 .recordRoom{
   visibility: visible;
   animation: recordroom 2s linear infinite;
@@ -398,18 +242,4 @@
   100% {
     visibility: visible;
   }
-}
-
-.privateRoom{
-  /* margin-left: 49px; */
-    min-width: 331.908px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-.privateRoom .id {
-  position: absolute;
-  bottom: 0;
-  right: 16%;
 }

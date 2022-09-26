@@ -129,7 +129,36 @@ export default function Room(props) {
       });
     
       client.on("volume-indicator", (volumes) => {
-        // changeVolumesIndicator(volumes)
+        console.log(volumes)
+        volumes.forEach(volume => {
+          if(volume.level > 15){
+            console.log('if ==> runs')
+            setAvailableRoom((prevState) => ({
+              ...prevState,
+              brodcasters: prevState.brodcasters.map((brod) => {
+                if (brod.uid === volume.uid) {
+                  return { ...brod, isTalking: true };
+                }
+                return brod;
+              }),
+            }));
+
+          }
+          else if(volume.level < 15){
+            console.log('else if ==> runs')
+            setAvailableRoom((prevState) => ({
+              ...prevState,
+              brodcasters: prevState.brodcasters.map((brod) => {
+                if (brod.uid === volume.uid) {
+                  return { ...brod, isTalking: false};
+                }
+                return brod;
+              }),
+            }));
+
+          }
+      })
+        
       });
     };
 
@@ -189,6 +218,7 @@ export default function Room(props) {
       console.log(user, room, token);
       user.isMuted = false;
       user.isAdmin = true;
+      user.isTalking = false;
       Me = { ...user };
       // roomInfo = {...room}
       room.brodcasters = [user];
@@ -269,6 +299,7 @@ export default function Room(props) {
       console.log("user changed to Brodcaster", user);
       user.isAsked = false;
       user.isMuted = false;
+      user.isTalking = false;
       if (user._id === Me._id) {
         setState((prevState) => ({
           ...prevState,
