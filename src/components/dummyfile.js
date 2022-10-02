@@ -15,6 +15,7 @@ export const messages = [
             uid: 1863996551,
             _id: "6231c44cd7a78d001683345b",
         },
+        isMe: true,
         __v: 0,
         _id: "63397ec5abce330016ae99ab",
     },
@@ -34,6 +35,7 @@ export const messages = [
             uid: 1863996551,
             _id: "6231c44cd7a78d001683345b",
         },
+        isMe: false,
         __v: 0,
         _id: "63397eb5abce330016ae99ab",
     },
@@ -53,6 +55,7 @@ export const messages = [
             uid: 1863996551,
             _id: "6231c44cd7a78d001683345b",
         },
+        isMe: false,
         __v: 0,
         _id: "63397ec5abce430016ae99ab",
     }

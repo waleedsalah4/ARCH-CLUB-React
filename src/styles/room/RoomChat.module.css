@@ -9,4 +9,39 @@
 }
 .roomFooter::-webkit-scrollbar {
     display: none;
-  }
+}
+
+.chatBox {
+    display: flex;
+    flex-direction: column;
+}
+
+.chatBox div {
+    display: flex;
+    flex-direction: column;
+    max-width: fit-content;
+    word-break: break-all;
+    padding: 0px 5px 0px 5px;
+    border-radius: 4px;
+    text-align: start;
+}
+
+.myMessage{
+    margin-left: auto;
+    background: #1976d2;
+    color: white;
+}
+.myMessage .userName{
+    text-decoration: none;
+    color: black;
+}
+
+.usersMessage {
+    text-align: start;
+    background: #999191;
+    color: black;
+}
+.usersMessage .userName{
+    text-decoration: none;
+    color: white;
+}

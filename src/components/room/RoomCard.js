@@ -36,7 +36,7 @@ function RoomCard(props) {
             <Button variant="contained" onClick={handleDisplayChat}>chat</Button>
           </div>
           <div className={`${classes.screen} ${!chatIsActive && classes.displayHidden}`}>
-            <RoomChat />
+            <RoomChat Me={Me} />
           </div>
           <div className={`${classes.screen} ${chatIsActive && classes.displayHidden}`}>
             {room.status === 'private' ? <Typography 

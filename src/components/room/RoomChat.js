@@ -1,22 +1,28 @@
 import React, { useEffect, useState } from 'react';
-// import { socket } from "../../store/actions";
-import { TextField, IconButton} from '@mui/material';
+import { socket } from "../../store/actions";
+import { Link } from 'react-router-dom';
+import { TextField, IconButton, Typography} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import classes from '../../styles/room/RoomChat.module.css';
-import {messages} from '../dummyfile';
+// import {messages} from '../dummyfile';
 
-function RoomChat() {
-    const [message, setMessage] = useState('')
-/*
+function RoomChat({Me}) {
+    const [message, setMessage] = useState('');
+    const [roomMessages, setRoomMessages] = useState([]);
+
     useEffect(()=>{
         //Message Created Successfully User that Create the message will listen on
         socket.on("sendMessageSuccess", (messageData) => { 
-            console.log(messageData)
+            console.log('sendMessageSuccess')
+            // console.log(messageData)
+            messageData.isMe = true;
+            setRoomMessages(roomMessages => [...roomMessages, messageData])
         })
                 
         //another user or users will listen on
         socket.on('message',(messageData) => {
-            console.log(messageData)
+            messageData.isMe = false;
+            setRoomMessages(roomMessages => [...roomMessages, messageData])
         })   
         
         //Message Removed Successfully:
@@ -36,7 +42,7 @@ function RoomChat() {
             socket.off("messageRemoved");
         };
     },[])
-*/
+
     const handleOnChange = (e) => {
         setMessage(e.target.value)
     }
@@ -44,19 +50,33 @@ function RoomChat() {
     const handelSendMessage = (e) => {
         e.preventDefault();
         if(message !== ''){
-            console.log(message)
-            // socket.emit("sendMessage", {
-            //     status: 'public',
-            //     message: message,
-            // })
+            // console.log(message)
+            socket.emit("sendMessage", {
+                status: 'public',
+                message: message,
+            })
         }
         setMessage('')
     }
+
+    // console.log(roomMessages)
     return (
         <>
             <main>
-                <div>
-                    chat
+                <div className={classes.chatBox}>
+                    {roomMessages && roomMessages.map((msg) => (
+                        <div 
+                            className={`${msg.isMe ? classes.myMessage : classes.usersMessage}`}
+                            key={msg._id}
+                        >
+                            <Link to='/home' className={classes.userName}>
+                                <Typography variant='caption'>{msg.user.name}</Typography>
+                            </Link>
+                            <Typography variant='caption'>
+                                {msg.message}
+                            </Typography>
+                        </div>
+                    )) }
                 </div>
             </main>
             <footer>
