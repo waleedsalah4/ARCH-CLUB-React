@@ -6,6 +6,10 @@ export let client = AgoraRTC.createClient({
   codec: "vp8",
 });
 
+//stop output logs of the SDK.
+AgoraRTC.setLogLevel(2); 
+//2: WARNING. Output logs of the WARNING and ERROR level.
+
 // for record
 export let audioTracks = [];
 export let recording = false;

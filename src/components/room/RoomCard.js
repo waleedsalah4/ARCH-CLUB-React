@@ -1,9 +1,10 @@
-import React from "react";
-import { IconButton, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { IconButton, Typography,Button } from "@mui/material";
 import RoomFooter from "./RoomFooter";
 import RoomSpeakers from "./RoomSpeakers";
 import RoomAudience from "./RoomAudience";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
+import RoomChat from './RoomChat';
 import classes from "../../styles/room/RoomCard.module.css";
 
 function RoomCard(props) {
@@ -18,11 +19,26 @@ function RoomCard(props) {
     Me
   } = props;
 
+  const [chatIsActive, setChatIsActive] = useState(false);
+  const handleDisplayChat = () => {
+    setChatIsActive(true)
+  }
+  const handleHideChat = () => {
+    setChatIsActive(false)
+  }
+
   return (
     <div className={`${!collapse && classes.displayHidden}`}>
       <div className={classes.page}>
         <div className={classes.house}>
-          <div className={classes.screen}>
+          <div className={classes.headerControls}>
+            <Button variant="contained" onClick={handleHideChat}>room</Button>
+            <Button variant="contained" onClick={handleDisplayChat}>chat</Button>
+          </div>
+          <div className={`${classes.screen} ${!chatIsActive && classes.displayHidden}`}>
+            <RoomChat />
+          </div>
+          <div className={`${classes.screen} ${chatIsActive && classes.displayHidden}`}>
             {room.status === 'private' ? <Typography 
               className={classes.privateId}
               variant="caption"

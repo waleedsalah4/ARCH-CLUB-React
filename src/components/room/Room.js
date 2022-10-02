@@ -129,10 +129,10 @@ export default function Room(props) {
       });
     
       client.on("volume-indicator", (volumes) => {
-        console.log(volumes)
+        // console.log(volumes)
         volumes.forEach(volume => {
           if(volume.level > 15){
-            console.log('if ==> runs')
+            // console.log('if ==> runs')
             setAvailableRoom((prevState) => ({
               ...prevState,
               brodcasters: prevState.brodcasters.map((brod) => {
@@ -145,7 +145,7 @@ export default function Room(props) {
 
           }
           else if(volume.level < 15){
-            console.log('else if ==> runs')
+            // console.log('else if ==> runs')
             setAvailableRoom((prevState) => ({
               ...prevState,
               brodcasters: prevState.brodcasters.map((brod) => {
