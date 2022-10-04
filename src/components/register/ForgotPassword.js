@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { forgotPassword } from '../../store/reducers/forgotPasswordSlice';
 
@@ -15,11 +15,17 @@ import TextField from '@mui/material/TextField';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 function ForgotPassword() {
+    const token = JSON.parse(localStorage.getItem('user-token') || false)
     const emailInput = useRef()
-
+    const navigate = useNavigate()
     const dispatch = useDispatch();
     const {emailSent, isLoading, forgotError} = useSelector((state)=> state.forgotSlice)
-
+  // console.log(token)
+    useEffect(()=> {
+        if(token) {
+            navigate('/home')
+        }
+    },[token,navigate])
 
     const handleSubmit = (event) => {
         event.preventDefault();

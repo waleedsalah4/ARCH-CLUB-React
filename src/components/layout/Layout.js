@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import NavBar from './NavBar';
-import { Outlet } from 'react-router-dom';
+import { Outlet ,Navigate, useLocation} from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -65,9 +65,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 
-
 export default function Layout(props) {
   const theme = useTheme();
+  let location = useLocation();
+  const token = JSON.parse(localStorage.getItem('user-token') || false)
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
@@ -79,7 +80,8 @@ export default function Layout(props) {
   };
  
   return (
-    <Box sx={{ display: 'flex' }}>
+    <>
+    {token ? <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <NavBar open={open} handleDrawerOpen={handleDrawerOpen}/>
       <Drawer variant="permanent" open={open}>
@@ -99,6 +101,7 @@ export default function Layout(props) {
         <Outlet />
 
       </Box>
-    </Box>
+    </Box> : <Navigate to="/" state={{ from: location }} replace />}
+    </>
   );
 }

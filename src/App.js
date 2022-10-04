@@ -8,6 +8,7 @@ import Home from './components/home/Home';
 import SignIn from './components/register/SignIn';
 import SignUp from './components/register/SignUp';
 import ForgotPassword from './components/register/ForgotPassword';
+import ResetPassword from './components/register/ResetPassword';
 import Layout from './components/layout/Layout';
 import Events from './components/events/Events';
 import Podcasts from './components/podcasts/Podcasts';
@@ -36,6 +37,7 @@ function App() {
         <Route path='/signin' element={<SignIn />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
       </Routes>
     </>
   )
