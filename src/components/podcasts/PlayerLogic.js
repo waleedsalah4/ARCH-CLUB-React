@@ -22,6 +22,7 @@ function PlayerLogic( {item}) {
         const seconds = Math.floor(audioPlayer.current.duration);
         setDuration(seconds);
         progressBar.current.max = seconds;
+        togglePlayPause()
     };
 
     const calculateTime = (secs) => {

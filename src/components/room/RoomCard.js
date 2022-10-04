@@ -34,7 +34,13 @@ function RoomCard(props) {
           <div className={classes.headerControls}>
             <Button variant="contained" onClick={handleHideChat}>room</Button>
             <Button variant="contained" onClick={handleDisplayChat}>chat</Button>
+            <div className={classes.collapseDiv}>
+              <IconButton aria-label="collapse" onClick={toggleCollapse}>
+                <KeyboardDoubleArrowDownIcon />
+              </IconButton>
+            </div>
           </div>
+
           <div className={`${classes.screen} ${!chatIsActive && classes.displayHidden}`}>
             <RoomChat Me={Me} />
           </div>
@@ -53,9 +59,7 @@ function RoomCard(props) {
                   )}
                   {room.name}
                 </Typography>
-                <IconButton aria-label="collapse" onClick={toggleCollapse}>
-                  <KeyboardDoubleArrowDownIcon />
-                </IconButton>
+                
               </div>
               <div className={classes.roomSpeakers}>
                 {/* <RoomSpeakers speaker={room.admin} /> */}

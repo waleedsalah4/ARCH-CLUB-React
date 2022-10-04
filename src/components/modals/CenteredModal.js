@@ -19,13 +19,15 @@ import UpdatePassword from '../profile/UpdatePassword';
 import DeleteAccount from '../profile/DeleteAccount';
 import FollowModal from '../profile/FollowModal';
 import Success from '../utilities/Success';
+import DeleteMessage from '../room/DeleteMessage';
 
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    // width: 400,
+    flexBasis: '600px',
     maxHeight: 400,
     overflow: 'auto',
     bgcolor: 'background.paper',
@@ -64,6 +66,7 @@ const CenteredModal = () => {
         DeleteAccount,
         
         Success,
+        DeleteMessage
     };
 
     let renderComponent;

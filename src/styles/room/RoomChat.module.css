@@ -6,6 +6,7 @@
     justify-content: center;
     overflow: auto;
     margin-left: 5px;
+    margin-bottom: 22px;
 }
 .roomFooter::-webkit-scrollbar {
     display: none;
@@ -44,4 +45,11 @@
 .usersMessage .userName{
     text-decoration: none;
     color: white;
+}
+
+.messageHeader {
+    display: flex;
+    justify-content: space-between;
+    gap: 1px 5px;
+    width: 100%;
 }

@@ -1,11 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { openModal } from '../../store/reducers/modalSlice';
 import { openFixedModal } from '../../store/reducers/fixedModalSlice';
 import { likePod, disLikePod } from '../../store/reducers/likeSlice';
 import { limiTitle } from '../utilities/Helpers';
 import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -18,6 +19,7 @@ import classes from '../../styles/podcasts/PodcastsCard.module.css';
 
 const PodcastsCard = ({podcast, otherUser}) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const { isRoomOpen } = useSelector((state) => state.fixedModalSlice)
 
     const handleDeletePodcast = (podcast) => {
@@ -48,10 +50,15 @@ const PodcastsCard = ({podcast, otherUser}) => {
 
     return (
         <div className={classes.podcastComponent}>
-            <div className={classes.pic} title="open podcats in podcasts player">
-                {/* <Link to={`/podcast-player/${podcast._id}`}> */}
-                    <img src={podcast.createdBy.photo} alt="user podcast" />
-                {/* </Link> */}
+            <div 
+                title="open brodcaster profile">
+                <IconButton sx={{ p: 0 }} onClick={() => navigate(`/user-profile/${podcast.createdBy._id}`)}>
+                    <Avatar 
+                        alt='user avatar'
+                        src={podcast.createdBy.photo}
+                        sx={{ width: 56, height: 56 }} 
+                    />
+                </IconButton> 
             </div>
             <div className={classes.description}> 
                 <div className={classes.dFlex}>
