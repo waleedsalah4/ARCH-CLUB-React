@@ -26,7 +26,6 @@ function RoomCard(props) {
   const handleHideChat = () => {
     setChatIsActive(false)
   }
-
   return (
     <div className={`${!collapse && classes.displayHidden}`}>
       <div className={classes.page}>
@@ -42,7 +41,7 @@ function RoomCard(props) {
           </div>
 
           <div className={`${classes.screen} ${!chatIsActive && classes.displayHidden}`}>
-            <RoomChat Me={Me} />
+            <RoomChat Me={Me} roomId={room._id} />
           </div>
           <div className={`${classes.screen} ${chatIsActive && classes.displayHidden}`}>
             {room.status === 'private' ? <Typography 

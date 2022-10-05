@@ -1,42 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { socket } from "../../store/actions";
+import { addMessage,removeMessage,getOldMassegs } from '../../store/reducers/roomChatSlice';
 import { openModal } from '../../store/reducers/modalSlice';
-import { TextField, IconButton, Typography} from '@mui/material';
+
+import ChatBox from './ChatBox';
+import Loader from '../utilities/Loader';
+import FeedBack from '../utilities/FeedBack';
+
+import { TextField, IconButton} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import CloseIcon from '@mui/icons-material/Close';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import classes from '../../styles/room/RoomChat.module.css';
 // import {messages} from '../dummyfile';
 
-function RoomChat() {
+function RoomChat({roomId, Me}) {
     const dispatch = useDispatch()
     const [message, setMessage] = useState('');
-    const [roomMessages, setRoomMessages] = useState([]);
-
+    // const [roomMessages, setRoomMessages] = useState([]);
+    const {roomMessages,isLoading,chatError,loadMoreVisible,currPage} = useSelector(state => state.roomChatSlice)
+    // console.log(roomMessages)
     useEffect(() => {
-        console.log('EXTRA useEffect RUNS!!!')
-    },[])
+        dispatch(getOldMassegs({id: roomId, page: 1}))
+    },[dispatch, roomId])
     useEffect(()=>{
         //Message Created Successfully User that Create the message will listen on
         socket.on("sendMessageSuccess", (messageData) => { 
             console.log('sendMessageSuccess')
-            // console.log(messageData)
-            messageData.isMe = true;
-            setRoomMessages(roomMessages => [...roomMessages, messageData])
+            // messageData.isMe = true;
+            dispatch(addMessage(messageData))
+            // setRoomMessages(roomMessages => [...roomMessages, messageData])
         })
                 
         //another user or users will listen on
         socket.on('message',(messageData) => {
-            messageData.isMe = false;
-            setRoomMessages(roomMessages => [...roomMessages, messageData])
+            // messageData.isMe = false;
+            // setRoomMessages(roomMessages => [...roomMessages, messageData])
+            dispatch(addMessage(messageData))
         })   
         
         //Message Removed Successfully:
         //User that Remove his message will listen on
         socket.on('removeMessageSuccess',(messageData) => {
-            console.log(messageData) // ???????????
-            setRoomMessages(prevState=> prevState.filter(mes => mes._id !== messageData._id))
+            //console.log(messageData) // ???????????
+            dispatch(removeMessage(messageData))
+            // setRoomMessages(prevState=> prevState.filter(mes => mes._id !== messageData._id))
             dispatch(openModal({name: 'Success', childrenProps:{
                 message: 'message has been deleted successfully'
             }}))
@@ -44,8 +52,9 @@ function RoomChat() {
                 
         //another user or users will listen on
         socket.on('messageRemoved',(messageData)=>{
-            console.log(messageData) // ???????????
-            setRoomMessages(prevState=> prevState.filter(mes => mes._id !== messageData._id))
+            dispatch(removeMessage(messageData))
+            //console.log(messageData) // ???????????
+            // setRoomMessages(prevState=> prevState.filter(mes => mes._id !== messageData._id))
         })
         return () => {
             socket.off("sendMessageSuccess");
@@ -77,41 +86,29 @@ function RoomChat() {
         setMessage('')
     }
 
-    const handelDeleteMessage = (id) => {
-        dispatch(openModal({
-            name: 'DeleteMessage',
-            childrenProps: {
-                messageId: id
-            }
-        }))
+    const loadMoreOldMessage = () =>{
+        dispatch(getOldMassegs({id: roomId, page: currPage}))
     }
-    // console.log(roomMessages)
+    
+    
     return (
         <>
             <main>
                 <div className={classes.chatBox}>
+                    <div className={classes.load}>
+                        {isLoading && <Loader />}
+                        {loadMoreVisible && <IconButton onClick={loadMoreOldMessage}>
+                                <ArrowUpwardIcon fontSize='small' />
+                            </IconButton>
+                        }
+                    </div>
                     {roomMessages && roomMessages.map((msg, index) => {
                         // const lastMessage = roomMessages.length - 1 === index
                         return(
-                        <div 
-                            // ref={lastMessage ? setRef : null}
-                            className={`${msg.isMe ? classes.myMessage : classes.usersMessage}`}
-                            key={msg._id}
-                        >
-                            <header className={classes.messageHeader}>
-                                <Link to='/home' className={classes.userName}>
-                                    <Typography variant='caption'>{msg.user.name}</Typography>
-                                </Link>
-                                {msg.isMe && <IconButton onClick={() => handelDeleteMessage(msg._id)}>
-                                    <CloseIcon fontSize='small' />
-                                </IconButton>}
-                            </header>
-                            <Typography variant='caption'>
-                                {msg.message}
-                            </Typography>
-                        </div>
+                        <ChatBox key={msg._id} msg={msg} Me={Me} />
                     )})}
                 </div>
+                {chatError && <FeedBack openStatus={true} message={chatError} status='error' /> }
             </main>
             <footer>
                 <form onSubmit={handelSendMessage} className={classes.roomFooter}>

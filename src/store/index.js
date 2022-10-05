@@ -18,6 +18,7 @@ import profilePodcastsSlice from "./reducers/profilePodcastsSlice";
 import profileEventsSlice from "./reducers/profileEventsSlice";
 import FollowSlice from "./reducers/FollowSlice";
 import SearchSlice from "./reducers/SearchSlice";
+import roomChatSlice from "./reducers/roomChatSlice";
 
 export default configureStore({
     reducer: { 
@@ -40,7 +41,8 @@ export default configureStore({
         profilePodcastsSlice,
         profileEventsSlice,
         FollowSlice,
-        SearchSlice
+        SearchSlice,
+        roomChatSlice
     }
 })
 

@@ -17,7 +17,8 @@
     flex-direction: column;
 }
 
-.chatBox div {
+.chatBox .myMessage,
+.chatBox .usersMessage {
     display: flex;
     flex-direction: column;
     max-width: fit-content;
@@ -52,4 +53,11 @@
     justify-content: space-between;
     gap: 1px 5px;
     width: 100%;
+}
+
+.load{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

@@ -38,7 +38,7 @@ function CreateRoom() {
 
     const validate = Yup.object({
         name: Yup.string()
-            .min(3, 'room name must be at least 3 charaters')
+            .min(2, 'room name must be at least 2 charaters')
             .required('room name is required'),
     })
 

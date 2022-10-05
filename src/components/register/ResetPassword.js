@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, 
+    // useState 
+} from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { 
+    // Link, 
+    useNavigate, useSearchParams } from 'react-router-dom';
 import {Formik, Form} from 'formik';
 import * as Yup from 'yup';
 
@@ -25,7 +29,7 @@ const validate = Yup.object({
 
 function ResetPassword() {
     const token = JSON.parse(localStorage.getItem('user-token') || false)
-    const [updated, setUpdatad] = useState(false);
+    // const [updated, setUpdatad] = useState(false);
 //   const dispatch = useDispatch();
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -79,7 +83,7 @@ function ResetPassword() {
                             {/* {isLoading ? 'Resting...' : 'Rest'} */}
                             reset
                         </Button>
-                        {updated && <Grid container justifyContent="flex-end">
+                        {/* {updated && <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <p>
                                 your password has been rest navigate to sign page to login
@@ -88,7 +92,7 @@ function ResetPassword() {
                                     Sign in
                                 </Link>
                             </Grid>
-                        </Grid>}
+                        </Grid>} */}
                     </Form>
                 </Formik>
             </Box>
