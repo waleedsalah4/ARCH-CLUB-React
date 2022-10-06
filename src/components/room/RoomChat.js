@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { socket } from "../../store/actions";
 import { addMessage,removeMessage,getOldMassegs } from '../../store/reducers/roomChatSlice';
@@ -64,11 +64,14 @@ function RoomChat({roomId, Me}) {
         };
     },[dispatch])
 
-    // const setRef = useCallback(node => {
-    //     if (node) {
-    //       node.scrollIntoView({ smooth: true })
-    //     }
-    // }, [])
+    const setRef = useCallback(node => {
+        if (node) {
+            node.scrollIntoView({ 
+                behavior: "smooth",
+                block: "end",
+            })
+        }
+    }, [])
 
     const handleOnChange = (e) => {
         setMessage(e.target.value)
@@ -101,11 +104,19 @@ function RoomChat({roomId, Me}) {
                                 <ArrowUpwardIcon fontSize='small' />
                             </IconButton>
                         }
+                        {roomMessages && roomMessages.length === 0 && <span>
+                            no messages yet
+                        </span>}
                     </div>
                     {roomMessages && roomMessages.map((msg, index) => {
-                        // const lastMessage = roomMessages.length - 1 === index
+                        const lastMessage = roomMessages.length - 1 === index
                         return(
-                        <ChatBox key={msg._id} msg={msg} Me={Me} />
+                        <ChatBox 
+                            key={msg._id} 
+                            msg={msg} Me={Me} 
+                            lastMessage={lastMessage} 
+                            setRef={setRef} 
+                        />
                     )})}
                 </div>
                 {chatError && <FeedBack openStatus={true} message={chatError} status='error' /> }

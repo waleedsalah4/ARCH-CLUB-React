@@ -6,7 +6,8 @@ import { IconButton, Typography} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import classes from '../../styles/room/RoomChat.module.css';
 
-function ChatBox({msg,Me}) {
+function ChatBox(props) {
+    const {msg, Me, lastMessage, setRef} = props;
     const dispatch = useDispatch()
     const handelDeleteMessage = (id) => {
         dispatch(openModal({
@@ -18,7 +19,7 @@ function ChatBox({msg,Me}) {
     }
     return (
         <div 
-            // ref={lastMessage ? setRef : null}
+            ref={lastMessage ? setRef : null}
             className={`${msg.user._id === Me._id ? classes.myMessage : classes.usersMessage}`}
             
         >
