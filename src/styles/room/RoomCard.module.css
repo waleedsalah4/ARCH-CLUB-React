@@ -234,7 +234,9 @@
     display: flex;
   }
   
-
+.rotateHand{
+  transform: rotate(180deg);
+}
   
   
 .recordRoom{

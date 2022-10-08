@@ -3,8 +3,9 @@ import { useDispatch } from "react-redux";
 import { closeFixedModal } from "../../store/reducers/fixedModalSlice";
 import { closeModal } from "../../store/reducers/modalSlice";
 import { socket } from "../../store/actions";
-import FeedBack from '../utilities/FeedBack';
+import { Toast } from '../utilities/sweetAlert';
 import AgoraRTC from "agora-rtc-sdk-ng";
+
 import {
   client,
   ac,
@@ -25,6 +26,13 @@ import {
 import RoomCard from "./RoomCard";
 import MiniRoom from "./MiniRoom";
 
+import adminLeftAudio from '../../assets/audio/adminLeft.wav';
+import userBecomeAudiencAudio from '../../assets/audio/userBecomeAudienc.wav';
+import userBecomeSpeakerAudio from '../../assets/audio/userBecomeSpeaker.wav';
+import userEnterAudio from '../../assets/audio/userEnter.wav';
+import userLeftAudio from '../../assets/audio/userLeft.wav';
+
+
 let Me = {};
 export default function Room(props) {
   const dispatch = useDispatch();
@@ -38,7 +46,6 @@ export default function Room(props) {
     isAskedState: false,
     isRecording: false,
   });
-  const [msg, setMsg] = useState({})
   const [collapse, setCollapse] = useState(true);
 
   const toggleCollapse = () => setCollapse(!collapse);
@@ -174,12 +181,12 @@ export default function Room(props) {
 
 
     socket.on("connect", () => {
-      console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+      //console.log(socket.id); // x8WIv7-mJelg7on_ALbx
     });
 
     socket.on("errorMessage", (msg) => {
-      console.log(msg);
-      // handleErrorMsg(msg)
+      // console.log(msg);
+      handleErrorMsg(msg)
     });
 
     socket.on("disconnect", async (reason) => {
@@ -269,6 +276,7 @@ export default function Room(props) {
         ...prevState,
         audience: [user, ...prevState.audience],
       }));
+      playAudio(userEnterAudio)
     });
 
     socket.on("userLeft", (user) => {
@@ -280,6 +288,7 @@ export default function Room(props) {
           (usr) => usr._id !== user._id
         ),
       }));
+      playAudio(userLeftAudio)
     });
 
     socket.on("userAskedForPerms", (user) => {
@@ -312,7 +321,7 @@ export default function Room(props) {
         audience: prevState.audience.filter((usr) => usr._id !== user._id),
         brodcasters: [...prevState.brodcasters, user],
       }));
-
+      playAudio(userBecomeSpeakerAudio)
       //change his role when adding agora
       if (user._id === Me._id) {
         agoraState.role = "host";
@@ -345,6 +354,8 @@ export default function Room(props) {
         ),
         audience: [...prevState.audience, user],
       }));
+
+      playAudio(userBecomeAudiencAudio)
 
       //change his role when adding agora
       if (user._id === Me._id) {
@@ -380,11 +391,18 @@ export default function Room(props) {
     });
 
     socket.on("adminLeft", () => {
-      console.log("admin left");
+      playAudio(adminLeftAudio)
+      Toast.fire({
+        icon: 'info',
+        title: 'admin left the room the room will be ended in one minute if add admin did not join back to room'
+      })
     });
 
     socket.on("roomEnded", () => {
-      console.log("room ended");
+      Toast.fire({
+        icon: 'info',
+        title: 'room ended'
+      })
       audioTracks = []
       leave();
       setAvailableRoom(null);
@@ -414,26 +432,54 @@ export default function Room(props) {
 
   const handleErrorMsg = (msg) => {
     if(msg.includes("tried to join room twice")){
-      setMsg({type: 'error', msg : 'tried to join room twice'});
+      Toast.fire({
+        icon: 'error',
+        title: 'you tried to join room twice'
+      })
     }
-    if(msg.includes('You are already in room')){
-      setMsg({type: 'error', msg: 'You are already in room'})
+    else if(msg.includes('You are already in room')){
+      Toast.fire({
+        icon: 'error',
+        title: 'You are already in room'
+      })
     }
-    if(msg.includes("active room you created")){
-      setMsg({type: 'error', msg: 'cannot do this action because there is an active room you created'});
+    else if(msg.includes("active room you created")){
+      Toast.fire({
+        icon: 'error',
+        title: 'cannot do this action because there is an active room you created'
+      })
     }
-    if(msg.includes("Duplicate field value")){
-      setMsg({type: 'error', msg: 'there is an active room with this name please check different name'} );
+    else if(msg.includes("Duplicate field value")){
+      Toast.fire({
+        icon: 'error',
+        title: 'there is an active room with this name please check different name'
+      })
     }
-    if(msg.includes("not found")){
-      setMsg({type: 'error',msg:'there is no room with this id'});
+    else if(msg.includes("not found")){
+      Toast.fire({
+        icon: 'error',
+        title: 'there is no room with this id'
+      })
     }
-    if(msg.includes("Invalid input data")){
-      setMsg({type: 'error',msg:'Invalid input data. Name must be en-US alphanumeric'});
+    else if(msg.includes("Invalid input data")){
+      Toast.fire({
+        icon: 'error',
+        title: 'Invalid input data. Name must be en-US alphanumeric'
+      })
     }  
-    
-}
+    else {
+      Toast.fire({
+        icon: 'error',
+        title: msg
+      })
+    } 
+  }
 
+  const playAudio = (src) =>{
+    let audio = new Audio(src);
+    audio.play();
+    
+  }
   return (
     <>
       {availableRoom && (
@@ -455,13 +501,6 @@ export default function Room(props) {
           />
         </>
       )}
-
-      {/* {msg && <FeedBack openStatus={true} message={msg.msg} status={msg.type}/>} */}
     </>
   );
 }
-
-// export const createAfuckenRoom = (data) => {
-//   console.log(data)
-//   console.log(passedSocket)
-// }

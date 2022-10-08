@@ -1,5 +1,6 @@
 import React from "react";
 import { recorder, toggleMic } from "./agoraSetting";
+import { Toast } from "../utilities/sweetAlert";
 import { Button, IconButton } from "@mui/material";
 import MicIcon from "@mui/icons-material/Mic";
 import MicOffIcon from "@mui/icons-material/MicOff";
@@ -31,6 +32,21 @@ function RoomFooter({ state, setState, socket, setAvailableRoom,Me }) {
   };
   const handleAskForPerms = () => {
     socket.emit("askForPerms");
+    setState((prevState) => ({
+      ...prevState,
+      isAskedState: !state.isAskedState,
+    }));
+    if(state.isAskedState){
+      Toast.fire({
+        icon: 'info',
+        title: 'you take your hand down`'
+      })
+    } else {
+      Toast.fire({
+        icon: 'info',
+        title: 'you asked to speak'
+      })
+    }
   };
   const handleMute = () => {
     toggleMic(state.isMuted);
@@ -97,7 +113,11 @@ function RoomFooter({ state, setState, socket, setAvailableRoom,Me }) {
           )}
 
           {state.isListener && !state.isAdmin && (
-            <IconButton aria-label="hand" onClick={handleAskForPerms}>
+            <IconButton 
+              aria-label="hand" 
+              onClick={handleAskForPerms}
+              className={`${state.isAskedState && classes.rotateHand}`}
+            >
               <PanToolIcon />
             </IconButton>
           )}

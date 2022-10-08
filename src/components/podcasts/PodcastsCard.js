@@ -5,6 +5,7 @@ import { openModal } from '../../store/reducers/modalSlice';
 import { openFixedModal } from '../../store/reducers/fixedModalSlice';
 import { likePod, disLikePod } from '../../store/reducers/likeSlice';
 import { limiTitle } from '../utilities/Helpers';
+import { Toast } from '../utilities/sweetAlert';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
@@ -31,7 +32,11 @@ const PodcastsCard = ({podcast, otherUser}) => {
     
     const handlePlayerModal = () => {
         if(isRoomOpen) {
-            console.log('can not open the podcast as there is a room running')
+            // console.log('can not open the podcast as there is a room running')
+            Toast.fire({
+                icon: 'info',
+                title: 'can not open the podcast as there is a room running'
+            })
         } else{
             //close old player first if it was running
             dispatch(openFixedModal({

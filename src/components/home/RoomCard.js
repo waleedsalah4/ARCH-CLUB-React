@@ -3,6 +3,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import { openFixedModal } from '../../store/reducers/fixedModalSlice';
 import { Button,Avatar } from '@mui/material';
 import { socket } from '../../store/actions';
+import { Toast } from '../utilities/sweetAlert';
 import classes from '../../styles/home/RoomCard.module.css';
 
 function RoomCard({room}) {
@@ -26,7 +27,10 @@ function RoomCard({room}) {
             }))
             
         } else{
-            console.log('can not open the room as there is a podcast running')
+            Toast.fire({
+                icon: 'info',
+                title: 'can not open the room as there is a podcast running'
+            })
         }
         
     }
