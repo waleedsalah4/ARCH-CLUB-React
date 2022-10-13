@@ -20,11 +20,9 @@ function Profile() {
     const dispatch = useDispatch()
     const {userData, isLoading, profileError,
         followUserError} = useSelector(state=> state.profileSlice)
-    // console.log(userData)
-    // console.log(isMe)
+        
     useEffect(()=>{
         if( params.id && params.id === mydata._id){
-            // console.log('navigate =>>>')
             navigate('/profile')
         } else{
             if(isMe){
@@ -34,7 +32,6 @@ function Profile() {
             }
         }
     },[dispatch, params])
-    // console.log(userData)
 
     return (
         <>

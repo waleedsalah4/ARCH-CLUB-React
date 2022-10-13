@@ -14,7 +14,6 @@ export default function DiscoverUsers() {
 
     useEffect(()=> {
         dispatch(discoverUsersReq(1))
-        // console.log('useEffect runs')
     },[dispatch])
 
 

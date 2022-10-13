@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
 
-// const token = JSON.parse(localStorage.getItem('user-token'))
 
 export const getActiveRooms = createAsyncThunk(
   'home/getActiveRooms', 

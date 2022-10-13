@@ -6,6 +6,7 @@ import FormInput from '../../register/FormInput';
 import {Formik, Form} from 'formik';
 import * as Yup from 'yup';
 
+import FeedBack from '../../utilities/FeedBack';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -19,7 +20,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 function CreateEvent() {
     const dispatch = useDispatch()
-    const {isLoading} = useSelector(state=> state.CreateEventSlice)
+    const {isLoading,createError} = useSelector(state=> state.CreateEventSlice)
     const [selectedDateTime, setSelectedDateTime] = useState(new Date())
 
     const validate = Yup.object({
@@ -110,6 +111,8 @@ function CreateEvent() {
                     </Form>
                 </Formik>
             </Box>
+            {createError && <FeedBack openStatus={true} message={createError} status='error'/>}
+        
         </>
     )
 }

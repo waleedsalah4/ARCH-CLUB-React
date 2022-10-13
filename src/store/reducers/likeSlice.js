@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
 
-// const token = JSON.parse(localStorage.getItem('user-token'))
 
 export const likePod = createAsyncThunk(
   'like/likePods', 
@@ -72,12 +71,10 @@ const likeSlice = createSlice({
       [likePod.fulfilled]: (state, action) => {
         state.isLoading = false; 
         state.like = action.payload;
-        // console.log(action.payload)
       },
       [likePod.rejected]: (state, action) => {
         state.isLoading = false;
         state.likeError = action.payload;
-        console.log(action.payload)
       },  
 
       [disLikePod.pending]: (state, action) => {
@@ -87,12 +84,10 @@ const likeSlice = createSlice({
       [disLikePod.fulfilled]: (state, action) => {
         state.isLoading = false; 
         state.like = action.payload.message;
-        // console.log(action.payload)
       },
       [disLikePod.rejected]: (state, action) => {
         state.isLoading = false;
-        state.likeError = action.payload.message;
-        console.log(action.payload)
+        state.likeError = action.payload;
       }, 
     },
 });

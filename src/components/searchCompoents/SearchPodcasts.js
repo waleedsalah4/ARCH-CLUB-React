@@ -13,7 +13,7 @@ function SearchPodcasts({value}) {
         isLoadingPodcasts,
         podcastsError,
     } = useSelector(state => state.SearchSlice)
-    // console.log(podcasts)
+    
     useEffect(() => {
         dispatch(searchForPodcasts({page: 1,value}))
     },[dispatch])

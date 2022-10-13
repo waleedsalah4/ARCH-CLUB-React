@@ -129,5 +129,4 @@ const EditEvent = ({event}) => {
     );
 };
 
-// export default React.memo(EditEvent);
 export default EditEvent;

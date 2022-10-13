@@ -5,7 +5,6 @@ import { ErrorMessage, useField } from 'formik';
 
 
 function FormInput(props) {
-    // const theme = useTheme();
     const [field, meta] = useField(props)
     const {label, onChange, errorMessage, ...inputProps} = props
     return (

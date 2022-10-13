@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import { openFixedModal } from '../../../store/reducers/fixedModalSlice';
 import FormInput from '../../register/FormInput';
+import { closeModal } from '../../../store/reducers/modalSlice';
 import {Formik, Form, Field} from 'formik';
 import * as Yup from 'yup';
 import { socket } from '../../../store/actions';
+import { Toast } from '../../utilities/sweetAlert';
 
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Switch from '@mui/material/Switch';
-// import { createAfuckenRoom } from '../../room/Room';
 
 
 const categories = [
@@ -69,14 +70,12 @@ function CreateRoom() {
                 isPlayerOpen: false
             }))
         } else{
-            console.log('can not create room as there is podcasts running')
+            dispatch(closeModal())
+            Toast.fire({
+                icon: 'info',
+                title: 'can not create room as there is podcasts running'
+              })
         }
-        
-        // console.log({ 
-        //     ...data,
-        //     status: statustype,
-        //     isRocording: toggleRecord
-        // })
 
     }
 

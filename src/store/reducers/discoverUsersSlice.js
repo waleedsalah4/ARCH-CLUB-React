@@ -2,8 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { followUser,unFollowUser } from './FollowUsersSlice';
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
 
-// const token = JSON.parse(localStorage.getItem('user-token'))
-
 export const discoverUsersReq = createAsyncThunk(
   'discoverPodcasts/discoverUsersReq', 
     async (page, thunkAPI) => {

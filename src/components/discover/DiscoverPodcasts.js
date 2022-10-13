@@ -1,7 +1,6 @@
 import React,{ useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { getAllPodcasts } from '../../store/reducers/discoverPodcastsSlice';
-// import { podcastsList } from '../dummyfile';
 import PodcastsCard from '../podcasts/PodcastsCard';
 import FeedBack from '../utilities/FeedBack';
 import Button from '@mui/material/Button';
@@ -10,10 +9,9 @@ import Loader from '../utilities/Loader';
 const DiscoverPodcasts = () => {
     const dispatch = useDispatch();
     const {discoverPodcasts,discoverPodsPage, isLoading, disPodError,loadMoreVisible} = useSelector(state => state.discoverPodcastsSlice)
-    // console.log(discoverPodcasts)
+
     useEffect(()=> {
         dispatch(getAllPodcasts(1))
-        // console.log('useEffect runs')
     },[dispatch])
 
 

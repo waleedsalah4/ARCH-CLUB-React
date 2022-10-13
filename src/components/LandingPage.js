@@ -14,7 +14,6 @@ export default function LandingPage() {
   // temp Auth
   const navigate = useNavigate()
   const token = JSON.parse(localStorage.getItem('user-token') || false)
-  // console.log(token)
   useEffect(()=> {
     if(token) {
       navigate('/home')
@@ -27,11 +26,7 @@ export default function LandingPage() {
         <AppBar position="static" color='default'>
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              {/* <Avatar
-                alt="Remy Sharp"
-                src="/static/images/avatar/1.jpg"
-                sx={{ width: 56, height: 56}}
-              /> */}
+              
               <Logo />
             </Typography>
             <Link to='/signin' style={{textDecoration: 'none', marginRight: '0.5rem'}}>
@@ -54,7 +49,7 @@ export default function LandingPage() {
               </p>
 
               <a 
-                href="https://github.com/AhmedHamed-20/club_cast/releases/download/v1.0/app-armeabi-v7a-release.apk" 
+                href="https://github.com/AhmedHamed-20/club_cast/releases/download/v1.2.2/app-armeabi-v7a-release.apk" 
                 download="archclub" 
                 className={`${classes.gradientButton} ${classes.gradientButtonEffect}`}>
                 GET OUR APP

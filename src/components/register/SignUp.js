@@ -70,7 +70,6 @@ function SignUp() {
               }}
               validationSchema={validate}
               onSubmit={values => {
-                console.log(values)
                 dispatch(signup( values))
               }}
             >

@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { closeModal } from './modalSlice';
 import { followUser,unFollowUser } from './FollowUsersSlice';
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
-// const token = JSON.parse(localStorage.getItem('user-token'))
 
 export const getUser = createAsyncThunk(
   'profile/getUser', 
@@ -199,7 +198,6 @@ const profileSlice = createSlice({
       [getMe.rejected]: (state, action) => {
         state.isLoading = false;
         state.profileError = action.payload;
-        // console.log(action.payload)
       },
 
       //getUser up
@@ -239,9 +237,7 @@ const profileSlice = createSlice({
         ,
         [followUser.fulfilled]: (state, action) => {
           state.followUserLoading= false;
-          // console.log(action.payload)
           if(action.payload.type === 'userData') {
-            // console.log('how the fuck i get in')
             let userInfo = state.userData;
             userInfo.isFollowed = true
             state.userData = userInfo;

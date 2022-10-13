@@ -16,7 +16,6 @@ export const getOldMassegs = createAsyncThunk(
           });
           const res = await response.json();
           if(res.status !== 'fail'){
-            console.log(res)
             return {res: res,chat: res.data, page: data.page}
           } else {
             return rejectWithValue(res.message);
@@ -64,7 +63,6 @@ const roomChatSlice = createSlice({
                 })
             }else{
                 action.payload.chat.map(res => state.roomMessages.unshift(res))
-                // state.roomMessages = [...state.roomMessages,...action.payload.chat]
             }
             state.currPage = action.payload.page + 1;
             state.roomMessages.length < action.payload.res.docsCount ? state.loadMoreVisible = true : state.loadMoreVisible = false;

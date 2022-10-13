@@ -41,7 +41,6 @@ function UpdatePassword() {
         dispatch(changePassword(values)).then((res)=>{
             if(res.payload.status === 'success'){
 
-                console.log(res)
                 loggingOut()
                 navigate('/')
             }

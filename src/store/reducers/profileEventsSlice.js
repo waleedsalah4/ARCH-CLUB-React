@@ -3,8 +3,6 @@ import { closeModal } from './modalSlice';
 
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
 
-// const token = JSON.parse(localStorage.getItem('user-token'))
-
 export const getMyEvents = createAsyncThunk(
   'profileEvents/getMyEvents', 
     async (page, thunkAPI) => {
@@ -183,7 +181,6 @@ const profileEventsSlice = createSlice({
       [getOtherUserEvents.rejected]: (state, action) => {
         state.isLoading = false;
         state.profileEventError = action.payload;
-        console.log(action)
         state.profileEventsPage = action.meta.arg.page;
         state.loadMoreVisible = false
       },

@@ -5,6 +5,7 @@ import FormInput from '../../register/FormInput';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 
+import FeedBack from '../../utilities/FeedBack';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -19,7 +20,7 @@ const categories = [
 function UploadPodcast() {
 
     const dispatch = useDispatch()
-    const {isLoading} = useSelector(state => state.uploadPodcastSlice)
+    const {isLoading,createPodError} = useSelector(state => state.uploadPodcastSlice)
 
     const validate = Yup.object({
         podcastName: Yup.string()
@@ -99,6 +100,8 @@ function UploadPodcast() {
                     </Form>)}
                 </Formik>
             </Box>
+            {createPodError && <FeedBack openStatus={true} message={createPodError} status='error'/>}
+        
         </>
     )
 }

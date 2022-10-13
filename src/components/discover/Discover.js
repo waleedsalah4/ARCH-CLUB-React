@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-// import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
@@ -50,22 +49,18 @@ function a11yProps(index) {
 }
 
 const Discover =() => {
-  const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+    const theme = useTheme();
+    const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
-//   const handleChangeIndex = (index) => {
-//     setValue(index);
-//   };
 
     return (
         <Box 
             sx={{ 
                 bgcolor: 'background.paper', 
-                //width: 500 
             }}
         >
         <AppBar 
@@ -83,11 +78,6 @@ const Discover =() => {
             <Tab label="Users" {...a11yProps(1)} />
             </Tabs>
         </AppBar>
-        {/* <SwipeableViews
-            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-            index={value}
-            onChangeIndex={handleChangeIndex}
-        > */}
             <TabPanel value={value} index={0} dir={theme.direction}>
                 <DiscoverPodcasts />
             </TabPanel>
@@ -96,7 +86,6 @@ const Discover =() => {
                 <DiscoverUsers  />
 
             </TabPanel>
-        {/* </SwipeableViews> */}
         </Box>
     );
 }

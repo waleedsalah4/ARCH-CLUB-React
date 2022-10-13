@@ -8,22 +8,17 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import PanToolIcon from "@mui/icons-material/PanTool";
 
 import classes from "../../styles/room/RoomCard.module.css";
-// import { useDispatch } from 'react-redux';
-// import {closeFixedModal} from '../../store/reducers/fixedModalSlice';
 
 function RoomFooter({ state, setState, socket, setAvailableRoom,Me }) {
-  // const dispatch = useDispatch()
-  // console.log("state =>", state);
+
   const handleLeaveroom = () => {
     socket.disconnect();
-    // dispatch(closeFixedModal())
   };
 
   const handleEndroom = () => {
     if (state.isRecording) {
       recorder.stop();
     }
-    // console.log('==>recordState====>',state.isRecording)
     socket.emit("endRoom");
   };
 

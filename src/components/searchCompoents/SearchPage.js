@@ -17,7 +17,7 @@ function SearchPage() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-    // console.log(params.text)
+    
     return (
         <>
         <Box sx={{ 

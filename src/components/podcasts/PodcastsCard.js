@@ -32,7 +32,6 @@ const PodcastsCard = ({podcast, otherUser}) => {
     
     const handlePlayerModal = () => {
         if(isRoomOpen) {
-            // console.log('can not open the podcast as there is a room running')
             Toast.fire({
                 icon: 'info',
                 title: 'can not open the podcast as there is a room running'

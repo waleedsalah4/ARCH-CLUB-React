@@ -2,14 +2,12 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { closeModal,openModal } from './modalSlice';
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
 
-// const token = JSON.parse(localStorage.getItem('user-token'))
 
 //req 1
 export const generateSignature = createAsyncThunk(
   'uploadPodcast/generateSignature', 
     async (data, thunkAPI) => {
       const { rejectWithValue, dispatch } = thunkAPI;
-      // console.log(data)
       try {
         const response = await fetch(`${url}/api/v1/podcasts/generateSignature`, {
             method: 'GET',
@@ -24,7 +22,6 @@ export const generateSignature = createAsyncThunk(
               ...data,
               ...res
             }
-            // console.log(dataObj)
             dispatch(uploadToCloudinary(dataObj))
           return res
         } else {
@@ -43,7 +40,6 @@ export const uploadToCloudinary = createAsyncThunk(
     'uploadPodcast/uploadToCloudinary', 
       async (data, thunkAPI) => {
         const { rejectWithValue, dispatch } = thunkAPI;
-        // console.log(data)
         try {
 
             let formdata = new FormData();
@@ -124,7 +120,6 @@ const uploadPodcastSlice = createSlice({
     name: 'uploadPodcast',
     initialState: { 
         uploadedPodcast: '',
-        // finishUpload: false,
         isLoading: false, 
         createPodError: null ,
     },
@@ -133,54 +128,43 @@ const uploadPodcastSlice = createSlice({
     extraReducers: {
         [generateSignature.pending]: (state, action) => {
             state.isLoading = true;
-            // state.finishUpload = false;
+            state.createPodError = null;
         },
         [generateSignature.fulfilled]: (state, action) => {
             state.isLoading = true; 
             state.uploadedPodcast = action.payload;
-            // state.finishUpload = false;
-            // console.log(action.payload)
         },
         [generateSignature.rejected]: (state, action) => {
             state.isLoading = false;
             state.createPodError = action.payload;
-            // state.finishUpload = false;
-            console.log(action.payload)
         },  
         //cloudinaryState
         [uploadToCloudinary.pending]: (state, action) => {
             state.isLoading = true;
-            // state.finishUpload = false;
+            state.createPodError = null;
         },
         [uploadToCloudinary.fulfilled]: (state, action) => {
             state.isLoading = true; 
-            state.uploadedPodcast = action.payload
-            // state.finishUpload = false;
-            // console.log(action.payload)
+            state.uploadedPodcast = action.payload;
         },
         [uploadToCloudinary.rejected]: (state, action) => {
             state.isLoading = false;
-            // state.finishUpload = false;
             state.createPodError = action.payload;
-            console.log(action.payload)
         },
 
         //createState
         [createPodcast.pending]: (state, action) => {
             state.isLoading = true;
-            // state.finishUpload = false;
+            state.createPodError = null;
         },
         [createPodcast.fulfilled]: (state, action) => {
             state.isLoading = false; 
-            // state.finishUpload = true;
+            
             state.uploadedPodcast = action.payload
-            // console.log(action.payload)
         },
         [createPodcast.rejected]: (state, action) => {
             state.isLoading = false;
-            // state.finishUpload = false;
             state.createPodError = action.payload;
-            console.log(action.payload)
         },
 
     },

@@ -63,10 +63,8 @@ export default function ProfileTabs({isMe, userData}) {
 
   return (
     <>
-    <Box sx={{ 
-      //maxWidth: { xs: 320, sm: 480 }, 
+    <Box sx={{  
       bgcolor: 'background.paper' }}>
-      {/* <AppBar position="static"> */}
         <Tabs
           value={value}
           onChange={handleChange}
@@ -77,9 +75,7 @@ export default function ProfileTabs({isMe, userData}) {
         >
           <Tab label="Podcasts" {...a11yProps(0)} />
           <Tab label="Events" {...a11yProps(1)} />
-          {/* <Tab label="Likes" {...a11yProps(2)} /> */}
         </Tabs>
-      {/* </AppBar> */}
     </Box>
     <Box>
       <TabPanel value={value} index={0} dir={theme.direction}>
@@ -88,9 +84,7 @@ export default function ProfileTabs({isMe, userData}) {
       <TabPanel value={value} index={1} dir={theme.direction}>
           <ProfileEvents otherUser={!isMe} userData={userData} />
       </TabPanel>
-      {/* <TabPanel value={value} index={2} dir={theme.direction}>
-          likes
-      </TabPanel> */}
+      
     </Box>
     </>
   );

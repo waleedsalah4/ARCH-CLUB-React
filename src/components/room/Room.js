@@ -34,10 +34,10 @@ import userLeftAudio from '../../assets/audio/userLeft.wav';
 
 
 let Me = {};
+let roomInfo = {};
 export default function Room(props) {
   const dispatch = useDispatch();
   const [availableRoom, setAvailableRoom] = useState(null);
-  // const [Me, setMe] = setState({})
   const [state, setState] = useState({
     isAdmin: false,
     isSpeaker: false,
@@ -52,14 +52,13 @@ export default function Room(props) {
 
   useEffect(() => {
     
-    let roomInfo = {};
+    
     let timerCounter = 0;
 
     let handleUserPublished = async(user, mediaType) => {
       const id = user.uid;
       remoteUsers[id] = user;
       //-------------
-      console.log("<============ userJoined ======>");
       await client.subscribe(user, "audio");
       user.audioTrack.play();
 
@@ -73,15 +72,13 @@ export default function Room(props) {
       } else {
         audioTracks.push(user.audioTrack.getMediaStreamTrack());
       }
-      console.log("AudioTracks ======>", audioTracks);
-      console.log("Successfully subscribed.");
+      
 
       //-----------
       setAvailableRoom((prevState) => ({
         ...prevState,
         brodcasters:  prevState.brodcasters.map(usr => {
           if(usr.uid === user.uid){
-            // user.isMuted = evt._audio_muted_;
             return {...usr, isMuted: user._audio_muted_}
           }
           return usr
@@ -105,24 +102,21 @@ export default function Room(props) {
       // join the channel
       if (agoraState.role === "host") {
         // create local audio and video tracks
-        // console.log(AgoraRTC);
         localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
         await client.publish(Object.values(localTracks));
         audioTracks.push(localTracks.audioTrack.getMediaStreamTrack());
         if (ac.state === "suspended") {
             ac.resume();
         }
-        console.log('if host add audio track', audioTracks)
       }
     
       client.on("user-published", handleUserPublished);
       client.on("user-left", handleUserLeft);
       client.on("user-mute-updated", function (evt) {
-        console.log("mute audio:=====>", evt);
+        // console.log("mute audio:=====>", evt);
       });
     
       client.on("user-unpublished", function (evt) {
-        console.log('user un published ====>', evt)
         setAvailableRoom((prevState) => ({
           ...prevState,
           brodcasters:  prevState.brodcasters.map(user => {
@@ -136,10 +130,8 @@ export default function Room(props) {
       });
     
       client.on("volume-indicator", (volumes) => {
-        // console.log(volumes)
         volumes.forEach(volume => {
           if(volume.level > 15){
-            // console.log('if ==> runs')
             setAvailableRoom((prevState) => ({
               ...prevState,
               brodcasters: prevState.brodcasters.map((brod) => {
@@ -152,7 +144,6 @@ export default function Room(props) {
 
           }
           else if(volume.level < 15){
-            // console.log('else if ==> runs')
             setAvailableRoom((prevState) => ({
               ...prevState,
               brodcasters: prevState.brodcasters.map((brod) => {
@@ -172,25 +163,21 @@ export default function Room(props) {
    
 
     let changeRole = async (token) => {
-      // await client.leave();
+      await client.leave();
 
-      leave();
-      console.log('roomInfo==>',roomInfo)
+      // leave();
       join(roomInfo.appid, token, roomInfo.channelName, roomInfo.uid);
     };
 
 
     socket.on("connect", () => {
-      //console.log(socket.id); // x8WIv7-mJelg7on_ALbx
     });
 
     socket.on("errorMessage", (msg) => {
-      // console.log(msg);
       handleErrorMsg(msg)
     });
 
     socket.on("disconnect", async (reason) => {
-      console.log(reason);
       if (reason === "transport close" && state.isAdmin) {
         if (state.isRecording) {
           await recorder.stop();
@@ -206,15 +193,21 @@ export default function Room(props) {
               dispatch(closeFixedModal());
             }
             timerCounter += 3;
-            console.log("please check your internet connection");
+            Toast.fire({
+              icon: 'info',
+              title: 'please check your internet connection'
+            })
           }
         }, 3000);
-      } else if (reason.includes("io server disconnect")) {
+      } else if (reason.includes("io server disconnect") || reason.includes("io client disconnect") ) {
         leave();
         dispatch(closeFixedModal());
         setAvailableRoom(null);
       } else {
-        console.log(reason);
+        Toast.fire({
+          icon: 'info',
+          title: reason
+        })
         leave();
         dispatch(closeFixedModal());
         setAvailableRoom(null);
@@ -222,12 +215,10 @@ export default function Room(props) {
     });
 
     socket.on("createRoomSuccess", async(user, room, token) => {
-      console.log(user, room, token);
       user.isMuted = false;
       user.isAdmin = true;
       user.isTalking = false;
       Me = { ...user };
-      // roomInfo = {...room}
       room.brodcasters = [user];
       dispatch(closeModal());
       setState((prevState) => ({
@@ -237,7 +228,6 @@ export default function Room(props) {
         isRecording: room.isRecording,
       }));
       setAvailableRoom(room);
-      // setMe({...user})
 
       agoraState.role = "host";
       await join(room.APP_ID, token, room.name, user.uid);
@@ -252,7 +242,6 @@ export default function Room(props) {
       room.admin.isAdmin = true;
       room.brodcasters = [room.admin, ...room.brodcasters];
       room.brodcasters.map(bro => bro.isMuted = true);
-      console.log("room => ", room);
       Me = { ...user };
       if(room.status === 'private'){
         dispatch(closeModal());
@@ -269,7 +258,6 @@ export default function Room(props) {
     });
 
     socket.on("userJoined", (user) => {
-      console.log("userJoined", user);
       user.isAsked = false;
       user.isMuted = false;
       setAvailableRoom((prevState) => ({
@@ -280,7 +268,6 @@ export default function Room(props) {
     });
 
     socket.on("userLeft", (user) => {
-      console.log("user left", user);
       setAvailableRoom((prevState) => ({
         ...prevState,
         audience: prevState.audience.filter((usr) => usr._id !== user._id),
@@ -292,7 +279,6 @@ export default function Room(props) {
     });
 
     socket.on("userAskedForPerms", (user) => {
-      console.log("userAskedForPerms", user);
       setAvailableRoom((prevState) => ({
         ...prevState,
         audience: prevState.audience.map((aud) => {
@@ -305,7 +291,6 @@ export default function Room(props) {
     });
 
     socket.on("userChangedToBrodcaster", (user) => {
-      console.log("user changed to Brodcaster", user);
       user.isAsked = false;
       user.isMuted = false;
       user.isTalking = false;
@@ -325,26 +310,23 @@ export default function Room(props) {
       //change his role when adding agora
       if (user._id === Me._id) {
         agoraState.role = "host";
-        console.log("host===================>");
       }
-      // user._id === Me._id ? agoraState.role = 'host' : '';
     });
 
     socket.on("brodcasterToken", async (token) => {
-      // console.log('brodcaster token when user changed from aud to brod', token)
       //only for user who asked
 
       await changeRole(token);
     });
 
     socket.on("userChangedToAudience", (user) => {
-      console.log("user back to be aud", user);
       if (user._id === Me._id) {
         setState((prevState) => ({
           ...prevState,
           isListener: true,
           isSpeaker: false,
           isMuted: false,
+          isAskedState: false
         }));
       }
       setAvailableRoom((prevState) => ({
@@ -364,13 +346,11 @@ export default function Room(props) {
     });
 
     socket.on("audienceToken", async (token) => {
-      // console.log('aud token', token)
 
       await changeRole(token);
     }); // will be only for user ho return be an audience
 
     socket.on("adminReJoinedRoomSuccess", async(user, room,token) => {
-      console.log("admin is back");
       roomInfo = {...room}
       user.isMuted = state.isMuted;
       room.admin.isAdmin = true;
@@ -428,8 +408,6 @@ export default function Room(props) {
     };
   }, [dispatch, state.isAdmin,state.isMuted, state.isRecording]);
 
-  // console.log("room outside the of effect", availableRoom);
-
   const handleErrorMsg = (msg) => {
     if(msg.includes("tried to join room twice")){
       Toast.fire({
@@ -467,12 +445,12 @@ export default function Room(props) {
         title: 'Invalid input data. Name must be en-US alphanumeric'
       })
     }  
-    else {
-      Toast.fire({
-        icon: 'error',
-        title: msg
-      })
-    } 
+    // else {
+    //   Toast.fire({
+    //     icon: 'error',
+    //     title: msg
+    //   })
+    // } 
   }
 
   const playAudio = (src) =>{

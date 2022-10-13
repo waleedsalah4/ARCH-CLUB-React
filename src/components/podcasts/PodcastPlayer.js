@@ -1,9 +1,4 @@
-import React
-// ,{ useState,useRef }
- from 'react';
-// import { useDispatch } from 'react-redux';
-// import { closeFixedModal } from '../../store/reducers/fixedModalSlice';
-
+import React from 'react';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import FastForwardIcon from '@mui/icons-material/FastForward';
@@ -35,11 +30,9 @@ function PodcastPlayer(props) {
                         <KeyboardDoubleArrowUpIcon />
                     </IconButton>
                     <Typography variant='p'>{item.name}</Typography>
-                {/* </div>
-                <div> */}
+
                     <IconButton aria-label='play-pause' 
                         onClick={togglePlayPause} 
-                        // className={classes.playPause}
                     >
                         {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
                     </IconButton>
@@ -137,32 +130,20 @@ function PodcastPlayer(props) {
                     >
                         <FavoriteIcon />
                     </div>
-
-                    {/* <button 
-                        className={classes.forwardBackward} 
-                        
-                    > */}
                         <IconButton aria-label='backward 10' onClick={backwardTen}>
                             <FastRewindIcon />
                         </IconButton> 10
-                    {/* </button> */}
 
                     <IconButton aria-label='play-pause' 
                         onClick={togglePlayPause} 
-                        // className={classes.playPause}
                     >
                         {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
                     </IconButton>
 
-                    {/* <button 
-                        
-                        className={classes.forwardBackward}
-                    > */}
                         10 
                         <IconButton aria-label='forward 10' onClick={forwardTen} >
                             <FastForwardIcon />
                         </IconButton>
-                    {/* </button> */}
 
                     <IconButton aria-label="replay" onClick={replayPodcast}>
                         <ReplayIcon />
@@ -175,90 +156,3 @@ function PodcastPlayer(props) {
 }
 
 export default PodcastPlayer
-
-    // ********* that moved to PlayerLogic component *****/
-
-    // const dispatch = useDispatch();
-
-    // const [isPlaying, setIsPlaying] = useState(false);
-    // const [duration, setDuration] = useState(0);
-    // const [currentTime, setCurrentTime] = useState(0);
-    // const [collapse, setCollapse] = useState(true)
-
-    // //reference
-    // const audioPlayer = useRef(); //reference our audio component
-    // const progressBar = useRef(); //reference our progressBar 
-    // const volumeBar = useRef();
-    // const animationRef = useRef(); //reference the animation
-
-    // const onLoadedMetadata = () => {
-    //     const seconds = Math.floor(audioPlayer.current.duration);
-    //     setDuration(seconds);
-    //     progressBar.current.max = seconds;
-    // };
-
-    // const calculateTime = (secs) => {
-    //     const minutes = Math.floor(secs / 60);
-    //     const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-    //     const seconds = Math.floor(secs % 60);
-    //     const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-    //     return `${returnedMinutes}:${returnedSeconds}`;
-    // }
-
-    // const togglePlayPause = () => {
-    //     const prevValue = isPlaying;
-    //     setIsPlaying(!prevValue)
-    //     if(!prevValue){
-    //         audioPlayer.current.play();
-    //         animationRef.current = requestAnimationFrame(whilePlaying)
-    //     }else {
-    //         audioPlayer.current.pause();
-    //         cancelAnimationFrame(animationRef.current)
-    //     }
-    // }
-
-   
-
-    // const whilePlaying = () => {
-    //     if(progressBar.current) {
-    //         progressBar.current.value = audioPlayer.current?.currentTime;
-    //     }
-    //     changePlayerCurrentTime();
-    //     animationRef.current = requestAnimationFrame(whilePlaying)
-    // }
-
-    // const changeRange = () => {
-    //     audioPlayer.current.currentTime = progressBar.current.value;
-    //     changePlayerCurrentTime()
-    // }
-
-    // const changePlayerCurrentTime = () => {
-    //     if(progressBar.current) {
-    //         progressBar.current.style.setProperty('--seek-before-width', `${progressBar.current.value / duration * 100}%`)
-    //         setCurrentTime(progressBar.current.value)
-    //     }
-    // }
-
-    // const forwardTen = () => {
-    //     progressBar.current.value = Number(progressBar.current.value) + 10
-    //     changeRange()
-    // }
-    // const backwardTen = () => {
-    //     progressBar.current.value = Number(progressBar.current.value) - 10
-    //     changeRange()
-    // }
-
-    // const changeVolume = () => {
-    //     // console.log(volumeBar.current.value)
-    //     audioPlayer.current.volume = volumeBar.current.value / 100;
-    // }
-
-    // const resetPlayer = () => {
-    //     audioPlayer.current.currentTime = 0
-    //     progressBar.current.value = 0;
-    //     changePlayerCurrentTime();
-    //     togglePlayPause()
-    // }
-
-    // const handleClose = () => dispatch(closeFixedModal());
-    // const ToggleCollapse = () => setCollapse(!collapse);

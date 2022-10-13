@@ -20,7 +20,7 @@ function ForgotPassword() {
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const {emailSent, isLoading, forgotError} = useSelector((state)=> state.forgotSlice)
-  // console.log(token)
+
     useEffect(()=> {
         if(token) {
             navigate('/home')

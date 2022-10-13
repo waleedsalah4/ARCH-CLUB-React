@@ -1,5 +1,4 @@
 import React from 'react';
-// import classes from '../../styles/podcasts/WaveLoader.module.css';
 
 function WaveLoader(props) {
     const {waveLoader, waveLoaderHeight, stroke, strokeWidth} = props;

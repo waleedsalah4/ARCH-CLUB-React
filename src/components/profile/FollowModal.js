@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { closeModal } from '../../store/reducers/modalSlice';
 import { getMyFollowers, getMyFollowing, getUserFollowers, getUserFollowing } from '../../store/reducers/FollowSlice';
 
 import Typography from '@mui/material/Typography';
@@ -27,7 +28,6 @@ function FollowModal(props) {
                 break;
     
             case 'userFollowers':
-                // console.log(data)
                 dispatch(getUserFollowers({id: data.id, page: data.page}))
                 break;
     
@@ -36,7 +36,7 @@ function FollowModal(props) {
                 break;
     
             default:
-                console.log('closeModal');                 
+                dispatch(closeModal())                
         }
     },[dispatch])
 
@@ -45,11 +45,11 @@ function FollowModal(props) {
         followUserError
     } = useSelector((state) => state.FollowSlice)
 
-    // console.log(followList)
+    
 
     useEffect(()=>{
         FetchData(props.text,{page: 1, id: props.id});
-        // console.log('useEffect runs')
+  
     },[FetchData,props.text,props.id])
 
     const fetchMoreData = () =>{

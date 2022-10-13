@@ -12,39 +12,30 @@ import { TextField, IconButton} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import classes from '../../styles/room/RoomChat.module.css';
-// import {messages} from '../dummyfile';
 
 function RoomChat({roomId, Me}) {
     const dispatch = useDispatch()
     const [message, setMessage] = useState('');
-    // const [roomMessages, setRoomMessages] = useState([]);
     const {roomMessages,isLoading,chatError,loadMoreVisible,currPage} = useSelector(state => state.roomChatSlice)
-    // console.log(roomMessages)
+   
     useEffect(() => {
         dispatch(getOldMassegs({id: roomId, page: 1}))
     },[dispatch, roomId])
     useEffect(()=>{
         //Message Created Successfully User that Create the message will listen on
         socket.on("sendMessageSuccess", (messageData) => { 
-            console.log('sendMessageSuccess')
-            // messageData.isMe = true;
             dispatch(addMessage(messageData))
-            // setRoomMessages(roomMessages => [...roomMessages, messageData])
         })
                 
         //another user or users will listen on
         socket.on('message',(messageData) => {
-            // messageData.isMe = false;
-            // setRoomMessages(roomMessages => [...roomMessages, messageData])
             dispatch(addMessage(messageData))
         })   
         
         //Message Removed Successfully:
         //User that Remove his message will listen on
         socket.on('removeMessageSuccess',(messageData) => {
-            //console.log(messageData) // ???????????
             dispatch(removeMessage(messageData))
-            // setRoomMessages(prevState=> prevState.filter(mes => mes._id !== messageData._id))
             dispatch(openModal({name: 'Success', childrenProps:{
                 message: 'message has been deleted successfully'
             }}))
@@ -53,8 +44,6 @@ function RoomChat({roomId, Me}) {
         //another user or users will listen on
         socket.on('messageRemoved',(messageData)=>{
             dispatch(removeMessage(messageData))
-            //console.log(messageData) // ???????????
-            // setRoomMessages(prevState=> prevState.filter(mes => mes._id !== messageData._id))
         })
         return () => {
             socket.off("sendMessageSuccess");
@@ -80,7 +69,6 @@ function RoomChat({roomId, Me}) {
     const handelSendMessage = (e) => {
         e.preventDefault();
         if(message !== ''){
-            // console.log(message)
             socket.emit("sendMessage", {
                 status: 'public',
                 message: message,

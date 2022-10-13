@@ -77,7 +77,6 @@ function PlayerLogic( {item}) {
     }
 
     const changeVolume = () => {
-        // console.log(volumeBar.current.value)
         audioPlayer.current.volume = volumeBar.current.value / 100;
     }
 

@@ -12,7 +12,6 @@ function Podcasts() {
 
     useEffect(()=> {
         dispatch(getMyFollowingPodcasts(1))
-        // console.log('useEffect runs')
     },[dispatch])
 
 

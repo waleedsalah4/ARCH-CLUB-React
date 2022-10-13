@@ -16,7 +16,6 @@ function DeleteAcount() {
 
     const handleDeleteAcount = () => {
         dispatch(deleteAccount()).then(res=>{
-            console.log(res)
             if(res.meta.requestStatus === "fulfilled"){
                 loggingOut()
                 navigate('/')

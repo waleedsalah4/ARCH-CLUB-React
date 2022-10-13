@@ -38,9 +38,6 @@ function EditProfile({data}) {
             dispatch(updateMe(values))
         },
     })
-    // const handleSubmit = (values) => {
-    //     console.log(values)
-    // }
 
     const handleChangePasswordModal = () => {
         dispatch(closeModal())

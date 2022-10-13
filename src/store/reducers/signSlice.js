@@ -108,7 +108,6 @@ const sign = createSlice({
       [login.rejected]: (state, action) => {
         state.isLoading = false;
         state.LogError = action.payload;
-        // console.log(action.payload)
       },
 
       //sign up

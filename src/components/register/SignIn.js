@@ -20,7 +20,7 @@ function SignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {userData, isLoading, LogError} = useSelector((state)=> state.signSlice)
-  // console.log(LogError)
+  
   useEffect(()=>{
     if(userData){
       navigate('/home')

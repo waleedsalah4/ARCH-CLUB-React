@@ -48,7 +48,6 @@ const forgotSlice = createSlice({
       [forgotPassword.rejected]: (state, action) => {
         state.isLoading = false;
         state.forgotError = action.payload;
-        // console.log(action.payload)
       }
     },
 });

@@ -3,7 +3,6 @@ import {closeModal} from './modalSlice';
 import { followUser, unFollowUser } from './FollowUsersSlice';
 const url = 'https://audiocomms-podcast-platform.herokuapp.com';
 
-// const token = JSON.parse(localStorage.getItem('user-token'))
 
 export const getMyFollowers = createAsyncThunk(
   'follow/getMyFollowers', 
@@ -288,7 +287,6 @@ const FollowSlice = createSlice({
       [unFollowUser.fulfilled]: (state, action) => {
         state.followLoading= false;
         if(action.payload.type === 'followModal'){
-          // console.log('how the fuck i get in')
           for (let user of state.followList) {
             if(user.follower?._id === action.payload.id){
                 user.follower.isFollowed = false;
