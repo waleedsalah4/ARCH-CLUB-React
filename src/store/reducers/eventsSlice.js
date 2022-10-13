@@ -51,9 +51,16 @@ const eventsSlice = createSlice({
       },
       [getMyFollowingEvents.fulfilled]: (state, action) => {
         state.isLoading = false; 
-        action.payload.events.map(res =>{
+        if(action.meta.arg === 1){
+          state.events = [];
+          action.payload.events.map(res =>{
             state.events.push(res);
-        })
+          })
+        }else {
+          action.payload.events.map(res =>{
+              state.events.push(res);
+          })
+        }
         state.eventPage++;
         state.events.length < action.payload.result.docsCount ? state.loadMoreVisible = true : state.loadMoreVisible = false
       },

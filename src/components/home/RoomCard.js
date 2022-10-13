@@ -39,7 +39,7 @@ function RoomCard({room}) {
         <div className={classes.room}>
             <div className={classes.roomCard}>
                 <div className={classes.roomTitle}>
-                    <div>
+                    <div className={classes.roomHeader}>
                         <span className={classes.roomName}>{room.name}</span>
                         <span className={classes.roomCategory}>{room.category}</span>
                     </div>

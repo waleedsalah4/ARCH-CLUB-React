@@ -18,10 +18,14 @@
     display: flex;
     justify-content: space-between;
     text-align: start;
+    gap: 2px 5px;
+}
+.roomHeader{
+    max-width: 120px;
 }
 .roomTitle .roomName {
     margin-top: 2px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
 }
 .roomTitle .roomCategory{
@@ -42,6 +46,9 @@
     gap: 5px 20px;
 }
 
+.people{
+    display: flex;
+}
 .userImg{
     width: 50px;
     height: 50px;

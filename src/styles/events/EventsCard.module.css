@@ -3,6 +3,7 @@
     box-shadow: 0px 0px 2px #6a4cff;
     border-radius: 6px;
     text-align: start;
+    max-width: 300px;
 }
 .eventHeader {
     display: flex;
