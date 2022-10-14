@@ -30,9 +30,13 @@ https://github.com/omarbadawy/audiocomms-podcast-api
 # Screenshots
 ![landpage](https://user-images.githubusercontent.com/69516726/195837930-8f80075a-62d2-433b-a15d-3755d709163c.png)
 ![Screenshot 2022-10-13 171935](https://user-images.githubusercontent.com/69516726/195838008-8453f076-88a2-4156-a1a1-21635db2ea4f.png)
+
 ![Screenshot 2022-10-13 172002](https://user-images.githubusercontent.com/69516726/195838038-a6eb1ff0-5444-4b9d-b658-8d68d3931924.png)
+
 ![Screenshot 2022-10-13 172028](https://user-images.githubusercontent.com/69516726/195838066-b667f954-fa6a-413a-b725-b0526b33d2d8.png)
+
 ![Screenshot 2022-10-13 173257](https://user-images.githubusercontent.com/69516726/195838197-11e5e8bf-e2d9-4726-886b-9e3b99bc9eed.png)
+
 ![Screenshot (3)](https://user-images.githubusercontent.com/69516726/195838249-4cf0de3f-1b10-4fcc-a521-ccee65e8c4da.png)
 ![Screenshot 2022-10-13 174934](https://user-images.githubusercontent.com/69516726/195838299-5017aea4-4be8-4635-8226-7b6da66e0449.png)
 ![Screenshot 2022-10-13 174852](https://user-images.githubusercontent.com/69516726/195838318-e761de57-3088-405b-88ec-1e9ffc72b9a6.png)
