@@ -27,6 +27,7 @@ const LazyPodcasts = React.lazy(() => import('./components/podcasts/Podcasts'))
 const LazyDiscover = React.lazy(() => import('./components/discover/Discover'))
 const LazyProfile = React.lazy(() => import('./components/profile/Profile'))
 const LazySearchPage = React.lazy(() => import('./components/searchCompoents/SearchPage'))
+const LazyNotFound = React.lazy(() => import('./components/utilities/NotFound'))
 
 
 
@@ -99,6 +100,7 @@ function App() {
           </React.Suspense>
         } />
         {/* <Route path='/reset-password' element={<ResetPassword />} /> */}
+        <Route path="*" element={<LazyNotFound />} />
       </Routes>
     </>
   )
