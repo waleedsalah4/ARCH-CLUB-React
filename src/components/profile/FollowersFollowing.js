@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import classes from '../../styles/profile/FollowModal.module.css';
 
 function FollowersFollowing({user}) {
+    const getMe = JSON.parse(localStorage.getItem('user-data') || false)
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -40,7 +41,7 @@ function FollowersFollowing({user}) {
                     />
                 </div>
             </div>
-            <div>
+            {user._id !== getMe._id ? <div>
                 <Button 
                     variant={user.isFollowed ? 'contained': 'outlined'}
                     onClick={handleFollowUser}
@@ -48,7 +49,7 @@ function FollowersFollowing({user}) {
                 >
                     {user.isFollowed ? 'Following': 'Follow'}
                 </Button>
-            </div>
+            </div>: ''}
         </div>
     )
 }
