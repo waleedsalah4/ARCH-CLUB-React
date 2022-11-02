@@ -6,6 +6,8 @@ import { socket } from '../../../store/actions';
 import FormInput from '../../register/FormInput';
 import {Formik, Form} from 'formik';
 import * as Yup from 'yup';
+import { Toast } from '../../utilities/sweetAlert';
+import { closeModal } from '../../../store/reducers/modalSlice';
 
 
 import Button from '@mui/material/Button';
@@ -39,7 +41,11 @@ function JoinPrivateRoom() {
                         isPlayerOpen: false
                     }))
                 } else{
-                    console.log('can not create room as there is podcasts running')
+                    dispatch(closeModal())
+                    Toast.fire({
+                        icon: 'info',
+                        title: 'can not create room as there is podcasts running'
+                    })
                 }
             }
         })
