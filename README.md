@@ -2,7 +2,8 @@
 it's a social media built on voice ✔👌
 
 <img src="https://user-images.githubusercontent.com/72945669/175784662-35e4d785-e76a-40fd-b162-0caf7e82511a.png" width="280">
-# NOTE
+
+# Note
 The server is down for now so you might not be able to test the app
 heres a recorded video for the app =>
 <a href='https://drive.google.com/file/d/1G_Sm_YMlgbSp7fd3JtKMzM284Cj-dUgC/view?usp=share_link'>video</a>
