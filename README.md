@@ -5,7 +5,7 @@ it's a social media built on voice ✔👌
 
 # Note
 The server is down for now so you might not be able to test the app
-heres a recorded video for the app =>
+here's a recorded video for the app =>
 <a href='https://drive.google.com/file/d/1G_Sm_YMlgbSp7fd3JtKMzM284Cj-dUgC/view?usp=share_link'>video</a>
 
 # Feature
