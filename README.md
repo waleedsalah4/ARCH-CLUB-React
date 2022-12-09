@@ -1,38 +1,40 @@
 # Live interactive voice stream and podcast app
+
 it's a social media built on voice ✔👌
 
 <img src="https://user-images.githubusercontent.com/72945669/175784662-35e4d785-e76a-40fd-b162-0caf7e82511a.png" width="280">
 
-# Note
-The server is down for now so you might not be able to test the app
-here's a recorded video for the app =>
-<a href='https://drive.google.com/file/d/1G_Sm_YMlgbSp7fd3JtKMzM284Cj-dUgC/view?usp=share_link'>video</a>
-
 # Feature
-- create public and private live voice streaming rooms 
-- ability to record your rooms 
+
+- create public and private live voice streaming rooms
+- ability to record your rooms
 - text chat in room
-- admin can accept someone request to become speaker or not 
+- admin can accept someone request to become speaker or not
 - admin can return any speaker to listener part
 - any user can know if admin record the room or not
-- create,update and know upcoming events  
-- follow and discover your favourite people 
+- create,update and know upcoming events
+- follow and discover your favourite people
 - listen, upload ,play and download podcasts
-- interaction with any podcast with likes 
+- interaction with any podcast with likes
 - edit your profile information (photo-name-bio-password)
 - search about (users-podcasts-public rooms)
 
 # Technologies
+
 - Reactjs/ react router/ redux toolkit/ formik/ material ui
 - agora (interactive live streaming)
 - socket_io
 
 # mobile app:
+
 https://github.com/AhmedHamed-20/club_cast
 
 # backend:
+
 https://github.com/omarbadawy/audiocomms-podcast-api
+
 # Screenshots
+
 <img src="https://user-images.githubusercontent.com/69516726/195837930-8f80075a-62d2-433b-a15d-3755d709163c.png" />
 <img src="https://user-images.githubusercontent.com/69516726/195838008-8453f076-88a2-4156-a1a1-21635db2ea4f.png" />
 -
