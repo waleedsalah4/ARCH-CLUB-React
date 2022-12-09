@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-const url = 'https://audiocomms-podcast-platform.herokuapp.com';
+import { url } from '../actions/config';
 
 
 export const login = createAsyncThunk(

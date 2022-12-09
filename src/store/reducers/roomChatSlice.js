@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {closeFixedModal} from './fixedModalSlice';
 
-const url = 'https://audiocomms-podcast-platform.herokuapp.com';
+import { url } from '../actions/config';
 
 export const getOldMassegs = createAsyncThunk(
     'roomChat/getOldMassegs', 

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {closeModal} from './modalSlice';
 import { followUser, unFollowUser } from './FollowUsersSlice';
-const url = 'https://audiocomms-podcast-platform.herokuapp.com';
+import { url } from '../actions/config';
 
 
 export const getMyFollowers = createAsyncThunk(

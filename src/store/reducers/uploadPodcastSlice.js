@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { closeModal,openModal } from './modalSlice';
-const url = 'https://audiocomms-podcast-platform.herokuapp.com';
+import { url } from '../actions/config';
+// const url = 'https://audiocomms-podcast-platform.herokuapp.com';
 
 
 //req 1
