@@ -206,7 +206,8 @@ export default function Room(props) {
       } else {
         Toast.fire({
           icon: 'info',
-          title: reason
+          // title: reason
+          title: 'Room ended'
         })
         leave();
         dispatch(closeFixedModal());

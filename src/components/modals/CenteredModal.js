@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { closeModal } from '../../store/reducers/modalSlice';
-import Box from '@mui/material/Box';
+// import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 
 import CreateEvent from './modalsComponents/CreateEvent';
@@ -20,14 +20,15 @@ import DeleteAccount from '../profile/DeleteAccount';
 import FollowModal from '../profile/FollowModal';
 import Success from '../utilities/Success';
 import DeleteMessage from '../room/DeleteMessage';
-
+import classes from '../../styles/centeredModal/CenteredModal.module.css';
+/*
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     // width: 400,
-    flexBasis: '600px',
+    // flexBasis: '600px',
     maxHeight: 400,
     overflow: 'auto',
     bgcolor: 'background.paper',
@@ -41,8 +42,9 @@ const style = {
     flexDirection: 'column',
     // justifyContent: 'center',
     alignItems: 'center',
+    
 };
-
+*/
 const CenteredModal = () => {
     const dispatch = useDispatch()
     const {isOpen, componentName, childrenProps} = useSelector((state) => state.modal)
@@ -86,9 +88,9 @@ const CenteredModal = () => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
+                <div className={classes.centeredModal}>
                     {renderComponent}
-                </Box>
+                </div>
             </Modal>
         </div>
     );
