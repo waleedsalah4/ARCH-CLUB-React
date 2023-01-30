@@ -2,7 +2,7 @@ import React from 'react';
 import { Link ,useNavigate} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { openModal } from '../../store/reducers/modalSlice';
-import { openFixedModal } from '../../store/reducers/fixedModalSlice';
+import { openFixedModal,closeFixedModal } from '../../store/reducers/fixedModalSlice';
 import { likePod, disLikePod } from '../../store/reducers/likeSlice';
 import { limiTitle } from '../utilities/Helpers';
 import { Toast } from '../utilities/sweetAlert';
@@ -38,6 +38,8 @@ const PodcastsCard = ({podcast, otherUser}) => {
             })
         } else{
             //close old player first if it was running
+            dispatch(closeFixedModal())
+            //then open it
             dispatch(openFixedModal({
                 name: 'PlayerLogic',
                 childrenProps: {item: podcast},
