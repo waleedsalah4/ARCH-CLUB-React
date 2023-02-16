@@ -16,6 +16,7 @@ function RoomAudience({audience, state}) {
     const handleClose = () =>{
         setAnchorEl(null)
     }
+    let userImg = audience.photo.includes('herokuapp') ? 'https://audiocomms-podcast-api.onrender.com/img/users/default.jpg': audience.photo;
     return (
         <div className={classes.user}>
             <IconButton 
@@ -27,7 +28,7 @@ function RoomAudience({audience, state}) {
             >
                 <Avatar
                     alt="user avatar"
-                    src={audience.photo}
+                    src={userImg}
                     sx={{ width: 56, height: 56 }}
                 />
             </IconButton>

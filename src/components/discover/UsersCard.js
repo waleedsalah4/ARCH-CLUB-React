@@ -9,7 +9,6 @@ import Button from '@mui/material/Button';
 import classes from '../../styles/discover/Discover.module.css';
 
 function UsersCard({user}) {
-    
     const dispatch = useDispatch();
     const navigate = useNavigate()
 
@@ -25,12 +24,13 @@ function UsersCard({user}) {
         }
     }
 
+    let userImg = user.photo.includes('herokuapp') ? 'https://audiocomms-podcast-api.onrender.com/img/users/default.jpg': user.photo;
     return (
         <div className={classes.userContainer}>
             <div className={classes.userAvatar}>
                 <Avatar 
                     alt='user avatar'
-                    src={user.photo}
+                    src={userImg}
                     sx={{ width: 50, height: 50, cursor: 'pointer'}}
                     onClick={() =>goToUserPage(user._id)}
                 />

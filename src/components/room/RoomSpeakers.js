@@ -17,6 +17,8 @@ function RoomSpeakers({speaker, state}) {
         setAnchorEl(null)
     }
 
+    let userImg = speaker.photo.includes('herokuapp') ? 'https://audiocomms-podcast-api.onrender.com/img/users/default.jpg': speaker.photo;
+
     return (
         <div className={classes.user}>
             <IconButton 
@@ -28,7 +30,7 @@ function RoomSpeakers({speaker, state}) {
             >
                 <Avatar
                     alt="user avatar"
-                    src={speaker.photo}
+                    src={userImg}
                     sx={{ width: 56, height: 56 }}
                     className={speaker.isTalking ? classes.isTalking : ''}
                 />

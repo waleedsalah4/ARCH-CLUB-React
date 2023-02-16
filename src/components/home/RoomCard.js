@@ -35,6 +35,8 @@ function RoomCard({room}) {
         
     }
 
+    let userImg = room.admin.photo.includes('herokuapp') ? 'https://audiocomms-podcast-api.onrender.com/img/users/default.jpg': room.admin.photo;
+
     return (
         <div className={classes.room}>
             <div className={classes.roomCard}>
@@ -57,7 +59,7 @@ function RoomCard({room}) {
                     <div className={classes.people}>
                         <Avatar 
                             // className={classes.userImg} 
-                            src={room.admin.photo} 
+                            src={userImg} 
                             title={`${room.admin.name} (host)`} 
                             alt="user-img" />
 

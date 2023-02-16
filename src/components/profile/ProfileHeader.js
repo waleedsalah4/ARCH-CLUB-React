@@ -57,6 +57,7 @@ function ProfileHeader({userData, isMe}) {
             dispatch(followUser({id: userData._id,type: 'userData' }))
         }
     }
+    let userImg = userData.photo.includes('herokuapp') ? 'https://audiocomms-podcast-api.onrender.com/img/users/default.jpg': userData.photo;
 
     return (
         <div className={classes.header}>
@@ -68,7 +69,7 @@ function ProfileHeader({userData, isMe}) {
                     <div className={classes.userImg}>
                         <div className={classes.avatar} >
                             <Avatar 
-                                src={userData.photo} 
+                                src={userImg} 
                                 alt="user avatar" 
                                 title='click to preview'
                                 onClick={openPhotoModal}

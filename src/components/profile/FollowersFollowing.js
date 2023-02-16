@@ -25,12 +25,14 @@ function FollowersFollowing({user}) {
             dispatch(followUser({id: user._id,type: 'followModal' }))
         }
     }
+    let userImg = user.photo.includes('herokuapp') ? 'https://audiocomms-podcast-api.onrender.com/img/users/default.jpg': user.photo;
+   
     return (
         <div className={classes.userContainer}>
             <div className={classes.userAvatar}>
                 <Avatar 
                     alt='user avatar'
-                    src={user.photo}
+                    src={userImg}
                     sx={{ width: 50, height: 50 }}
                     onClick={goTouserPage}
                 />

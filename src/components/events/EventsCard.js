@@ -28,13 +28,15 @@ const EventsCard = ({evt, otherUser})=> {
         }))
     }
 
+    let userImg = evt.createdBy.photo.includes('herokuapp') ? 'https://audiocomms-podcast-api.onrender.com/img/users/default.jpg': evt.createdBy.photo;
+
     return (
         <div className={classes.eventComponent}>
             <div className={classes.eventHeader}>
                 <div className={classes.userData}>
                     <div>
                         <IconButton sx={{ p: 0 }}>
-                            <Avatar alt="user avatar" src={evt.createdBy.photo} sx={{ width: 56, height: 56 }}/>
+                            <Avatar alt="user avatar" src={userImg} sx={{ width: 56, height: 56 }}/>
                         </IconButton>
                     </div>
                     <div>

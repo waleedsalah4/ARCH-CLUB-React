@@ -54,6 +54,9 @@ const PodcastsCard = ({podcast, otherUser}) => {
         podcast.isLiked ? dispatch(disLikePod(podcast._id)): dispatch(likePod(podcast._id))
     }
 
+    let userImg = podcast.createdBy.photo.includes('herokuapp') ? 'https://audiocomms-podcast-api.onrender.com/img/users/default.jpg': podcast.createdBy.photo;
+   
+
     return (
         <div className={classes.podcastComponent}>
             <div 
@@ -61,7 +64,7 @@ const PodcastsCard = ({podcast, otherUser}) => {
                 <IconButton sx={{ p: 0 }} onClick={() => navigate(`/user-profile/${podcast.createdBy._id}`)}>
                     <Avatar 
                         alt='user avatar'
-                        src={podcast.createdBy.photo}
+                        src={userImg}
                         sx={{ width: 56, height: 56 }} 
                     />
                 </IconButton> 
