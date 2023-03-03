@@ -43,6 +43,7 @@ function RoomAudience({audience, state}) {
                 isAdmin={state.isAdmin}
                 handleClose={handleClose} 
                 type='audience'
+                typeAdmin={null}
                 userId={audience._id}
             />
             <div className={`${classes.userName} ${classes.listener}`}>

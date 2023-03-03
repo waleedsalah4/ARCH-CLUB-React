@@ -61,7 +61,7 @@ function ResetPassword() {
                     validationSchema={validate}
                     onSubmit={values => {
                         // dispatch(login(values))
-                        console.log(values)
+                        // console.log(values)
                     }}
                 >
                     <Form>

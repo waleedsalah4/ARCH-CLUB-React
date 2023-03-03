@@ -1,22 +1,21 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { socket } from '../../store/actions';
-// import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
 export default function MiniModal(props) {
-    const {anchorEl,open, handleClose, type,isAdmin, userId} = props;
+    const {anchorEl,open, handleClose, type,isAdmin, userId,typeAdmin} = props;
     const navigate = useNavigate()
     const changeUserToSpeaker = () => {
-        console.log('changeUserToSpeaker')
+        // console.log('changeUserToSpeaker')
         socket.emit('givePermsTo', {
             _id: userId // user id 
         })
         handleClose()
     }
     const changeUserToListener = () => {
-        console.log('changeUserToListener')
+        // console.log('changeUserToListener')
         socket.emit('takeAwayPermsFrom', {
             _id: userId  // id for user who you want to change
         })
@@ -42,7 +41,7 @@ export default function MiniModal(props) {
                 {isAdmin && type === 'audience' ? <MenuItem onClick={changeUserToSpeaker}>
                          change to speaker
                     </MenuItem> : ''}
-                {isAdmin && type !== 'audience' ? <MenuItem onClick={changeUserToListener}>
+                {isAdmin && type !== 'audience' && !typeAdmin ? <MenuItem onClick={changeUserToListener}>
                         change to audience
                     </MenuItem> : ''}
                 

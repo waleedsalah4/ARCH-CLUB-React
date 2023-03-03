@@ -12,6 +12,8 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import FixedComponents from './FixedComponents';
 import SideBarListItems from './SideBarListItems';
+import { useMediaQuery } from '@mui/material';
+import MobileNav from './MobileNav';
 import classes from '../../styles/Layout.module.css';
 
 const drawerWidth = 240;
@@ -67,12 +69,22 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function Layout(props) {
   const theme = useTheme();
+  const match = useMediaQuery('(min-width:600px)')
   let location = useLocation();
   const token = JSON.parse(localStorage.getItem('user-token') || false)
   const [open, setOpen] = useState(false);
+  const [openMobileNav, setMobileNav] = useState(false)
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    if(match){
+      setOpen(true);
+    } else {
+      setMobileNav(true)
+    }
+  };
+
+  const handleMobileViewClose = () => {
+    setMobileNav(false);
   };
 
   const handleDrawerClose = () => {
@@ -84,7 +96,7 @@ export default function Layout(props) {
     {token ? <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <NavBar open={open} handleDrawerOpen={handleDrawerOpen}/>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} sx={{display: {xs:'none', sm: 'block'}}}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -95,6 +107,7 @@ export default function Layout(props) {
         <SideBarListItems open={open}/>
         
       </Drawer>
+      {openMobileNav && <MobileNav  handleMobileViewClose={handleMobileViewClose}/>}
       <Box component="main" sx={{ flexGrow: 1, p: 3 }} className={classes.main}>
         <DrawerHeader />
         <FixedComponents />

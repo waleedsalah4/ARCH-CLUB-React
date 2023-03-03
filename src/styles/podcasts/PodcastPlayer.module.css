@@ -72,13 +72,13 @@
 }
 
 .progressBar {
-    --bar-bg: #ffe3d4;
+    --bar-bg: #f4f4f4;
     --seek-before-width: 0px;
-    --seek-before-color: #ffc2a1;
+    --seek-before-color: #1236ea;
     --knobby: #3452a5;
     --selectedKnobby: #26c9c3;
 
-    /* appearance: none; */
+    appearance: none;
     background: var(--bar-bg);
     position: relative;
     width: 100%;
@@ -140,6 +140,7 @@
   /* knobby - chrome and safari */
   .progressBar::-webkit-slider-thumb {
     -webkit-appearance: none;
+    /* appearance: none; */
     height: 15px;
     width: 15px;
     border-radius: 50%;

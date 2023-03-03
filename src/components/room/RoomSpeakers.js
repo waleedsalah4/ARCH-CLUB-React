@@ -45,6 +45,7 @@ function RoomSpeakers({speaker, state}) {
                 open={open} 
                 handleClose={handleClose} 
                 type='speaker'
+                typeAdmin={speaker.isAdmin || null}
                 isAdmin={state.isAdmin}
                 userId={speaker._id}
             />

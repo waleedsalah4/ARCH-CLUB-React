@@ -6,3 +6,23 @@
     text-align: center;
     overflow: auto;
 }
+
+.mobileNav {
+    background-color: rgba(255,255,255, 0.9);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3000;
+    /* display: flex; */
+    /* justify-content: center; */
+    padding-top: 10%;
+    transition: all 1s ease-in-out;
+}
+
+.closeMobileNav {
+    position: absolute;
+    top: 2%;
+    right: 3%;
+}
