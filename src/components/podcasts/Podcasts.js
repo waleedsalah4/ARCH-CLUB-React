@@ -13,7 +13,7 @@ function Podcasts() {
     useEffect(()=> {
         dispatch(getMyFollowingPodcasts(1))
     },[dispatch])
-
+    console.log('')
 
     const handleLoadMorePods = () => {
         dispatch(getMyFollowingPodcasts(podsPage))
@@ -24,11 +24,11 @@ function Podcasts() {
                 {podcasts && podcasts.map(podcast => (
                     <PodcastsCard key={podcast._id} podcast={podcast} otherUser={true} />
                 ))}
-                {isLoading && <Loader />}
-                    {podcasts.length ===0 && !isLoading && <p>your following haven't uploaded any podcasts yet</p>}
+                {podcasts.length ===0 && !isLoading && <p>your following haven't uploaded any podcasts yet</p>}
 
                 {podsError && <FeedBack openStatus={true} message={podsError} status='error' /> }
             </div>
+            {isLoading && <Loader />}
             {loadMoreVisible && <Button 
                     variant='contained'
                     onClick={handleLoadMorePods}
