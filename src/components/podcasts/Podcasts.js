@@ -19,20 +19,26 @@ function Podcasts() {
         dispatch(getMyFollowingPodcasts(podsPage))
     }
     return (
-        <div className={classes.podcastscontainer}>
-            {podcasts && podcasts.map(podcast => (
-                <PodcastsCard key={podcast._id} podcast={podcast} otherUser={true} />
-            ))}
-            {isLoading && <Loader />}
-                {loadMoreVisible && <Button 
+        <>
+            <div className={classes.podcastscontainer}>
+                {podcasts && podcasts.map(podcast => (
+                    <PodcastsCard key={podcast._id} podcast={podcast} otherUser={true} />
+                ))}
+                {isLoading && <Loader />}
+                    {podcasts.length ===0 && !isLoading && <p>your following haven't uploaded any podcasts yet</p>}
+
+                {podsError && <FeedBack openStatus={true} message={podsError} status='error' /> }
+            </div>
+            {loadMoreVisible && <Button 
                     variant='contained'
                     onClick={handleLoadMorePods}
+                    sx={{marginTop: '1.5rem'}}
                 >
-                    Load More</Button>}
-                {podcasts.length ===0 && !isLoading && <p>your following haven't uploaded any podcasts yet</p>}
-
-            {podsError && <FeedBack openStatus={true} message={podsError} status='error' /> }
-        </div>
+                    Load More
+                </Button>
+            }
+        
+        </>
     )
 }
 
