@@ -25,7 +25,7 @@ it's a social media built on voice ✔👌
 - agora (interactive live streaming)
 - socket_io
 
-# This was implemented also by vanilla javascript by me.
+# This app was implemented also by vanilla javascript by me.
 you can find it here -> https://github.com/waleedsalah4/ARCH-CLUB
 
 # mobile app:
