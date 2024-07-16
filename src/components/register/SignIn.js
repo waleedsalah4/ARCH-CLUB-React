@@ -50,8 +50,8 @@ function SignIn() {
           sx={{ mt: 3 }}>
             <Formik 
               initialValues={{
-                email: '',
-                password: '',
+                email: "test6@test.com",
+                password: "0123456789",
               }}
               validationSchema={validate}
               onSubmit={values => {
